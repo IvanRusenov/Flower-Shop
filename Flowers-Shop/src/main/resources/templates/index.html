@@ -1,39 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/css/reset-css.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/commons::head}"></head>
 <body>
-    <header >
-        <nav>
-            <ul>
-                <li>
-                    <img src="/img/orchid_9704101.png" alt="orchid">
-                    <a href="/">Orchid app</a>
-                </li>
-                <li>
-                    <a href="/">Add Bouquet</a>
-                </li>
-                <li>
-                    <a  href="/">Welcome {username}</a>
-                </li>
-                <li>
-                    <a href="/">Login</a>
-                </li>
-                <li>
-                    <a href="/">Register</a>
-                </li>
-                <li>
-                    <a href="/">Logout</a>
-                </li>
-            </ul>
-        </nav>
-    </header>
+    <header th:replace="~{fragments/commons::nav}"></header>
     <main>
         <section class="position-absolute top-50 start-50 translate-middle zaoblen">
            <div class="mx-auto p-3 text-center">
@@ -43,11 +13,9 @@
                     <button class="button-29 rounded-pill p-1 col-3 fs-5">Login</button>
                     <button class="button-29 rounded-pill p-1 col-3 fs-5">Register</button>
                 </div>
-            </div>
+           </div>
         </section>
     </main>
-    <footer>
-        <div>&copy Ivan Rusenov 2024</div>
-    </footer>
+    <footer th:replace="~{fragments/commons::footer}"></footer>
 </body>
 </html>

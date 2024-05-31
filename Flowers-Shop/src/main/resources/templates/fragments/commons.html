@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ОРХИДЕЯ</title>
+  <link rel="icon" href="/img/orchid_9704101.png" type="image/icon type">
+  <link rel="stylesheet" href="/css/reset-css.css">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header >
+  <nav>
+<!--    TODO: new nav layout when items are hidden-->
+    <ul>
+      <li>
+        <img src="/img/orchid_9704101.png" alt="orchid">
+        <a href="/">Orchid app</a>
+      </li>
+      <li th:if="1!=1">
+        <a href="/">Add Bouquet</a>
+      </li>
+      <li th:if="1!=1">
+        <a  href="/">Welcome {username}</a>
+      </li>
+      <li th:if="1==1">
+        <a href="/">Login</a>
+      </li>
+      <li th:if="1==1">
+        <a href="/">Register</a>
+      </li>
+      <li th:if="1!=1">
+        <a href="/">Logout</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+<footer>
+  <div>&copy Ivan Rusenov 2024</div>
+</footer>
+
+</body>
+</html>

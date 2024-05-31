@@ -32,6 +32,8 @@ nav {
 nav ul {
     display: flex;
     justify-content: space-around;
+    padding-left: 0;
+    margin-bottom: 0;
 }
 
 nav ul li {
@@ -155,4 +157,6 @@ button {
 
   h1 {
     font-style: oblique;
+     font-size: 5em;
+     font-weight: bold;
   }
