@@ -18,20 +18,20 @@
         <img src="/img/orchid_9704101.png" alt="orchid">
         <a href="/">Orchid app</a>
       </li>
-      <li th:if="1!=1">
-        <a href="/">Add Bouquet</a>
+      <li th:if="${@loggedUser.isLogged}">
+        <a th:href="@{/bouquet/add}">Add Bouquet</a>
       </li>
-      <li th:if="1!=1">
-        <a  href="/">Welcome {username}</a>
+      <li th:if="${@loggedUser.isLogged}">
+        <span th:text="@{|Welcome ${@loggedUser.username}|}">Welcome {username}</span>
       </li>
-      <li th:if="1==1">
-        <a href="/">Login</a>
+      <li th:unless="${@loggedUser.isLogged}">
+        <a th:href="@{/login}">Login</a>
       </li>
-      <li th:if="1==1">
-        <a href="/">Register</a>
+      <li th:uless="${@loggedUser.isLogged}">
+        <a th:href="@{/register}">Register</a>
       </li>
-      <li th:if="1!=1">
-        <a href="/">Logout</a>
+      <li th:if="${@loggedUser.isLogged}">
+        <a th:href="@{/logout}">Logout</a>
       </li>
     </ul>
   </nav>

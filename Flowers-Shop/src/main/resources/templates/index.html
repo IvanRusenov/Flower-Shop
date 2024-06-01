@@ -5,13 +5,13 @@
 <body>
     <header th:replace="~{fragments/commons::nav}"></header>
     <main>
-        <section class="position-absolute top-50 start-50 translate-middle zaoblen">
+        <section class="position-absolute top-50 start-50 translate-middle my-container">
            <div class="mx-auto p-3 text-center">
                 <h1 class="text-white">Орхидея</h1>
                 <p class="text-white fs-4 m-3">Онлайн бутик за цветя и букети</p>
                 <div class="d-flex justify-content-center gap-4 m-3 pt-2">
-                    <button class="button-29 rounded-pill p-1 col-3 fs-5">Login</button>
-                    <button class="button-29 rounded-pill p-1 col-3 fs-5">Register</button>
+                    <a th:href="@{/login}" class="button-29 rounded-pill p-1 col-3 fs-5">Login</a>
+                    <a th:href="@{/register}" class="button-29 rounded-pill p-1 col-3 fs-5">Register</a>
                 </div>
            </div>
         </section>

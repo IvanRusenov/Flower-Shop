@@ -28,6 +28,9 @@ public class User {
 
     private String address;
 
+    @ManyToOne
+    private Role role;
+
     public long getId() {
         return id;
     }
@@ -82,5 +85,13 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
