@@ -24,11 +24,8 @@ public class User {
     @Column(name = "lastName")
     private String lastName;
 
-    //todo: implement roles
-
     private String address;
-
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Role role;
 
     public long getId() {

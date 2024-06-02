@@ -1,13 +1,23 @@
 package com.ivan.Flowers.Shop.controllers;
 
 import com.ivan.Flowers.Shop.models.dtos.UserRegisterDTO;
+import com.ivan.Flowers.Shop.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class UserController {
+
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/")
     public ModelAndView index() {
@@ -17,5 +27,24 @@ public class UserController {
     @GetMapping("/register")
     public ModelAndView register(@ModelAttribute("userRegisterDTO") UserRegisterDTO userRegisterDTO) {
         return new ModelAndView("register");
+    }
+
+    @PostMapping("/register")
+    public ModelAndView register(@ModelAttribute("userRegisterDTO") @Valid UserRegisterDTO userRegisterDTO,
+                                 BindingResult bindingResult) {
+
+        ModelAndView register = new ModelAndView("register");
+
+        if (bindingResult.hasErrors()){
+            return register;
+        }
+
+        boolean isRegistered = userService.register(userRegisterDTO);
+
+        if (isRegistered) {
+            return new ModelAndView("redirect:/login");
+        }
+
+        return register;
     }
 }
