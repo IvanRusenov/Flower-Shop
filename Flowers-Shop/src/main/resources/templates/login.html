@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons::head}"></head>
+<body>
+<header th:replace="~{fragments/commons::nav}"></header>
+<main>
+  <!-- todo: fix responsive issue with position-absolute -->
+  <div class="position-absolute top-50 start-50 translate-middle content-wrap w-25 mx-auto bg-opacity-75 bg-black border custom-round">
+    <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Login</span></h1>
+    <form class="form-floating mx-auto w-75 bg-blur" th:method="post" th:action="@{/login}" th:object="${userLoginDTO}">
+      <div class="form-floating mb-3 text-center">
+        <input th:field="*{username}" th:errorclass="is-invalid" class="form-control" id="username" placeholder="Username">
+        <label for="username">Username</label>
+        <small th:errors="*{username}" class="text-danger ">Username error message</small>
+      </div>
+<!--      <div class="form-floating mb-3 text-center">-->
+<!--        <input th:field="*{email}" th:errorclass="is-invalid" type="email" class="form-control" id="email" placeholder="name@example.com">-->
+<!--        <label for="email">Email address</label>-->
+<!--        <small th:errors="*{email}" class="text-danger">Email error message</small>-->
+<!--      </div>-->
+      <div class="form-floating mb-3 text-center">
+        <input th:field="*{password}" th:errorclass="is-invalid" type="password" class="form-control" id="password" placeholder="Password">
+        <label for="password">Password</label>
+        <small th:errors="*{password}" class="text-danger">Password error message</small>
+      </div>
+<!--      <div class="form-floating mb-3 text-center">-->
+<!--        <input th:field="*{confirmPassword}" th:errorclass="is-invalid" type="password" class="form-control" id="confirmPassword" placeholder="Confirm password">-->
+<!--        <label for="confirmPassword">Confirm Password</label>-->
+<!--        <small th:errors="*{confirmPassword}" class="text-danger">Email error message</small>-->
+<!--      </div>-->
+      <div class="form-floating mb-3 text-center">
+        <button class="button-29 rounded-pill p-2 w-50 my-2 ">LOGIN</button>
+      </div>
+    </form>
+  </div>
+</main>
+<footer th:replace="~{fragments/commons::footer}"></footer>
+</body>
+</html>

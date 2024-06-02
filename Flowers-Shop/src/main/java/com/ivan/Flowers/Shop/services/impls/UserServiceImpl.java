@@ -1,12 +1,14 @@
 package com.ivan.Flowers.Shop.services.impls;
 
 import com.ivan.Flowers.Shop.enums.RoleType;
+import com.ivan.Flowers.Shop.models.dtos.UserLoginDTO;
 import com.ivan.Flowers.Shop.models.dtos.UserRegisterDTO;
 import com.ivan.Flowers.Shop.models.entities.Role;
 import com.ivan.Flowers.Shop.models.entities.User;
 import com.ivan.Flowers.Shop.repositories.RoleRepository;
 import com.ivan.Flowers.Shop.repositories.UserRepository;
 import com.ivan.Flowers.Shop.services.UserService;
+import com.ivan.Flowers.Shop.session.LoggedUser;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +20,13 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final LoggedUser loggedUser;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, LoggedUser loggedUser) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.loggedUser = loggedUser;
     }
 
     @Override
@@ -52,7 +56,28 @@ public class UserServiceImpl implements UserService {
         user.setRole(role);
 
         userRepository.saveAndFlush(user);
-        //todo: implement roles
+
+        return true;
+    }
+
+    @Override
+    public boolean login(UserLoginDTO userLoginDTO) {
+
+        Optional<User> optionalUser = userRepository.findByUsername(userLoginDTO.getUsername());
+
+        if (optionalUser.isEmpty()) {
+            return false;
+        }
+
+        boolean isMatches = passwordEncoder.matches(userLoginDTO.getPassword(), optionalUser.get().getPassword());
+
+        if (!isMatches) {
+            return false;
+        }
+
+        loggedUser.setUsername(userLoginDTO.getUsername());
+        loggedUser.setId(optionalUser.get().getId());
+        loggedUser.setLogged(true);
 
         return true;
     }

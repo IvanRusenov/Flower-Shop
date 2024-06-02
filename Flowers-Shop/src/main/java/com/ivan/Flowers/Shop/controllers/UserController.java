@@ -1,5 +1,6 @@
 package com.ivan.Flowers.Shop.controllers;
 
+import com.ivan.Flowers.Shop.models.dtos.UserLoginDTO;
 import com.ivan.Flowers.Shop.models.dtos.UserRegisterDTO;
 import com.ivan.Flowers.Shop.services.UserService;
 import jakarta.validation.Valid;
@@ -46,5 +47,30 @@ public class UserController {
         }
 
         return register;
+    }
+
+
+    @GetMapping("/login")
+    public ModelAndView login(@ModelAttribute("userLoginDTO") UserLoginDTO userLoginDTO) {
+        return new ModelAndView("login");
+    }
+
+    @PostMapping("/login")
+    public ModelAndView login(@ModelAttribute("userLoginDTO") @Valid UserLoginDTO userLoginDTO,
+                              BindingResult bindingResult) {
+        ModelAndView login = new ModelAndView("login");
+
+        if (bindingResult.hasErrors()) {
+            return login;
+        }
+
+        boolean isLogged = userService.login(userLoginDTO);
+
+        if (!isLogged) {
+            return login;
+        }
+
+        return new ModelAndView("redirect:/home");
+
     }
 }
