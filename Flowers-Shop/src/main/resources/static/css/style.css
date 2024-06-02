@@ -160,3 +160,8 @@ button {
      font-size: 5em;
      font-weight: bold;
   }
+
+  .custom-round {
+    border: 1px solid lightgray;
+    border-radius: 0 2em 0 2em;
+ }
