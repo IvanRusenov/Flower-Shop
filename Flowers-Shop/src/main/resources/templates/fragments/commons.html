@@ -22,7 +22,7 @@
         <a th:href="@{/bouquet/add}">Add Bouquet</a>
       </li>
       <li th:if="${@loggedUser.isLogged}">
-        <span th:text="@{|Welcome ${@loggedUser.username}|}">Welcome {username}</span>
+        <span class="text-white" th:text="@{|Welcome ${@loggedUser.username}|}">Welcome {username}</span>
       </li>
       <li th:unless="${@loggedUser.isLogged}">
         <a th:href="@{/login}">Login</a>
