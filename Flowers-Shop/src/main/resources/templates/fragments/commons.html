@@ -27,7 +27,7 @@
       <li th:unless="${@loggedUser.isLogged}">
         <a th:href="@{/login}">Login</a>
       </li>
-      <li th:uless="${@loggedUser.isLogged}">
+      <li th:unless="${@loggedUser.isLogged}">
         <a th:href="@{/register}">Register</a>
       </li>
       <li th:if="${@loggedUser.isLogged}">

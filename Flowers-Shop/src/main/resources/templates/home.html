@@ -4,50 +4,178 @@
 <body>
 <header th:replace="~{fragments/commons::nav}"></header>
 <main class="home">
-    <div class="container d-flex flex-wrap justify-content-center mx-auto my-5">
-        <div class="card m-3 text-center flex-shrink-0" style="width: 18rem;">
-<!--            todo: the images must be of the same height.-->
-            <img src="img/pexels-nur-yilmaz-53801215-9168324.jpg" class="card-img-top" alt="picture">
-            <div class="card-body">
-                <h5 class="card-title">Букет слънчогледи</h5>
-                <p class="card-text">Цена 29,60 лв</p>
-                <a href="#" class="button-29 rounded-pill p-2 w-50 my-2 ">Купи</a>
+<!--    <div class="container d-flex flex-wrap justify-content-center mx-auto my-5">-->
+<!--        <div class="card m-3 text-center flex-shrink-0" style="width: 18rem;">-->
+<!--&lt;!&ndash;            todo: the images must be of the same height.&ndash;&gt;-->
+<!--            <img src="img/pexels-nur-yilmaz-53801215-9168324.jpg" class="card-img-top" alt="picture">-->
+<!--            <div class="card-body">-->
+<!--                <h5 class="card-title">Букет слънчогледи</h5>-->
+<!--                <p class="card-text">Цена 29,60 лв</p>-->
+<!--                <a href="#" class="button-29 rounded-pill p-2 w-50 my-2 ">Купи</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="card m-3 text-center flex-shrink-0" style="width: 18rem;">-->
+<!--            <img src="img/pexels-nur-yilmaz-53801215-9168324.jpg" class="card-img-top" alt="picture">-->
+<!--            <div class="card-body">-->
+<!--                <h5 class="card-title">Букет слънчогледи</h5>-->
+<!--                <p class="card-text">Цена 29,60 лв</p>-->
+<!--                <a href="#" class="button-29 rounded-pill p-2 w-50 my-2 ">Купи</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="card m-3 text-center flex-shrink-0" style="width: 18rem;">-->
+<!--            <img src="img/pexels-nur-yilmaz-53801215-9168324.jpg" class="card-img-top" alt="picture">-->
+<!--            <div class="card-body">-->
+<!--                <h5 class="card-title">Букет слънчогледи</h5>-->
+<!--                <p class="card-text">Цена 29,60 лв</p>-->
+<!--                <a href="#" class="button-29 rounded-pill p-2 w-50 my-2 ">Купи</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="card m-3 text-center flex-shrink-0" style="width: 18rem;">-->
+<!--            <img src="img/pexels-nur-yilmaz-53801215-9168324.jpg" class="card-img-top" alt="picture">-->
+<!--            <div class="card-body">-->
+<!--                <h5 class="card-title">Букет слънчогледи</h5>-->
+<!--                <p class="card-text">Цена 29,60 лв</p>-->
+<!--                <a href="#" class="button-29 rounded-pill p-2 w-50 my-2 ">Купи</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="card m-3 text-center flex-shrink-0" style="width: 18rem;">-->
+<!--            <img src="img/pexels-nur-yilmaz-53801215-9168324.jpg" class="card-img-top" alt="picture">-->
+<!--            <div class="card-body">-->
+<!--                <h5 class="card-title">Букет слънчогледи</h5>-->
+<!--                <p class="card-text">Цена 29,60 лв</p>-->
+<!--                <a href="#" class="button-29 rounded-pill p-2 w-50 my-2 ">Купи</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+
+<!--    <div class="container">-->
+<!--        <div class="row g-5">-->
+<!--            <div class="col-12 col-md-6 col-lg-4">-->
+<!--                <div class="card">-->
+<!--                    <img src="img/boxes/box1.jpg" alt="picture of bouquet">-->
+<!--                    <div class="card-body">-->
+<!--                        <h5 class="card-title"> picture of bouquet</h5>-->
+<!--                        <p class="card-text">pjiabspi b</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-12 col-md-6 col-lg-4">-->
+<!--                <div class="card">-->
+<!--                    <img src="img/boxes/box2.jpg" alt="picture of bouquet" class="card-img-top">-->
+<!--                    <div class="card-body">-->
+<!--                        <h5 class="card-title"> picture of bouquet</h5>-->
+<!--                        <p class="card-text">pjiabspi b</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-12 col-md-6 col-lg-4">-->
+<!--                <div class="card">-->
+<!--                    <img src="img/boxes/box3.jpg" class="card-img-top">-->
+<!--                    <div class="card-body">-->
+<!--                        <h5 class="card-title"> picture of bouquet</h5>-->
+<!--                        <p class="card-text">pjiabspi b</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--    </div>-->
+
+    <div class="container text-center my-5">
+        <div class="row g-5">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="media">
+                        <img src="/img/boxes/box1.jpg" alt="picture of bouquet">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Bouquet of light pink roses in a box No.264</h5>
+                        <p class="card-text">Price: 362,50 lv.</p>
+                        <form action="#">
+                            <button class="button-29 rounded-pill">ADD TO CART</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card ">
+                    <div class="media">
+                        <img src="/img/boxes/box2.jpg" alt="picture of bouquet" class="card-img-top">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Bouquet of pink roses in a box No.365</h5>
+                        <p class="card-text">Price: 369,87 lv.</p>
+                        <form action="#">
+                            <button class="button-29 rounded-pill">ADD TO CART</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="media">
+                        <img src="/img/boxes/box3.jpg" class="card-img-top">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Bouquet of red roses in a box</h5>
+                        <p class="card-text">Price: 585,26 lv.</p>
+                        <form action="#">
+                            <button class="button-29 rounded-pill">ADD TO CART</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="card m-3 text-center flex-shrink-0" style="width: 18rem;">
-            <img src="img/pexels-nur-yilmaz-53801215-9168324.jpg" class="card-img-top" alt="picture">
-            <div class="card-body">
-                <h5 class="card-title">Букет слънчогледи</h5>
-                <p class="card-text">Цена 29,60 лв</p>
-                <a href="#" class="button-29 rounded-pill p-2 w-50 my-2 ">Купи</a>
+        <div class="row g-5">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="media">
+                        <img src="/img/boxes/box4.jpg" alt="picture of bouquet">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Bouquet of blue roses in a box</h5>
+                        <p class="card-text">Price: 1293,26 lv.</p>
+                        <form action="#">
+                            <button class="button-29 rounded-pill">ADD TO CART</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="card m-3 text-center flex-shrink-0" style="width: 18rem;">
-            <img src="img/pexels-nur-yilmaz-53801215-9168324.jpg" class="card-img-top" alt="picture">
-            <div class="card-body">
-                <h5 class="card-title">Букет слънчогледи</h5>
-                <p class="card-text">Цена 29,60 лв</p>
-                <a href="#" class="button-29 rounded-pill p-2 w-50 my-2 ">Купи</a>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="media">
+                        <img src="/img/boxes/box5.jpg" class="card-img-top">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title"> picture of bouquet</h5>
+                        <p class="card-text">pjiabspi b</p>
+                        <form action="#">
+                            <button class="button-29 rounded-pill">ADD TO CART</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="card m-3 text-center flex-shrink-0" style="width: 18rem;">
-            <img src="img/pexels-nur-yilmaz-53801215-9168324.jpg" class="card-img-top" alt="picture">
-            <div class="card-body">
-                <h5 class="card-title">Букет слънчогледи</h5>
-                <p class="card-text">Цена 29,60 лв</p>
-                <a href="#" class="button-29 rounded-pill p-2 w-50 my-2 ">Купи</a>
-            </div>
-        </div>
-        <div class="card m-3 text-center flex-shrink-0" style="width: 18rem;">
-            <img src="img/pexels-nur-yilmaz-53801215-9168324.jpg" class="card-img-top" alt="picture">
-            <div class="card-body">
-                <h5 class="card-title">Букет слънчогледи</h5>
-                <p class="card-text">Цена 29,60 лв</p>
-                <a href="#" class="button-29 rounded-pill p-2 w-50 my-2 ">Купи</a>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="media">
+                        <img src="/img/boxes/box7.jpg" class="card-img-top">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title"> picture of bouquet</h5>
+                        <p class="card-text">pjiabspi b</p>
+                        <form action="#">
+                            <button class="button-29 rounded-pill">ADD TO CART</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
 </main>
+
+
 <footer th:replace="~{fragments/commons::footer}"></footer>
 </body>
 </html>
