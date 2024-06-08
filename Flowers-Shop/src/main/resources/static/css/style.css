@@ -201,3 +201,11 @@ button {
      object-fit: fill;
      padding: 1em;
  }
+
+.card-body p {
+    margin-bottom: 0;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 1.5em;
+}
+

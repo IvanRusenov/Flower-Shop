@@ -23,7 +23,7 @@ public class HomeController {
         ModelAndView modelAndView = new ModelAndView("home");
 
         List<Bouquet> bouquets = homeService.getBouquets();
-        modelAndView.addObject(bouquets);
+        modelAndView.addObject("bouquets", bouquets);
 
         return modelAndView;
     }
