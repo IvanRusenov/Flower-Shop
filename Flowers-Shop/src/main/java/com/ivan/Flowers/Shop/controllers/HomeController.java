@@ -1,5 +1,6 @@
 package com.ivan.Flowers.Shop.controllers;
 
+import com.ivan.Flowers.Shop.models.dtos.BouquetDTO;
 import com.ivan.Flowers.Shop.models.entities.Bouquet;
 import com.ivan.Flowers.Shop.services.HomeService;
 import org.springframework.stereotype.Controller;
@@ -22,8 +23,7 @@ public class HomeController {
 
         ModelAndView modelAndView = new ModelAndView("home");
 
-        List<Bouquet> bouquets = homeService.getBouquets();
-        modelAndView.addObject("bouquets", bouquets);
+        modelAndView.addObject("bouquets", homeService.getBouquets());
 
         return modelAndView;
     }

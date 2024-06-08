@@ -1,6 +1,6 @@
 package com.ivan.Flowers.Shop.services.impls;
 
-import com.ivan.Flowers.Shop.models.entities.Bouquet;
+import com.ivan.Flowers.Shop.models.dtos.BouquetDTO;
 import com.ivan.Flowers.Shop.repositories.BouquetRepository;
 import com.ivan.Flowers.Shop.services.HomeService;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,13 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public List<Bouquet> getBouquets() {
-       return bouquetRepository.findAll();
+    public List<BouquetDTO> getBouquets() {
+
+       return bouquetRepository
+               .findAll()
+               .stream()
+               .map(b-> new BouquetDTO(b.getDescription(), b.getNumber(), b.getPrice(), b.getUrl()))
+               .toList();
+
     }
 }

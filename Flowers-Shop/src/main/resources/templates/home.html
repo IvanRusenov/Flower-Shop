@@ -90,9 +90,9 @@
                         <img th:src="${bouquet.url}" alt="picture of bouquet">
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title" th:text="${bouquet.description}">Bouquet of light pink roses in a box No.264</h5>
-                        <p class="card-text" th:tetx="|No. ${bouquet.number}|">No. 267</p>
-                        <p class="card-text mb-2" th:tetx="|Price: ${bouquet.price}|">Price: 362,50 lv.</p>
+                        <h5 class="card-title" th:text="${bouquet.description}">{description}</h5>
+                        <p class="card-text" th:text="|No. ${bouquet.number}|">{No.}</p>
+                        <p class="card-text mb-2" th:text="|Price: ${bouquet.price}|">{Price: lv.}</p>
                         <form action="#">
                             <button class="button-29 rounded-pill">ADD TO CART</button>
                         </form>
