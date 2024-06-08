@@ -24,8 +24,8 @@ public class Bouquet {
     @Column(nullable = false)
     private String url;
 
-    @Column(nullable = false)
-    private int number;
+    @Column(nullable = false, unique = true)
+    private int itemNumber;
 
     public long getId() {
         return id;
@@ -75,11 +75,11 @@ public class Bouquet {
         this.url = url;
     }
 
-    public int getNumber() {
-        return number;
+    public int getItemNumber() {
+        return itemNumber;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setItemNumber(int itemNumber) {
+        this.itemNumber = itemNumber;
     }
 }

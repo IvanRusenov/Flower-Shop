@@ -41,7 +41,7 @@ public class Initialisations implements CommandLineRunner {
         bouquet.setPrice(362.5);
         bouquet.setQuantity(4);
         bouquet.setUrl("/img/boxes/box1.jpg");
-        bouquet.setNumber(264);
+        bouquet.setItemNumber(264);
 
         bouquetRepository.saveAndFlush(bouquet);
 

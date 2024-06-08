@@ -22,7 +22,7 @@ public class HomeServiceImpl implements HomeService {
        return bouquetRepository
                .findAll()
                .stream()
-               .map(b-> new BouquetDTO(b.getDescription(), b.getNumber(), b.getPrice(), b.getUrl()))
+               .map(b-> new BouquetDTO(b.getDescription(), b.getItemNumber(), b.getPrice(), b.getUrl()))
                .toList();
 
     }
