@@ -20,14 +20,14 @@ public class BouquetController {
 
 
     @GetMapping("/bouquet/add")
-    public ModelAndView addBouquet(ModelAndView modelAndView) {
+    public ModelAndView addBouquet(BouquetDTO bouquetDTO) {
 
-        if (!modelAndView.getModel().containsKey("bouquetDTO")) {
-            modelAndView.addObject("bouquetDTO", BouquetDTO.empty());
-        }
-        modelAndView.setViewName("bouquet-add");
+//        if (!modelAndView.getModel().containsKey("bouquetDTO")) {
+//            modelAndView.addObject("bouquetDTO", BouquetDTO.empty());
+//        }
+//        modelAndView.setViewName("bouquet-add");
 
-        return modelAndView;
+        return new ModelAndView("bouquet-add");
 
     }
 

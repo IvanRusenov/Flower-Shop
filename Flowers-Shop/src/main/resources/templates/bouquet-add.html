@@ -7,7 +7,7 @@
     <!-- todo: fix responsive issue with position-absolute -->
     <div class="position-absolute top-50 start-50 translate-middle content-wrap w-25 mx-auto bg-opacity-75 bg-black border custom-round">
         <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Add Bouquet</span></h1>
-        <form class="form-floating mx-auto w-75 bg-blur" th:method="post" th:action="@{/bouquet/add}" th:object="${bouquetDTO}">
+        <form class="form-floating mx-auto w-75 bg-blur" th:method="post" th:action="@{/bouquet/add}" th:object="${bouquetDTO}" enctype="multipart/form-data">
             <div class="form-floating mb-3 text-center">
                 <input th:field="*{description}" th:errorclass="is-invalid" class="form-control" id="description" placeholder="Description">
                 <label for="description">Description</label>
@@ -23,10 +23,37 @@
                 <label for="price">Price</label>
                 <small th:errors="*{price}" class="text-danger">Price error message</small>
             </div>
-            <div class="form-floating mb-3 text-center">
-                <input th:field="*{url}" th:errorclass="is-invalid" type="text" class="form-control" id="url" placeholder="Url">
-                <label for="url">URL</label>
-                <small th:errors="*{url}" class="text-danger">Url error message</small>
+<!--            <div class="form-floating mb-3 text-center">-->
+<!--                <input th:field="*{url}" th:errorclass="is-invalid" type="text" class="form-control" id="url" placeholder="Url">-->
+<!--                <label for="url">URL</label>-->
+<!--                <small th:errors="*{url}" class="text-danger">Url error message</small>-->
+<!--            </div>-->
+
+
+
+<!--            adding picture -->
+            <div class="form-floating mb-3 text-center text-white">
+<!--                <h4>Choose picture</h4>-->
+<!--                <form th:action="@{/picture/add}" th:method="POST" enctype="multipart/form-data">-->
+<!--                    <input type="hidden" id="id" name="routeId">-->
+<!--                    <div class="form-group">-->
+<!--                        <label>-->
+<!--                            <input type="text" name="pictureTitle">-->
+<!--                        </label>-->
+<!--                    </div>-->
+<!--                    <div class="image-upload">-->
+<!--                        <label for="picture">-->
+<!--                            <img src="/images/add-img.png" alt=""/>-->
+<!--                        </label>-->
+                        <input  th:field="*{picture}" th:errorclass="is-invalid" type="file" class="form-control" id="picture" name="picture" placeholder="Choose picture"/>
+                        <label for="picture">Choose picture</label>
+                        <small th:errors="*{picture}" class="text-danger">Picture error message</small>
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <button class="btn-primary rounded">Upload Picture</button>-->
+<!--                    </div>-->
+<!--                </form>-->
+
             </div>
             <div class="form-floating mb-3 text-center">
                 <button class="button-29 rounded-pill p-2 w-50 my-2 ">REGISTER</button>
