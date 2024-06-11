@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -43,6 +42,8 @@ public class BouquetServiceImpl implements BouquetService {
             return false;
         }
 
+//        todo: validate file size < 5mb
+
         //todo: save picture to the images
         Bouquet bouquet = new Bouquet();
 
@@ -54,6 +55,7 @@ public class BouquetServiceImpl implements BouquetService {
 //            file.createNewFile();
                 OutputStream outputStream = new FileOutputStream(file);
                 outputStream.write(pictureFile.getBytes());
+                outputStream.close();
             } catch (IOException e) {
                 e.getStackTrace();
             }
