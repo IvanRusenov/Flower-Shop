@@ -11,8 +11,11 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToMany
-    private List<CartItem> cartItems;
+    @ManyToMany
+//    @JoinColumn(name = "cart_id", referencedColumnName = "id")
+    private List<Bouquet> bouquets;
+
+    private double totalPrice;
 
     public long getId() {
         return id;
@@ -22,11 +25,19 @@ public class Cart {
         this.id = id;
     }
 
-    public List<CartItem> getCartItems() {
-        return cartItems;
+    public List<Bouquet> getBouquets() {
+        return bouquets;
     }
 
-    public void setCartItems(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
+    public void setBouquets(List<Bouquet> bouquets) {
+        this.bouquets = bouquets;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }

@@ -24,8 +24,6 @@ public class Order {
 
     @OneToMany
     private List<Bouquet> bouquets;
-
-
     @ManyToOne
     private User orderBy;
 

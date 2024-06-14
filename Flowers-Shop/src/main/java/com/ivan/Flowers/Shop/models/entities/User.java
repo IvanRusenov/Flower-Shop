@@ -33,6 +33,9 @@ public class User {
     @OneToMany(mappedBy = "orderBy")
     private List<Order> orders;
 
+    @OneToOne
+    private Cart cart;
+
     public long getId() {
         return id;
     }
@@ -103,5 +106,13 @@ public class User {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 }
