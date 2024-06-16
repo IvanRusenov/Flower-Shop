@@ -209,3 +209,14 @@ button {
     font-size: 1.5em;
 }
 
+.cart-media {
+    height: 25%;
+}
+
+.cart-round {
+    border: 1px solid lightgray;
+    border-radius: 3em 0 3em 0;
+    overflow: hidden;
+}
+
+

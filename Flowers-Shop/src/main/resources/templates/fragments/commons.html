@@ -34,7 +34,9 @@
         <a th:href="@{/logout}">Logout</a>
       </li>
       <li th:if="${@loggedUser.isLogged}">
-        <img src="img/shopping-cart.png" alt="cart">
+        <a th:href="@{/cart}">
+          <img src="img/shopping-cart.png" alt="cart">
+        </a>
       </li>
     </ul>
   </nav>

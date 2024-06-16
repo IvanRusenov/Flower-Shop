@@ -2,10 +2,8 @@ package com.ivan.Flowers.Shop.controllers;
 
 import com.ivan.Flowers.Shop.services.CartService;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -15,6 +13,12 @@ public class CartController {
 
     public CartController(CartService cartService) {
         this.cartService = cartService;
+    }
+
+
+    @GetMapping("/cart")
+    public ModelAndView cart() {
+        return new ModelAndView("cart");
     }
 
     @GetMapping("cart/add/{itemNumber}")
