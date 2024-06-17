@@ -17,12 +17,16 @@ html {
 
 }
 
-body {
+.background1 {
     /* background-image: url(img/background.jpg); */
     background-image: url(/img/background1.png);
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
+}
+
+body {
+    background-color: black;
 }
 
 nav {
@@ -219,4 +223,44 @@ button {
     overflow: hidden;
 }
 
+ .remove-btn {
+    align-items: center;
+    appearance: none;
+    background: radial-gradient(ellipse farthest-corner at right bottom, #fe3737 0%, #fd3131 8%, #c63232 30%, #aa3a3a 40%, transparent 80%),
+                radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #ffacac 8%, #d16464 25%, #8a2e2e 62.5%, #5d1f1f 100%);
+    border: 0;
+    box-shadow: rgba(66, 35, 35, 0.4) 0 2px 4px,rgba(66, 35, 35, 0.3) 0 7px 13px -3px,rgba(111, 58, 58, 0.5) 0 -3px 0 inset;
+    box-sizing: border-box;
+    color: white;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: "JetBrains Mono",monospace;
+    justify-content: center;
+    line-height: 1;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: box-shadow .15s,transform .15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    will-change: box-shadow,transform;
+    font-size: calc(0.1em + 1.5vw);
+  }
+
+  .remove-btn:hover {
+    box-shadow: rgba(66, 35, 35, 0.4) 0 4px 8px, rgba(66, 35, 35, 0.3) 0 7px 13px -3px, #4d083f 0 -3px 0 inset;
+    transform: translateY(-2px);
+  }
+
+  .remove-btn:focus {
+    box-shadow: #c44eab 0 0 0 1.5px inset, rgba(66, 35, 35, 0.4) 0 2px 4px, rgba(66, 35, 35, 0.3) 0 7px 13px -3px, #4d0808 0 -3px 0 inset;
+  }
+
+  .remove-btn:active {
+    box-shadow: #4d080b 0 3px 7px inset;
+    transform: translateY(2px);
+  }
 
