@@ -17,9 +17,9 @@ import java.util.Optional;
 
 @Service
 public class BouquetServiceImpl implements BouquetService {
-        public static final String IMAGES_PATH = "src/main/resources/static/img";
+//        public static final String IMAGES_PATH = "src/main/resources/static/img";
         private static final  String URL_PATH = "img/";
-    //    public static final String IMAGES_PATH = ".\\src\\main\\resources\\static\\img\\";
+        public static final String IMAGES_PATH = ".\\src\\main\\resources\\static\\img\\";
     private final BouquetRepository bouquetRepository;
 
     public BouquetServiceImpl(BouquetRepository bouquetRepository) {
@@ -48,9 +48,9 @@ public class BouquetServiceImpl implements BouquetService {
         Bouquet bouquet = new Bouquet();
 
         MultipartFile pictureFile = bouquetDTO.getPicture();
-        File file = new File(IMAGES_PATH +"/"+pictureFile.getOriginalFilename());
+        File file = new File(IMAGES_PATH + pictureFile.getOriginalFilename());
 
-        if (!file.exists() && file.isDirectory()) {
+        if (!file.exists()) {
             try {
 //            file.createNewFile();
                 OutputStream outputStream = new FileOutputStream(file);
