@@ -83,12 +83,11 @@
 <!--    </div>-->
 
     <div class="container text-center my-5">
-        <div class="row g-5">
+        <div th:object="${bouquets}" class="row g-5">
             <div th:each="bouquet: ${bouquets}" class="col-12 col-md-6 col-lg-4">
 <!--                <form th:method="post" th:action="@{/cart/add/{itemNumber}(itemNumber=*{bouquet.itemNumber})}">-->
                     <div class="card">
                         <div class="media">
-<!--                            <img th:src="@{${bouquet.url}}" alt="picture of bouquet">-->
                             <img th:src="${bouquet.url}" alt="picture of bouquet">
                         </div>
                         <div class="card-body">

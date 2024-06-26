@@ -6,11 +6,8 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.io.IOException;
 
 @Controller
 public class BouquetController {
@@ -21,21 +18,21 @@ public class BouquetController {
         this.bouquetService = bouquetService;
     }
 
-    @ModelAttribute("bouquetDTO")
-    private BouquetDTO bouquetDTO() {
-        return new BouquetDTO();
-    }
-
 
     @GetMapping("/bouquet/add")
-    public ModelAndView addBouquet() {
+    public ModelAndView addBouquet(BouquetDTO bouquetDTO) {
+
+//        if (!modelAndView.getModel().containsKey("bouquetDTO")) {
+//            modelAndView.addObject("bouquetDTO", BouquetDTO.empty());
+//        }
+//        modelAndView.setViewName("bouquet-add");
 
         return new ModelAndView("bouquet-add");
 
     }
 
     @PostMapping("/bouquet/add")
-    public ModelAndView addBouquet(@Valid BouquetDTO bouquetDTO, BindingResult bindingResult) throws IOException {
+    public ModelAndView addBouquet(@Valid BouquetDTO bouquetDTO, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return new ModelAndView("bouquet-add");
