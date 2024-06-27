@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ОРХИДЕЯ</title>
-  <link rel="icon" href="/img/orchid_9704101.png" type="image/icon type">
+  <link rel="icon" href="/images/orchid_9704101.png" type="image/icon type">
   <link rel="stylesheet" href="/css/reset-css.css">
   <link rel="stylesheet" href="/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/style.css">
@@ -15,27 +18,27 @@
 <!--    TODO: new nav layout when items are hidden-->
     <ul>
       <li>
-        <img src="/img/orchid_9704101.png" alt="orchid">
+        <img src="/images/orchid_9704101.png" alt="orchid">
         <a href="/">Orchid app</a>
       </li>
-      <li th:if="${@loggedUser.isLogged}">
+      <li sec:authorize="isAuthenticated()">
         <a th:href="@{/bouquet/add}">Add Bouquet</a>
       </li>
-      <li th:if="${@loggedUser.isLogged}">
-        <span class="text-white" th:text="@{|Welcome ${@loggedUser.username}|}">Welcome {username}</span>
+      <li sec:authorize="isAuthenticated()">
+        <span class="text-white" th:text="Welcome " sec:authentication="name">Welcome {username}</span>
       </li>
-      <li th:unless="${@loggedUser.isLogged}">
+      <li sec:authorize="!isAuthenticated()">
         <a th:href="@{/login}">Login</a>
       </li>
-      <li th:unless="${@loggedUser.isLogged}">
+      <li sec:authorize="!isAuthenticated()">
         <a th:href="@{/register}">Register</a>
       </li>
-      <li th:if="${@loggedUser.isLogged}">
+      <li sec:authorize="isAuthenticated()">
         <a th:href="@{/logout}">Logout</a>
       </li>
-      <li th:if="${@loggedUser.isLogged}">
+      <li sec:authorize="isAuthenticated()">
         <a th:href="@{/cart}">
-          <img src="img/shopping-cart.png" alt="cart">
+          <img src="/images/shopping-cart.png" alt="cart">
         </a>
       </li>
     </ul>
