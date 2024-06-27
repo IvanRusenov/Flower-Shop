@@ -6,7 +6,7 @@
 <main>
     <!-- todo: fix responsive issue with position-absolute -->
     <div class="position-absolute top-50 start-50 translate-middle content-wrap w-25 mx-auto bg-opacity-75 bg-black border custom-round">
-        <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Add Bouquet</span></h1>
+        <h1 class="text-center my-5 text-white midFont">Add Bouquet</h1>
         <form class="form-floating mx-auto w-75 bg-blur" th:method="post" th:action="@{/bouquet/add}" th:object="${bouquetDTO}" enctype="multipart/form-data">
             <div class="form-floating mb-3 text-center">
                 <input th:field="*{description}" th:errorclass="is-invalid" class="form-control" id="description" placeholder="Description">

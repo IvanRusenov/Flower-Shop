@@ -65,12 +65,30 @@ footer div {
    background-color: rgba(0, 0, 0, 0.7);
     /* border: 1px solid lightgray; */
     border-radius: 0 2em 0 2em;
-    font-family: 'Times New Roman', Times, serif;
-    font-style: oblique;
-    letter-spacing: 0.5em;
+
 
 
 }
+
+.myFont {
+    font-family: 'Times New Roman', Times, serif;
+    font-style: oblique;
+    letter-spacing: 0.5em;
+}
+
+.bigFont {
+    font-style: oblique;
+    font-size: 5em;
+    font-weight: bold;
+}
+
+.midFont {
+    font-style: oblique;
+    font-size: 3em;
+    font-weight: bold;
+}
+
+
 
 button {
     color: black;
@@ -161,10 +179,10 @@ button {
   }
 
   h1 {
-    font-style: oblique;
-     font-size: 5em;
-     font-weight: bold;
+
   }
+
+
 
   .custom-round {
     border: 1px solid light-gray;

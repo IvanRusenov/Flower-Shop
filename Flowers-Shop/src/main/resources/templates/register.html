@@ -6,7 +6,7 @@
 <main>
     <!-- todo: fix responsive issue with position-absolute -->
     <div class="position-absolute top-50 start-50 translate-middle content-wrap w-25 mx-auto bg-opacity-75 bg-black border custom-round">
-        <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Register</span></h1>
+        <h1 class="text-center mt-2 bigFont"><span class="badge badge-pill badge-dark">Register</span></h1>
         <form class="form-floating mx-auto w-75 bg-blur" th:method="post" th:action="@{/register}" th:object="${userRegisterDTO}">
             <div class="form-floating mb-3 text-center">
                 <input th:field="*{username}" th:errorclass="is-invalid" class="form-control" id="username" placeholder="Username">

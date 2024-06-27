@@ -7,15 +7,15 @@ import org.springframework.web.multipart.MultipartFile;
 public class BouquetDTO {
 
         @Size(min = 2, max = 40, message = "Description must be between 2 and 40 symbols!")
-        String description;
+        private String description;
         @PositiveOrZero(message = "Number must be positive!")
-        int itemNumber;
+        private int itemNumber;
         @PositiveOrZero(message = "Price must be positive or zero")
-        double price;
+        private double price;
         @Size(min = 5, message = "Not valid url")
-        String url;
+        private String url;
 
-        MultipartFile picture;
+        private MultipartFile picture;
 
         public String getDescription() {
                 return description;

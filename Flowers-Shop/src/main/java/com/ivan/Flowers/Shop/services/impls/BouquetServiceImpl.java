@@ -18,7 +18,7 @@ import java.util.Optional;
 @Service
 public class BouquetServiceImpl implements BouquetService {
 //        public static final String IMAGES_PATH = "src/main/resources/static/img";
-        private static final  String URL_PATH = "img/";
+        private static final  String URL_PATH = "/img/";
         public static final String IMAGES_PATH = ".\\src\\main\\resources\\static\\img\\";
     private final BouquetRepository bouquetRepository;
 
