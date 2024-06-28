@@ -10,7 +10,6 @@ import com.ivan.Flowers.Shop.repositories.CartRepository;
 import com.ivan.Flowers.Shop.repositories.RoleRepository;
 import com.ivan.Flowers.Shop.repositories.UserRepository;
 import com.ivan.Flowers.Shop.services.UserService;
-import com.ivan.Flowers.Shop.session.LoggedUser;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,16 +22,15 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
-    private CartRepository cartRepository;
+    private final CartRepository cartRepository;
     private final PasswordEncoder passwordEncoder;
-    private final LoggedUser loggedUser;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, CartRepository cartRepository, PasswordEncoder passwordEncoder, LoggedUser loggedUser) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, CartRepository cartRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.cartRepository = cartRepository;
         this.passwordEncoder = passwordEncoder;
-        this.loggedUser = loggedUser;
+
     }
 
     @Override
@@ -91,9 +89,6 @@ public class UserServiceImpl implements UserService {
             return false;
         }
 
-        loggedUser.setUsername(userLoginDTO.getUsername());
-        loggedUser.setId(optionalUser.get().getId());
-        loggedUser.setLogged(true);
 
         return true;
     }
