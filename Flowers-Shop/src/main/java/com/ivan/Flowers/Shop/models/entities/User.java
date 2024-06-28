@@ -27,8 +27,14 @@ public class User {
     private String lastName;
 
     private String address;
-    @ManyToOne(optional = false)
-    private Role role;
+
+    @ManyToMany
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<Role> roles;
 
     @OneToMany(mappedBy = "orderBy")
     private List<Order> orders;
@@ -92,12 +98,12 @@ public class User {
         this.address = address;
     }
 
-    public Role getRole() {
-        return role;
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     public List<Order> getOrders() {

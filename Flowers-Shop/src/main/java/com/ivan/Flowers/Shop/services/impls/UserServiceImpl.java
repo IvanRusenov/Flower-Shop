@@ -48,6 +48,7 @@ public class UserServiceImpl implements UserService {
 
         User user = new User();
         user.setOrders(new ArrayList<>());
+        user.setRoles(new ArrayList<>());
 
         Cart cart = new Cart();
         cart.setBouquets(new ArrayList<>());
@@ -61,13 +62,15 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userRegisterDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
 
-        Role role = roleRepository.findByType(RoleType.USER);
+        Role role = roleRepository.findByType(RoleType.ROLE_USER);
 
         if (userRepository.count() == 0) {
-            role = roleRepository.findByType(RoleType.ADMIN);
+
+            user.getRoles().add(roleRepository.findByType(RoleType.ROLE_ADMIN));
+
         }
 
-        user.setRole(role);
+        user.getRoles().add(role);
 
         userRepository.saveAndFlush(user);
 
