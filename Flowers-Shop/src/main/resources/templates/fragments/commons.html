@@ -21,11 +21,12 @@
         <img src="/images/orchid_9704101.png" alt="orchid">
         <a th:href="@{/}">Orchid app</a>
       </li>
-      <li sec:authorize="hasRole('ADMIN')">
+      <li sec:authorize="hasRole('ROLE_ADMIN')">
         <a th:href="@{/bouquet/add}">Add Bouquet</a>
       </li>
       <li sec:authorize="isAuthenticated()">
-        <span class="text-white" th:text="Welcome " sec:authentication="name">Welcome {username}</span>
+        <span class="text-white">Welcome, </span>
+        <span class="text-white" sec:authentication="name">Anonymous</span>
       </li>
       <li sec:authorize="!isAuthenticated()">
         <a th:href="@{/login}">Login</a>
