@@ -40,7 +40,7 @@ public class Initialisations implements CommandLineRunner {
         bouquet.setDescription("Bouquet of light pink roses in a box");
         bouquet.setPrice(362.5);
         bouquet.setQuantity(4);
-        bouquet.setUrl("/images/boxes/box1.jpg");
+        bouquet.setUrl("/uploads/box1.jpg");
         bouquet.setItemNumber(264);
 
         bouquetRepository.saveAndFlush(bouquet);
