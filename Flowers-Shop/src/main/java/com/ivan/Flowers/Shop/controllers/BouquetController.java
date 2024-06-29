@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+
 @Controller
 public class BouquetController {
 
@@ -18,21 +20,15 @@ public class BouquetController {
         this.bouquetService = bouquetService;
     }
 
-
     @GetMapping("/bouquet/add")
     public ModelAndView addBouquet(BouquetDTO bouquetDTO) {
-
-//        if (!modelAndView.getModel().containsKey("bouquetDTO")) {
-//            modelAndView.addObject("bouquetDTO", BouquetDTO.empty());
-//        }
-//        modelAndView.setViewName("bouquet-add");
 
         return new ModelAndView("bouquet-add");
 
     }
 
     @PostMapping("/bouquet/add")
-    public ModelAndView addBouquet(@Valid BouquetDTO bouquetDTO, BindingResult bindingResult) {
+    public ModelAndView addBouquet(@Valid BouquetDTO bouquetDTO, BindingResult bindingResult) throws IOException {
 
         if (bindingResult.hasErrors()) {
             return new ModelAndView("bouquet-add");
@@ -48,11 +44,9 @@ public class BouquetController {
         return new ModelAndView("redirect:/home");
     }
 
-
     //TODO: IMPLEMENT DELETE BOUQUET
     //TODO: IF ADMIN SHOW ADD-DELETE
     //TODO: IMPLEMENT ORDER
     //TODO: IMPLEMENT CART
-
 
 }
