@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -40,6 +41,14 @@ public class BouquetController {
             return new ModelAndView("bouquet-add");
             //todo: return appropriate error message
         }
+
+        return new ModelAndView("redirect:/home");
+    }
+
+    @PostMapping("/bouquet/remove/{itemNumber}")
+    public ModelAndView remove(@PathVariable("itemNumber") String itemNumber) throws IOException {
+
+        bouquetService.removeBouquet(itemNumber);
 
         return new ModelAndView("redirect:/home");
     }

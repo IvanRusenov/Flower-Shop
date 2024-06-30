@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+
 <head th:replace="~{fragments/commons::head}"></head>
 <body>
 <header th:replace="~{fragments/commons::nav}"></header>
@@ -95,7 +98,14 @@
                             <p class="card-text" th:text="|No. ${bouquet.itemNumber}|">{No.}</p>
                             <p class="card-text mb-2" th:text="|Price: ${bouquet.price}|">{Price: lv.}</p>
 
-                                <a th:href="@{/cart/add/{itemNumber}(itemNumber=${bouquet.itemNumber})}" class="button-29 rounded-pill">ADD TO CART</a>
+                            <a sec:authorize="!hasRole('ROLE_ADMIN')" th:href="@{/cart/add/{itemNumber}(itemNumber=${bouquet.itemNumber})}" class="button-29 rounded-pill">ADD TO CART</a>
+                            <form sec:authorize="hasRole('ROLE_ADMIN')"
+                                  th:method="post"
+                                  th:action="@{/bouquet/remove/{itemNumber}(itemNumber=${bouquet.itemNumber})}"
+                            >
+                                <button th:href="@{/bouquet/remove/{itemNumber}(itemNumber=${bouquet.itemNumber})}"
+                                        class="remove-btn rounded-pill">Remove</button>
+                            </form>
 
                         </div>
                     </div>
