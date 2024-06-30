@@ -26,7 +26,7 @@ public class Initialisations implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         initRoles();
-        initBouquets();
+//        initBouquets();
 
     }
 
