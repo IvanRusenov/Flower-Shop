@@ -5,7 +5,6 @@ import com.ivan.Flowers.Shop.models.entities.Bouquet;
 import com.ivan.Flowers.Shop.repositories.BouquetRepository;
 import com.ivan.Flowers.Shop.services.BouquetService;
 import com.ivan.Flowers.Shop.services.CloudinaryService;
-//import com.ivan.Flowers.Shop.utils.Utils;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -17,7 +16,6 @@ import java.util.Optional;
 public class BouquetServiceImpl implements BouquetService {
 
     private final CloudinaryService cloudinaryService;
-//    private static final String URL_PATH = "/uploads/";
     private final BouquetRepository bouquetRepository;
 
     public BouquetServiceImpl(CloudinaryService cloudinaryService, BouquetRepository bouquetRepository) {
@@ -34,7 +32,7 @@ public class BouquetServiceImpl implements BouquetService {
             return false;
         }
 
-        List<String> contentTypes = Arrays.asList("image/png", "image/jpeg", "image/gif");
+        List<String> contentTypes = Arrays.asList("image/png", "image/jpeg", "image/gif", "image/jpg", "image/webp");
         String fileContentType = bouquetDTO.getPicture().getContentType();
         if (!contentTypes.contains(fileContentType)) {
             return false;
@@ -42,12 +40,7 @@ public class BouquetServiceImpl implements BouquetService {
 
         //todo: validate file size < 5mb
 
-
-
-//        Utils.uploadFile(bouquetDTO.getPicture());
-
         Bouquet bouquet = new Bouquet();
-//        String url = URL_PATH + bouquetDTO.getPicture().getOriginalFilename();
         String url = cloudinaryService.uploadImage(bouquetDTO.getPicture());
         bouquet.setUrl(url);
         bouquet.setDescription(bouquetDTO.getDescription());
