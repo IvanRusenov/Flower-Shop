@@ -11,6 +11,7 @@ import java.nio.file.StandardCopyOption;
 
 public class Utils {
 
+
     public static final String UPLOAD_FOLDER = ".\\uploads\\";
 
     public static void uploadFile(MultipartFile file) throws IOException {
@@ -28,4 +29,6 @@ public class Utils {
             throw new IOException("File " + file.getOriginalFilename() + " was not saved!!!", e);
         }
     }
+
+
 }
