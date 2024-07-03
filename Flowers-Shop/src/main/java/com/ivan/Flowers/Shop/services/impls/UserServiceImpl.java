@@ -55,9 +55,6 @@ public class UserServiceImpl implements UserService {
 
         cartRepository.saveAndFlush(cart);
         user.setCart(cart);
-
-
-
         user.setUsername(userRegisterDTO.getUsername());
         user.setEmail(userRegisterDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));

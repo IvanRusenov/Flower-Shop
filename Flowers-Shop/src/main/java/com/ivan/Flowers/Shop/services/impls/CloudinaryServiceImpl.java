@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class CloudinaryServiceImpl implements CloudinaryService {
@@ -22,8 +21,10 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 
     @Override
     public String uploadImage(MultipartFile multipartFile) throws IOException {
+
         File file = File
                 .createTempFile("temp-file", multipartFile.getOriginalFilename());
+
         multipartFile.transferTo(file);
 
         return this.cloudinary.uploader()
@@ -35,8 +36,6 @@ public class CloudinaryServiceImpl implements CloudinaryService {
     @Override
     public boolean deleteImage(String imageUrl) throws IOException {
 
-//        http://res.cloudinary.com/dxfs2okxg/image/upload/v1719752595/otmz2kv0kxeoazlejec0.webp
-
         String[] split = imageUrl.split("/");
         String s = split[split.length - 1];
         String publicId = s.split("\\.")[0];
@@ -46,6 +45,5 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 
         return true;
     }
-
 
 }

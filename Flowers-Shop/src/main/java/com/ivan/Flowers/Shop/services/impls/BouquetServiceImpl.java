@@ -55,9 +55,11 @@ public class BouquetServiceImpl implements BouquetService {
 
     @Override
     public void removeBouquet(String itemNumber) throws IOException {
-//        http://res.cloudinary.com/dxfs2okxg/image/upload/v1719752595/otmz2kv0kxeoazlejec0.webp
 
         Optional<Bouquet> byItemNumber = bouquetRepository.findByItemNumber(Integer.parseInt(itemNumber));
+
+
+
 
         String url = byItemNumber.get().getUrl();
 

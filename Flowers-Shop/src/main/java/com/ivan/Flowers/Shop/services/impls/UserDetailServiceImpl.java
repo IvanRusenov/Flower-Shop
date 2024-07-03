@@ -2,6 +2,7 @@ package com.ivan.Flowers.Shop.services.impls;
 
 import com.ivan.Flowers.Shop.enums.RoleType;
 import com.ivan.Flowers.Shop.models.entities.Role;
+import com.ivan.Flowers.Shop.models.user.ShopUserDetails;
 import com.ivan.Flowers.Shop.repositories.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,7 +32,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     private static UserDetails map(com.ivan.Flowers.Shop.models.entities.User user) {
 
-        return new com.ivan.Flowers.Shop.models.user.UserDetails(
+        return new ShopUserDetails(
                 user.getUsername(),
                 user.getPassword(),
                 user.getRoles().stream().map(Role::getType).map(UserDetailServiceImpl::map).toList()

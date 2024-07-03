@@ -2,15 +2,14 @@ package com.ivan.Flowers.Shop.models.entities;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity(name = "bouquets")
 public class Bouquet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-//    @Column(nullable = false, unique = true)
-//    private String name;
 
     @Column(nullable = false)
     private String description;
@@ -34,14 +33,6 @@ public class Bouquet {
     public void setId(long id) {
         this.id = id;
     }
-
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
 
     public String getDescription() {
         return description;
@@ -81,5 +72,19 @@ public class Bouquet {
 
     public void setItemNumber(int itemNumber) {
         this.itemNumber = itemNumber;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bouquet bouquet = (Bouquet) o;
+        return id == bouquet.id && Double.compare(price, bouquet.price) == 0 && quantity == bouquet.quantity && itemNumber == bouquet.itemNumber && Objects.equals(description, bouquet.description) && Objects.equals(url, bouquet.url);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, description, price, quantity, url, itemNumber);
     }
 }

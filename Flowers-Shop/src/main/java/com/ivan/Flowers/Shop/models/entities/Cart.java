@@ -11,11 +11,13 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToMany
-//    @JoinColumn(name = "cart_id", referencedColumnName = "id")
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Bouquet> bouquets;
 
     private double totalPrice;
+
+    @OneToOne(mappedBy = "cart")
+    private User owner;
 
     public long getId() {
         return id;
