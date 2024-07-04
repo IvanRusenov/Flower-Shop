@@ -24,6 +24,7 @@ public class Order {
 
     @OneToMany
     private List<Bouquet> bouquets;
+
     @ManyToOne
     private User orderBy;
 
@@ -75,5 +76,4 @@ public class Order {
         this.orderBy = orderBy;
     }
 
-    //    private User orderBy;
 }

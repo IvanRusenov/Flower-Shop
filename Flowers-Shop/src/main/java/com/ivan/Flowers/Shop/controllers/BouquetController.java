@@ -53,9 +53,6 @@ public class BouquetController {
         return new ModelAndView("redirect:/home");
     }
 
-    //TODO: IMPLEMENT DELETE BOUQUET
-    //TODO: IF ADMIN SHOW ADD-DELETE
     //TODO: IMPLEMENT ORDER
-    //TODO: IMPLEMENT CART
 
 }

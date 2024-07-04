@@ -2,9 +2,11 @@ package com.ivan.Flowers.Shop.services.impls;
 
 import com.ivan.Flowers.Shop.models.entities.Bouquet;
 import com.ivan.Flowers.Shop.models.entities.Cart;
+import com.ivan.Flowers.Shop.models.entities.CartItem;
 import com.ivan.Flowers.Shop.models.entities.User;
 import com.ivan.Flowers.Shop.models.user.ShopUserDetails;
 import com.ivan.Flowers.Shop.repositories.BouquetRepository;
+import com.ivan.Flowers.Shop.repositories.CartItemRepository;
 import com.ivan.Flowers.Shop.repositories.CartRepository;
 import com.ivan.Flowers.Shop.repositories.UserRepository;
 import com.ivan.Flowers.Shop.services.CartService;
@@ -19,12 +21,14 @@ public class CartServiceImpl implements CartService {
 
     private final UserRepository userRepository;
     private final BouquetRepository bouquetRepository;
+    private final CartItemRepository cartItemRepository;
 
     private final CartRepository cartRepository;
 
-    public CartServiceImpl(UserRepository userRepository, BouquetRepository bouquetRepository, CartRepository cartRepository) {
+    public CartServiceImpl(UserRepository userRepository, BouquetRepository bouquetRepository, CartItemRepository cartItemRepository, CartRepository cartRepository) {
         this.userRepository = userRepository;
         this.bouquetRepository = bouquetRepository;
+        this.cartItemRepository = cartItemRepository;
         this.cartRepository = cartRepository;
 
     }
@@ -34,33 +38,43 @@ public class CartServiceImpl implements CartService {
     public void addToCart(int itemNumber, UserDetails userDetails) {
 
         if (!(userDetails instanceof ShopUserDetails shopUserDetails)) {
-            return;
-            //todo: Display appropriate messages
+            throw new RuntimeException("User is not authenticated.");
         }
+
+//        TODO: use getBouquets and getTotalSum
 
         User user = userRepository.findByUsername(shopUserDetails.getUsername()).orElseThrow();
         Bouquet bouquet = bouquetRepository.findByItemNumber(itemNumber).orElseThrow();
         Cart cart = user.getCart();
-//        int size = cart.getBouquets().size();
-        cart.getBouquets().add(bouquet);
-        cart.setTotalPrice(cart.getBouquets().stream().mapToDouble(Bouquet::getPrice).sum());
 
-//        cartRepository.saveAndFlush(cart);
-//        userRepository.saveAndFlush(user);
+        CartItem cartItem = cart.getItems().stream().filter(ci -> ci.getBouquet().getId() == bouquet.getId()).findFirst().orElse(null);
+
+        if (cartItem == null) {
+            cartItem = new CartItem();
+            cartItem.setBouquet(bouquet);
+            cartItem.setQuantity(1);
+            cartItem.setPrice(bouquet.getPrice());
+            cart.getItems().add(cartItem);
+            cartItemRepository.save(cartItem);
+        } else {
+            cartItem.setQuantity(cartItem.getQuantity() + 1);
+        }
+
+        cart.setTotalPrice(cart.getItems().stream().mapToDouble(CartItem::getPrice).sum());
+        cartRepository.save(cart);
 
     }
 
     @Override
     @Transactional
-    public List<Bouquet> getBouquets(UserDetails userDetails) {
+    public List<CartItem> getItems(UserDetails userDetails) {
 
         if (!(userDetails instanceof ShopUserDetails shopUserDetails)) {
-            throw new RuntimeException("anonymous");
-            //todo: Display appropriate messages
+            throw new RuntimeException("User is not authenticated.");
         }
 
         User user = userRepository.findByUsername(shopUserDetails.getUsername()).orElseThrow();
-        return user.getCart().getBouquets();
+        return user.getCart().getItems();
 
     }
 
@@ -69,37 +83,43 @@ public class CartServiceImpl implements CartService {
     public double getTotalSum(UserDetails userDetails) {
 
         if (!(userDetails instanceof ShopUserDetails shopUserDetails)) {
-            throw new RuntimeException("anonymous");
-            //todo: Display appropriate messages
+            throw new RuntimeException("User is not authenticated.");
         }
 
         User user = userRepository.findByUsername(shopUserDetails.getUsername()).orElseThrow();
 
-        return user.getCart().getBouquets().
-                stream()
-                .mapToDouble(Bouquet::getPrice)
+        return user.getCart().getItems().stream()
+                .mapToDouble(item -> item.getQuantity() * item.getPrice())
                 .sum();
 
     }
 
     @Override
-    public void remove(int itemNumber, UserDetails userDetails) {
+    public void remove(long id, UserDetails userDetails) {
 
         if (!(userDetails instanceof ShopUserDetails shopUserDetails)) {
-            throw new RuntimeException("anonymous");
-            //todo: Display appropriate messages
+            throw new RuntimeException("User is not authenticated.");
         }
 
-        User user = userRepository.findByUsername(shopUserDetails.getUsername()).orElseThrow();
-        Cart cart = cartRepository.findById(user.getCart().getId()).orElseThrow();
+        String username = shopUserDetails.getUsername();
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found: " + username));
 
-        Bouquet bouquet = bouquetRepository.findByItemNumber(itemNumber).orElseThrow();
-//
-//        Cart cart = user.getCart();
-        cart.getBouquets().remove(bouquet);
+        CartItem cartItem = cartItemRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cart item not found with id: " + id));
+
+
+        Cart cart = cartRepository.findById(user.getCart().getId())
+                .orElseThrow(() -> new RuntimeException("Cart not found for user: " + username));
+
+
+        cart.getItems().remove(cartItem);
+        cart.setTotalPrice(cart.getItems().stream().mapToDouble(CartItem::getPrice).sum());
+
         cartRepository.saveAndFlush(cart);
-//        userRepository.saveAndFlush(user);
-    }
+        cartItemRepository.delete(cartItem);
+        userRepository.saveAndFlush(user);
 
+    }
 
 }

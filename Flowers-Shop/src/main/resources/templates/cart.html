@@ -9,20 +9,20 @@
 
     <div class="container-fluid mb-5">
 
-        <div th:each="bouquet: ${bouquets}" class="row align-items-center m-3 cart-round">
+        <div th:each="item: ${items}" class="row align-items-center m-3 cart-round">
 
             <div class="media col-12 col-md-3 p-2">
-                <img th:src="${bouquet.getUrl()}" alt="picture of bouquet">
+                <img th:src="${item.getBouquet().getUrl()}" alt="picture of bouquet">
             </div>
 
             <div class="col-12 col-md-7 fs-5">
-                <p th:text="${bouquet.getDescription()}">{Description}</p>
-                <p class="py-3 fst-italic" th:text="|Quantity: ${bouquet.getQuantity()} pcs|">Quantity: {2} pcs</p>
-                <p class="fw-bold fst-italic" th:text="|Price: ${bouquet.price} $|">Price: {2365.26} $</p>
+                <p th:text="${item.getBouquet().getDescription()}">{Description}</p>
+                <p class="py-3 fst-italic" th:text="|Quantity: ${item.getQuantity()} pcs|">Quantity: {2} pcs</p>
+                <p class="fw-bold fst-italic" th:text="|Price per pcs: ${item.getBouquet().getPrice()} $|">Price: {2365.26} $</p>
             </div>
 
             <div class="col-12 col-md-2">
-                <form th:action="@{/cart/remove/{itemNumber}(itemNumber=*{bouquet.getItemNumber()})}" th:method="post">
+                <form th:action="@{/cart/remove/{id}(id=*{item.getId()})}" th:method="post">
                     <button type="submit" class="remove-btn rounded-pill px-3 py-1">Remove</button>
                 </form>
             </div>
@@ -35,6 +35,7 @@
         <button class="button-29 rounded-pill mb-5 px-5 fs-3 fw-bold fst-italic">BUY</button>
     </div>
 </div>
+<!--        TODO:implement back to gallery button-->
 
 <footer th:replace="~{fragments/commons::footer}"></footer>
 </body>

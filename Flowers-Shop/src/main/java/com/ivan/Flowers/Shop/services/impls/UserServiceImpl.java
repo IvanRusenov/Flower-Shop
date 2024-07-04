@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
         user.setRoles(new ArrayList<>());
 
         Cart cart = new Cart();
-        cart.setBouquets(new ArrayList<>());
+        cart.setItems(new ArrayList<>());
 
         cartRepository.saveAndFlush(cart);
         user.setCart(cart);

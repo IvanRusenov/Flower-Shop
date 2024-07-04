@@ -23,7 +23,7 @@ public class CartController {
     public ModelAndView cart(@AuthenticationPrincipal UserDetails userDetails) {
 
         ModelAndView cart = new ModelAndView("cart");
-        cart.addObject("bouquets", cartService.getBouquets(userDetails));
+        cart.addObject("items", cartService.getItems(userDetails));
         cart.addObject("totalSum", cartService.getTotalSum(userDetails));
 
         return cart;
@@ -39,11 +39,11 @@ public class CartController {
         return new ModelAndView("redirect:/cart");
     }
 
-    @PostMapping("/cart/remove/{itemNumber}")
-    public ModelAndView remove(@PathVariable("itemNumber") int itemNumber,
+    @PostMapping("/cart/remove/{id}")
+    public ModelAndView remove(@PathVariable("id") long id,
                                @AuthenticationPrincipal UserDetails userDetails) {
 
-        cartService.remove(itemNumber, userDetails);
+        cartService.remove(id, userDetails);
 
         return new ModelAndView("redirect:/cart");
     }

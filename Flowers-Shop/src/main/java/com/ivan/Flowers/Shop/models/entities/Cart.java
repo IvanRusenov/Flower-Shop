@@ -11,13 +11,14 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Bouquet> bouquets;
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<CartItem> items;
 
     private double totalPrice;
 
     @OneToOne(mappedBy = "cart")
     private User owner;
+
 
     public long getId() {
         return id;
@@ -27,12 +28,12 @@ public class Cart {
         this.id = id;
     }
 
-    public List<Bouquet> getBouquets() {
-        return bouquets;
+    public List<CartItem> getItems() {
+        return items;
     }
 
-    public void setBouquets(List<Bouquet> bouquets) {
-        this.bouquets = bouquets;
+    public void setItems(List<CartItem> items) {
+        this.items = items;
     }
 
     public double getTotalPrice() {
@@ -41,5 +42,13 @@ public class Cart {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }
