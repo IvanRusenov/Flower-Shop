@@ -2,6 +2,7 @@ package com.ivan.flower_shop.orders.models.entities;
 
 import com.ivan.flower_shop.orders.enums.StatusType;
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,6 +18,7 @@ public class Order {
     private long userId;
 
     @Column(nullable = false)
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime orderDateTime;
 
     @Column(nullable = false)
