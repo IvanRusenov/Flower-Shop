@@ -22,25 +22,25 @@
         <a th:href="@{/}">Orchid app</a>
       </li>
       <li sec:authorize="hasRole('ROLE_ADMIN')">
-        <a th:href="@{/bouquet/add}">Add Bouquet</a>
+        <a class="bn5" th:href="@{/bouquet/add}">Add Bouquet</a>
       </li>
       <li sec:authorize="isAuthenticated()">
         <span class="text-white">Welcome, </span>
         <span class="text-white" sec:authentication="name">Anonymous</span>
       </li>
       <li sec:authorize="!isAuthenticated()">
-        <a th:href="@{/login}">Login</a>
+        <a class="bn5" th:href="@{/login}">Login</a>
       </li>
       <li sec:authorize="!isAuthenticated()">
-        <a th:href="@{/register}">Register</a>
+        <a class="bn5" th:href="@{/register}">Register</a>
       </li>
       <li sec:authorize="isAuthenticated()">
         <form th:action="@{/logout}" th:method="post">
-          <button type="submit" class="text-white bg-black">Logout</button>
+          <button type="submit" class="text-white bg-black bn5">Logout</button>
         </form>
       </li>
       <li sec:authorize="isAuthenticated()">
-        <a th:href="@{/cart}">
+        <a class="bn5" th:href="@{/cart}">
 <!--          TODO: show the number of products in the cart-->
           <img src="/images/shopping-cart.png" alt="cart">
         </a>

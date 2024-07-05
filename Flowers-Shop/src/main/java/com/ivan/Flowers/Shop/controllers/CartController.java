@@ -39,6 +39,7 @@ public class CartController {
         return new ModelAndView("redirect:/cart");
     }
 
+    //TODO: implement delete mapping
     @PostMapping("/cart/remove/{id}")
     public ModelAndView remove(@PathVariable("id") long id,
                                @AuthenticationPrincipal UserDetails userDetails) {

@@ -45,6 +45,7 @@ public class BouquetController {
         return new ModelAndView("redirect:/home");
     }
 
+    //TODO: implement delete mapping
     @PostMapping("/bouquet/remove/{itemNumber}")
     public ModelAndView remove(@PathVariable("itemNumber") String itemNumber) throws IOException {
 
