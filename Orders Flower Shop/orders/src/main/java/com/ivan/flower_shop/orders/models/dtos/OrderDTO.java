@@ -1,52 +1,24 @@
-package com.ivan.flower_shop.orders.models.entities;
+package com.ivan.flower_shop.orders.models.dtos;
 
 import com.ivan.flower_shop.orders.enums.StatusType;
-import jakarta.persistence.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity(name = "orders")
-public class Order {
+public class OrderDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column(nullable = false)
-    private long userId;
-
-    @Column(nullable = false)
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Long userId;
     private LocalDateTime orderDateTime;
-
-    @Column(nullable = false)
     private double totalAmount;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     private StatusType status;
-
-    @Column(nullable = false)
     private String shippingAddress;
+    private List<OrderItemDTO> items;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<OrderItem> items;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -82,11 +54,11 @@ public class Order {
         this.shippingAddress = shippingAddress;
     }
 
-    public List<OrderItem> getItems() {
+    public List<OrderItemDTO> getItems() {
         return items;
     }
 
-    public void setItems(List<OrderItem> items) {
+    public void setItems(List<OrderItemDTO> items) {
         this.items = items;
     }
 }

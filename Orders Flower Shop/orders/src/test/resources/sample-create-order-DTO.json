@@ -1,0 +1,21 @@
+{
+  "userId": 2,
+  "shippingAddress": "Plovdiv Trakia bl.1560 et.29 No 296",
+  "items": [
+    {
+      "productId": 1,
+      "quantity": 1,
+      "unitPrice": 50.00
+    },
+    {
+      "productId": 2,
+      "quantity": 2,
+      "unitPrice": 50.00
+    },
+    {
+      "productId": 3,
+      "quantity": 1,
+      "unitPrice": 100.00
+    }
+  ]
+}
