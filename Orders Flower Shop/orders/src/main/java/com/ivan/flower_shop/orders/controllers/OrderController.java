@@ -4,6 +4,7 @@ import com.ivan.flower_shop.orders.models.dtos.OrderDTO;
 import com.ivan.flower_shop.orders.services.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,27 +25,41 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO orderDTO) {
 
-        LOGGER.info("Going to create order {}", orderDTO);
 
         orderService.createOrder(orderDTO);
+//        LOGGER.info("Created order {}", orderDTO);
+        LOGGER.info("New order was created");
 
-        return ResponseEntity.ok().build();
+//        return ResponseEntity.status(201).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping
-    public  List<OrderDTO> getAllOrders() {
+    public ResponseEntity<List<OrderDTO>> getAllOrders() {
 
         LOGGER.info("Showing all orders");
 
-        return orderService.getAllOrders();
+        List<OrderDTO> allOrders = orderService.getAllOrders();
+
+        return ResponseEntity.ok(allOrders);
     }
 
     @GetMapping("/{orderId}")
-    public OrderDTO getOrderById(@PathVariable Long orderId) {
+    public ResponseEntity<OrderDTO> getOrderById(@PathVariable Long orderId) {
 
         LOGGER.info("Get order with id {}", orderId);
 
-        return orderService.getOrderById(orderId);
+        OrderDTO orderById = orderService.getOrderById(orderId);
+
+        if (orderById == null) {
+
+            LOGGER.info("Cannot find order with id {}", orderId);
+
+            return ResponseEntity.notFound().build();
+
+        }
+
+        return ResponseEntity.ok(orderById);
     }
 
     /**
@@ -55,18 +70,21 @@ public class OrderController {
      * @author <p><strong>{@code Ivan Rusenov}</strong></p>
      */
     @DeleteMapping("/{orderId}")
-    public void deleteOrder(@PathVariable Long orderId) {
+    public ResponseEntity<Void> deleteOrder(@PathVariable Long orderId) {
 
         orderService.deleteOrder(orderId);
         LOGGER.info("Order with {} was deleted!", orderId);
+
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{orderId}")
-    public void updateOrder(@PathVariable Long orderId, @RequestBody OrderDTO orderDTO) {
+    public ResponseEntity<Void> updateOrder(@PathVariable Long orderId, @RequestBody OrderDTO orderDTO) {
 
         orderService.updateOrder(orderId, orderDTO);
         LOGGER.info("Order with {} was updated", orderId);
 
+        return ResponseEntity.ok().build();
     }
 
 }

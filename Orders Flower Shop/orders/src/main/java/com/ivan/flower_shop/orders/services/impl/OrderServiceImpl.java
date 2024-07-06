@@ -43,6 +43,9 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = orderRepository.findById(orderId).orElse(null);
 
+        if (order==null) {
+            return null;
+        }
         return mapToOrderDTO(order);
 
     }
