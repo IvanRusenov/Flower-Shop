@@ -53,16 +53,27 @@ public class CartServiceImpl implements CartService {
             cartItem = new CartItem();
             cartItem.setBouquet(bouquet);
             cartItem.setQuantity(1);
-            cartItem.setPrice(bouquet.getPrice());
+            cartItem.setUnitPrice(bouquet.getPrice());
             cart.getItems().add(cartItem);
             cartItemRepository.save(cartItem);
         } else {
             cartItem.setQuantity(cartItem.getQuantity() + 1);
         }
 
-        cart.setTotalPrice(cart.getItems().stream().mapToDouble(CartItem::getPrice).sum());
+        cart.setTotalPrice(cart.getItems().stream().mapToDouble(CartItem::getUnitPrice).sum());
         cartRepository.save(cart);
 
+    }
+
+
+    @Override
+    public Cart getCart(UserDetails userDetails) {
+        if (!(userDetails instanceof ShopUserDetails shopUserDetails)) {
+            throw new RuntimeException("User is not authenticated.");
+        }
+
+        User user = userRepository.findByUsername(shopUserDetails.getUsername()).orElseThrow();
+        return user.getCart();
     }
 
     @Override
@@ -80,7 +91,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public double getTotalSum(UserDetails userDetails) {
+    public String getTotalSum(UserDetails userDetails) {
 
         if (!(userDetails instanceof ShopUserDetails shopUserDetails)) {
             throw new RuntimeException("User is not authenticated.");
@@ -88,9 +99,12 @@ public class CartServiceImpl implements CartService {
 
         User user = userRepository.findByUsername(shopUserDetails.getUsername()).orElseThrow();
 
-        return user.getCart().getItems().stream()
-                .mapToDouble(item -> item.getQuantity() * item.getPrice())
+        double sum = user.getCart().getItems().stream()
+                .mapToDouble(item -> item.getQuantity() * item.getUnitPrice())
                 .sum();
+
+        return String.format("%.2f", sum);
+        //TODO: Remove BUG sum is not correct on adding more than one item of the same type
 
     }
 
@@ -114,12 +128,14 @@ public class CartServiceImpl implements CartService {
 
 
         cart.getItems().remove(cartItem);
-        cart.setTotalPrice(cart.getItems().stream().mapToDouble(CartItem::getPrice).sum());
+        cart.setTotalPrice(cart.getItems().stream().mapToDouble(CartItem::getUnitPrice).sum());
 
         cartRepository.saveAndFlush(cart);
         cartItemRepository.delete(cartItem);
         userRepository.saveAndFlush(user);
 
     }
+
+
 
 }

@@ -15,7 +15,7 @@ public class CartItem {
     private Bouquet bouquet;
 
     private int quantity;
-    private double price;
+    private double unitPrice;
 
     public long getId() {
         return id;
@@ -41,12 +41,12 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    public double getPrice() {
-        return price;
+    public double getUnitPrice() {
+        return unitPrice;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setUnitPrice(double unitPrice) {
+        this.unitPrice = unitPrice;
     }
 
     @Override
@@ -54,11 +54,11 @@ public class CartItem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CartItem cartItem = (CartItem) o;
-        return id == cartItem.id && quantity == cartItem.quantity && Double.compare(price, cartItem.price) == 0 && Objects.equals(bouquet, cartItem.bouquet);
+        return id == cartItem.id && quantity == cartItem.quantity && Double.compare(unitPrice, cartItem.unitPrice) == 0 && Objects.equals(bouquet, cartItem.bouquet);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, bouquet, quantity, price);
+        return Objects.hash(id, bouquet, quantity, unitPrice);
     }
 }

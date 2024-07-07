@@ -17,7 +17,7 @@
                     <div class="card-body">
                         <h5 class="card-title" th:text="${bouquet.description}">{description}</h5>
                         <p class="card-text" th:text="|No. ${bouquet.itemNumber}|">{No.}</p>
-                        <p class="card-text mb-2" th:text="|Price: ${bouquet.price}|">{Price: lv.}</p>
+                        <p class="card-text mb-2" th:text="|Price: ${bouquet.unitPrice}|">{Price: lv.}</p>
 
                         <a sec:authorize="!hasRole('ROLE_ADMIN')" th:href="@{/cart/add/{itemNumber}(itemNumber=${bouquet.itemNumber})}" class="button-29 rounded-pill">ADD TO CART</a>
                         <form sec:authorize="hasRole('ROLE_ADMIN')"

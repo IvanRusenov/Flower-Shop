@@ -25,7 +25,8 @@ public class CartController {
         ModelAndView cart = new ModelAndView("cart");
         cart.addObject("items", cartService.getItems(userDetails));
         cart.addObject("totalSum", cartService.getTotalSum(userDetails));
-
+        cart.addObject("cart", cartService.getCart(userDetails));
+        //TODO: remove items if cart is added
         return cart;
     }
 

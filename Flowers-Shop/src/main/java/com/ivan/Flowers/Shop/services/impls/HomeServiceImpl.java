@@ -26,7 +26,7 @@ public class HomeServiceImpl implements HomeService {
                    BouquetDTO bouquetDTO = new BouquetDTO();
                    bouquetDTO.setDescription(b.getDescription());
                    bouquetDTO.setUrl(b.getUrl());
-                   bouquetDTO.setPrice(b.getPrice());
+                   bouquetDTO.setUnitPrice(b.getPrice());
                    bouquetDTO.setItemNumber(b.getItemNumber());
                    return bouquetDTO;
                })

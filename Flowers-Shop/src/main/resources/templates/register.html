@@ -19,6 +19,11 @@
                 <small th:errors="*{email}" class="text-danger">Email error message</small>
             </div>
             <div class="form-floating mb-3 text-center">
+                <input th:field="*{shippingAddress}" th:errorclass="is-invalid" class="form-control" id="shippingAddress" placeholder="Shipping Address">
+                <label for="shippingAddress">Shipping address</label>
+                <small th:errors="*{shippingAddress}" class="text-danger ">Shipping address error message</small>
+            </div>
+            <div class="form-floating mb-3 text-center">
                 <input th:field="*{password}" th:errorclass="is-invalid" type="password" class="form-control" id="password" placeholder="Password">
                 <label for="password">Password</label>
                 <small th:errors="*{password}" class="text-danger">Email error message</small>

@@ -19,9 +19,9 @@
                 <small th:errors="*{itemNumber}" class="text-danger">Item Number error message</small>
             </div>
             <div class="form-floating mb-3 text-center">
-                <input th:field="*{price}" th:errorclass="is-invalid" type="number" step=".01" class="form-control" id="price" placeholder="Price">
+                <input th:field="*{unitPrice}" th:errorclass="is-invalid" type="number" step=".01" class="form-control" id="price" placeholder="Price">
                 <label for="price">Price</label>
-                <small th:errors="*{price}" class="text-danger">Price error message</small>
+                <small th:errors="*{unitPrice}" class="text-danger">Price error message</small>
             </div>
 <!--            <div class="form-floating mb-3 text-center">-->
 <!--                <input th:field="*{url}" th:errorclass="is-invalid" type="text" class="form-control" id="url" placeholder="Url">-->

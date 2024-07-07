@@ -11,7 +11,7 @@ public class BouquetDTO {
         @PositiveOrZero(message = "Number must be positive!")
         private int itemNumber;
         @PositiveOrZero(message = "Price must be positive or zero")
-        private double price;
+        private double unitPrice;
         @Size(min = 5, message = "Not valid url")
         private String url;
 
@@ -33,12 +33,13 @@ public class BouquetDTO {
                 this.itemNumber = itemNumber;
         }
 
-        public double getPrice() {
-                return price;
+        @PositiveOrZero(message = "Price must be positive or zero")
+        public double getUnitPrice() {
+                return unitPrice;
         }
 
-        public void setPrice(double price) {
-                this.price = price;
+        public void setUnitPrice(@PositiveOrZero(message = "Price must be positive or zero") double unitPrice) {
+                this.unitPrice = unitPrice;
         }
 
         public String getUrl() {

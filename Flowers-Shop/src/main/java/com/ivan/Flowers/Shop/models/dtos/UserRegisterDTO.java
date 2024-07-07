@@ -11,6 +11,8 @@ public class UserRegisterDTO {
     @Email(message = "Enter valid email!")
     @NotBlank(message = "Email cannot be empty!")
     private String email;
+    @Size(min = 2, max = 50, message = "Shipping address length must be between 2 and 250 symbols!")
+    private String shippingAddress;
     @Size(min = 3, max = 20, message = "Password length must be between 3 and 20 symbols!")
     private String password;
     @Size(min = 3, max = 20, message = "Password length must be between 3 and 20 symbols!")
@@ -30,6 +32,14 @@ public class UserRegisterDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(String shippingAddress) {
+        this.shippingAddress = shippingAddress;
     }
 
     public String getPassword() {

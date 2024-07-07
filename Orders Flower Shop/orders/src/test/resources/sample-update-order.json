@@ -2,7 +2,7 @@
   "userId": 2,
   "orderDateTime": "2024-07-05T12:34:56",
   "totalAmount": 250.00,
-  "status": "DELIVERED",
+  "status": "PENDING",
   "shippingAddress": "Plovdiv Trakia bl.1560 et.29 No 296",
   "items": [
     {

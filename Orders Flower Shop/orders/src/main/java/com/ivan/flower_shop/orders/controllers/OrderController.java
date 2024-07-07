@@ -27,7 +27,6 @@ public class OrderController {
 
 
         orderService.createOrder(orderDTO);
-//        LOGGER.info("Created order {}", orderDTO);
         LOGGER.info("New order was created");
 
 //        return ResponseEntity.status(201).build();

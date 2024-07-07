@@ -26,7 +26,8 @@ public class User {
     @Column(name = "lastName")
     private String lastName;
 
-    private String address;
+    @Column(nullable = false)
+    private String shippingAddress;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -36,8 +37,8 @@ public class User {
     )
     private List<Role> roles;
 
-    @OneToMany(mappedBy = "orderBy")
-    private List<Order> orders;
+//    @OneToMany(mappedBy = "orderBy")
+//    private List<Order> orders;
 
     @OneToOne
     private Cart cart;
@@ -90,12 +91,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getAddress() {
-        return address;
+    public String getShippingAddress() {
+        return shippingAddress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setShippingAddress(String address) {
+        this.shippingAddress = address;
     }
 
     public List<Role> getRoles() {
@@ -105,14 +106,14 @@ public class User {
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
+//
+//    public List<Order> getOrders() {
+//        return orders;
+//    }
+//
+//    public void setOrders(List<Order> orders) {
+//        this.orders = orders;
+//    }
 
     public Cart getCart() {
         return cart;

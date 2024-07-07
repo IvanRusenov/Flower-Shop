@@ -56,7 +56,7 @@ public class BouquetServiceImpl implements BouquetService {
         bouquet.setUrl(url);
         bouquet.setDescription(bouquetDTO.getDescription());
         bouquet.setItemNumber(bouquetDTO.getItemNumber());
-        bouquet.setPrice(bouquetDTO.getPrice());
+        bouquet.setPrice(bouquetDTO.getUnitPrice());
         bouquet.setQuantity(bouquet.getQuantity() + 1);
 
         bouquetRepository.saveAndFlush(bouquet);
@@ -81,7 +81,7 @@ public class BouquetServiceImpl implements BouquetService {
 
             if (!itemsToRemove.isEmpty()) {
                 double totalPriceReduction = itemsToRemove.stream()
-                        .mapToDouble(CartItem::getPrice)
+                        .mapToDouble(CartItem::getUnitPrice)
                         .sum();
 
                 cart.setTotalPrice(cart.getTotalPrice() - totalPriceReduction);
