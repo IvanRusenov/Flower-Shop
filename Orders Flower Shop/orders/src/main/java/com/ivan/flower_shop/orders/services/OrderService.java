@@ -11,9 +11,11 @@ public interface OrderService {
 
     void createOrder(OrderDTO orderDTO);
 
-     List<OrderDTO> getAllOrders();
+    List<OrderDTO> getAllOrders();
 
-    OrderDTO getOrderById(Long orderId);
+    List<OrderDTO> getAllOrdersByUser(Long userId);
+
+//    OrderDTO getOrderById(Long orderId);
 
     void deleteOrder(Long orderId);
 

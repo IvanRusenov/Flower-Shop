@@ -43,23 +43,43 @@ public class OrderController {
         return ResponseEntity.ok(allOrders);
     }
 
-    @GetMapping("/{orderId}")
-    public ResponseEntity<OrderDTO> getOrderById(@PathVariable Long orderId) {
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<OrderDTO>> getOrderById(@PathVariable Long userId) {
 
-        LOGGER.info("Get order with id {}", orderId);
+        LOGGER.info("Get order with id {}", userId);
 
-        OrderDTO orderById = orderService.getOrderById(orderId);
+        List<OrderDTO> allOrdersByUser = orderService.getAllOrdersByUser(userId);
 
-        if (orderById == null) {
+        if (allOrdersByUser == null) {
 
-            LOGGER.info("Cannot find order with id {}", orderId);
+            LOGGER.info("Cannot find order with id {}", userId);
 
             return ResponseEntity.notFound().build();
 
         }
 
-        return ResponseEntity.ok(orderById);
+        return ResponseEntity.ok(allOrdersByUser);
     }
+
+
+
+//    @GetMapping("/{orderId}")
+//    public ResponseEntity<OrderDTO> getOrderById(@PathVariable Long orderId) {
+//
+//        LOGGER.info("Get order with id {}", orderId);
+//
+//        OrderDTO orderById = orderService.getOrderById(orderId);
+//
+//        if (orderById == null) {
+//
+//            LOGGER.info("Cannot find order with id {}", orderId);
+//
+//            return ResponseEntity.notFound().build();
+//
+//        }
+//
+//        return ResponseEntity.ok(orderById);
+//    }
 
     /**
      * <strong>{@code Deletes}</strong> an order with id {@code @param orderId} from database.

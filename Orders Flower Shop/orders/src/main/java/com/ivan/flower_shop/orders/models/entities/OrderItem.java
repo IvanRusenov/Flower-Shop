@@ -13,7 +13,7 @@ public class OrderItem {
     private Order order;
 
     @Column(nullable = false)
-    private long productId;
+    private long bouquetId;
 
     @Column(nullable = false)
     private int quantity;
@@ -40,12 +40,12 @@ public class OrderItem {
         this.order = order;
     }
 
-    public long getProductId() {
-        return productId;
+    public long getBouquetId() {
+        return bouquetId;
     }
 
-    public void setProductId(long productId) {
-        this.productId = productId;
+    public void setBouquetId(long bouquetId) {
+        this.bouquetId = bouquetId;
     }
 
     public int getQuantity() {

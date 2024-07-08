@@ -2,31 +2,31 @@ package com.ivan.flower_shop.orders.models.dtos;
 
 public class OrderItemDTO {
 
-    private long productId;
+    private long bouquetId;
     private int quantity;
     private double unitPrice;
 
-    public Long getProductId() {
-        return productId;
+    public long getBouquetId() {
+        return bouquetId;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setBouquetId(long bouquetId) {
+        this.bouquetId = bouquetId;
     }
 
-    public Integer getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
-    public Double getUnitPrice() {
+    public double getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(Double unitPrice) {
+    public void setUnitPrice(double unitPrice) {
         this.unitPrice = unitPrice;
     }
 }

@@ -7,6 +7,7 @@ import com.ivan.flower_shop.orders.models.entities.Order;
 import com.ivan.flower_shop.orders.models.entities.OrderItem;
 import com.ivan.flower_shop.orders.repositories.OrderRepository;
 import com.ivan.flower_shop.orders.services.OrderService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,9 +17,11 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
+    private final ModelMapper modelMapper;
 
-    public OrderServiceImpl(OrderRepository orderRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository, ModelMapper modelMapper) {
         this.orderRepository = orderRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -39,16 +42,27 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDTO getOrderById(Long orderId) {
+    public List<OrderDTO> getAllOrdersByUser(Long userId) {
 
-        Order order = orderRepository.findById(orderId).orElse(null);
+        List<Order> allByUserId = orderRepository.findAllByUserId(userId);
 
-        if (order==null) {
-            return null;
-        }
-        return mapToOrderDTO(order);
+        return allByUserId.stream()
+                .map(order -> modelMapper.map(order, OrderDTO.class))
+                .toList();
 
     }
+
+//    @Override
+//    public OrderDTO getOrderById(Long orderId) {
+//
+//        Order order = orderRepository.findById(orderId).orElse(null);
+//
+//        if (order==null) {
+//            return null;
+//        }
+//        return mapToOrderDTO(order);
+//
+//    }
 
     @Override
     public void saveOrder(Order order) {
@@ -85,7 +99,7 @@ public class OrderServiceImpl implements OrderService {
         List<OrderItem> orderItems = orderDTO.getItems().stream().map(itemDTO -> {
 
             OrderItem orderItem = new OrderItem();
-            orderItem.setProductId(itemDTO.getProductId());
+            orderItem.setBouquetId(itemDTO.getBouquetId());
             orderItem.setQuantity(itemDTO.getQuantity());
             orderItem.setUnitPrice(itemDTO.getUnitPrice());
             orderItem.setTotalPrice(itemDTO.getQuantity() * itemDTO.getUnitPrice());
@@ -124,7 +138,7 @@ public class OrderServiceImpl implements OrderService {
         List<OrderItemDTO> orderItemDTOS = order.getItems().stream().map(orderItem -> {
 
             OrderItemDTO orderItemDTO = new OrderItemDTO();
-            orderItemDTO.setProductId(orderItem.getProductId());
+            orderItemDTO.setBouquetId(orderItem.getBouquetId());
             orderItemDTO.setQuantity(orderItem.getQuantity());
             orderItemDTO.setUnitPrice(orderItem.getUnitPrice());
 

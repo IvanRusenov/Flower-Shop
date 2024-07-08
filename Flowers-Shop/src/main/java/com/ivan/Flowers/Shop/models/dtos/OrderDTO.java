@@ -8,9 +8,9 @@ import java.util.List;
 public class OrderDTO {
 
     private Long userId;
-//    private LocalDateTime orderDateTime;
-//    private double totalAmount;
-//    private StatusType status;
+    private LocalDateTime orderDateTime;
+    private double totalAmount;
+    private StatusType status;
     private String shippingAddress;
     private List<OrderItemDTO> items;
 
@@ -22,29 +22,29 @@ public class OrderDTO {
         this.userId = userId;
     }
 
-//    public LocalDateTime getOrderDateTime() {
-//        return orderDateTime;
-//    }
-//
-//    public void setOrderDateTime(LocalDateTime orderDateTime) {
-//        this.orderDateTime = orderDateTime;
-//    }
-//
-//    public double getTotalAmount() {
-//        return totalAmount;
-//    }
-//
-//    public void setTotalAmount(double totalAmount) {
-//        this.totalAmount = totalAmount;
-//    }
-//
-//    public StatusType getStatus() {
-//        return status;
-//    }
-//
-//    public void setStatus(StatusType status) {
-//        this.status = status;
-//    }
+    public LocalDateTime getOrderDateTime() {
+        return orderDateTime;
+    }
+
+    public void setOrderDateTime(LocalDateTime orderDateTime) {
+        this.orderDateTime = orderDateTime;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public StatusType getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusType status) {
+        this.status = status;
+    }
 
     public String getShippingAddress() {
         return shippingAddress;

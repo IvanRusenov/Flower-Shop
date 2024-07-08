@@ -1,4 +1,4 @@
-package com.ivan.Flowers.Shop.configs;
+package com.ivan.flower_shop.orders.configurations;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +11,5 @@ public class AppConfig {
     ModelMapper modelMapper() {
         return new ModelMapper();
     }
-
 
 }

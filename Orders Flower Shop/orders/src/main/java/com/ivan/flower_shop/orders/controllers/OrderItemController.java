@@ -35,7 +35,7 @@ public class OrderItemController {
     public OrderItem updateOrderItem(@PathVariable Long orderItemId, @RequestBody OrderItem orderItemDetails) {
         OrderItem orderItem = orderItemService.getOrderItemById(orderItemId);
         if (orderItem != null) {
-            orderItem.setProductId(orderItemDetails.getProductId());
+            orderItem.setBouquetId(orderItemDetails.getBouquetId());
             orderItem.setQuantity(orderItemDetails.getQuantity());
             orderItem.setUnitPrice(orderItemDetails.getUnitPrice());
             orderItem.setTotalPrice(orderItemDetails.getTotalPrice());
