@@ -8,54 +8,29 @@
     <div class="container py-5">
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-lg-10 col-xl-8">
-                <div class="border" style="border-radius: 10px;">
-                    <div class="card-body p-4">
+                <div class="border mb-3" style="border-radius: 10px;" th:each="order: ${orders}">
+                    <div class="p-4">
                         <div class="shadow-0 mb-4">
-                            <div class="card-body text-white">
-                                <div class="row">
+                            <div class="text-white">
+                                <div class="row" th:each="item: ${order.getItems()}">
                                     <div class="col-md-2">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/13.webp"
-                                             class="img-fluid" alt="Phone">
+                                        <img th:src="${item.getUrl()}"
+                                             class="img-fluid" alt="Picture of bouquet">
                                     </div>
                                     <div class="col-md-2 text-center d-flex justify-content-center align-items-center text-white">
-                                        <p class="mb-0 text-white">Samsung Galaxy</p>
+                                        <p class="mb-0 text-white" th:text="${item.getDescription()}">Description</p>
                                     </div>
                                     <div class="col-md-2 text-center d-flex justify-content-center align-items-center text-white">
-                                        <p class="mb-0 small text-white">White</p>
+                                        <p class="mb-0 small text-white" th:text="|Item No: ${item.getItemNumber()}|">Item number</p>
                                     </div>
                                     <div class="col-md-2 text-center d-flex justify-content-center align-items-center text-white">
-                                        <p class="mb-0 small text-white">Capacity: 64GB</p>
+                                        <p class="mb-0 small text-white" th:text="|Quantity: ${item.getQuantity()}|">Qty: 1</p>
                                     </div>
                                     <div class="col-md-2 text-center d-flex justify-content-center align-items-center text-white">
-                                        <p class="mb-0 small text-white">Qty: 1</p>
+                                        <p class="mb-0 small text-white" th:text="|Price per unit: ${item.getUnitPrice()}|">$499</p>
                                     </div>
                                     <div class="col-md-2 text-center d-flex justify-content-center align-items-center text-white">
-                                        <p class="mb-0 small text-white">$499</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="shadow-0 mb-4">
-                            <div class="card-body text-white">
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/13.webp"
-                                             class="img-fluid" alt="Phone">
-                                    </div>
-                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center text-white">
-                                        <p class="mb-0 text-white">Samsung Galaxy</p>
-                                    </div>
-                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center text-white">
-                                        <p class="mb-0 small text-white">White</p>
-                                    </div>
-                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center text-white">
-                                        <p class="mb-0 small text-white">Capacity: 64GB</p>
-                                    </div>
-                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center text-white">
-                                        <p class="mb-0 small text-white">Qty: 1</p>
-                                    </div>
-                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center text-white">
-                                        <p class="mb-0 small text-white">$499</p>
+                                        <p class="mb-0 small text-white" th:text="|Price: ${item.getUnitPrice() * item.getQuantity()}|">$499</p>
                                     </div>
                                 </div>
                             </div>
@@ -65,11 +40,11 @@
 
                         <div class="d-flex justify-content-between pt-2 text-white">
                             <p class="fw-bold mb-0 text-white">Order Details</p>
-                            <p class="mb-0 text-white"><span class="fw-bold me-4 text-white">Total</span> $898.00</p>
+                            <p class="mb-0 text-white" th:text="|Total: ${order.getTotalAmount()}|"><span class="fw-bold me-4 text-white">Total</span> $898.00</p>
                         </div>
                         <div class="d-flex justify-content-between text-white">
-                            <p class="mb-0 text-white">Invoice Date : 22 Dec,2019</p>
-                            <p class="mb-0 text-white"><span class="fw-bold me-4 text-white">GST 18%</span> 123</p>
+                            <p class="mb-0 text-white" th:text="|Order Date and time: ${order.getOrderDateTime()}|">Order Date and time: 22 Dec,2019</p>
+                            <p class="mb-0 text-white" th:text="|Status: ${order.getStatus()}|"><span class="fw-bold me-4 text-white">Status</span>PENDING</p>
                         </div>
 
 <!--                        <div class="d-flex justify-content-between mb-5">-->
