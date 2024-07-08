@@ -35,6 +35,9 @@
         <a class="bn5" th:href="@{/register}">Register</a>
       </li>
       <li sec:authorize="isAuthenticated()">
+        <a class="bn5" th:href="@{/orders}">My orders</a>
+      </li>
+      <li sec:authorize="isAuthenticated()">
         <form th:action="@{/logout}" th:method="post">
           <button type="submit" class="text-white bg-black bn5">Logout</button>
         </form>
