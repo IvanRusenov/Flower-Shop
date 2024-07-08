@@ -1,10 +1,11 @@
 package com.ivan.Flowers.Shop.services.impls;
 
-import com.ivan.Flowers.Shop.models.dtos.CreateOrderDTO;
-import com.ivan.Flowers.Shop.models.dtos.OrderDTO;
+import com.ivan.Flowers.Shop.models.dtos.*;
+import com.ivan.Flowers.Shop.models.entities.Bouquet;
 import com.ivan.Flowers.Shop.models.entities.Cart;
 import com.ivan.Flowers.Shop.models.entities.User;
 import com.ivan.Flowers.Shop.models.user.ShopUserDetails;
+import com.ivan.Flowers.Shop.repositories.BouquetRepository;
 import com.ivan.Flowers.Shop.repositories.CartRepository;
 import com.ivan.Flowers.Shop.repositories.UserRepository;
 import com.ivan.Flowers.Shop.services.OrderService;
@@ -18,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,12 +30,14 @@ public class OrderServiceImpl implements OrderService {
     private final CartRepository cartRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
+    private  final BouquetRepository bouquetRepository;
 
-    public OrderServiceImpl(@Qualifier("ordersRestClient") RestClient orderRestClient, CartRepository cartRepository, ModelMapper modelMapper, UserRepository userRepository) {
+    public OrderServiceImpl(@Qualifier("ordersRestClient") RestClient orderRestClient, CartRepository cartRepository, ModelMapper modelMapper, UserRepository userRepository, BouquetRepository bouquetRepository) {
         this.orderRestClient = orderRestClient;
         this.cartRepository = cartRepository;
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
+        this.bouquetRepository = bouquetRepository;
     }
 
     @Override
@@ -49,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDTO> getAllOrdersByUser(UserDetails userDetails) {
+    public List<OrderDetailsDTO> getAllOrdersByUser(UserDetails userDetails) {
 
         if (!(userDetails instanceof ShopUserDetails shopUserDetails)) {
             throw new RuntimeException("User is not authenticated.");
@@ -59,15 +63,42 @@ public class OrderServiceImpl implements OrderService {
 
         User user = userRepository.findByUsername(shopUserDetails.getUsername()).orElseThrow();
 
-         return orderRestClient
+        List<OrderDTO> orderDTOS = orderRestClient
                 .get()
-                .uri("/orders/"+ user.getId())
+                .uri("/orders/" + user.getId())
                 .accept(MediaType.asMediaType(MediaType.APPLICATION_JSON))
                 .retrieve()
-                .body(new ParameterizedTypeReference<>() {});
+                .body(new ParameterizedTypeReference<>() {
+                });
 
+        List<OrderDetailsDTO> orderDetailsDTOS = orderDTOS.stream().map(orderDTO -> {
+
+            OrderDetailsDTO orderDetailsDTO = modelMapper.map(orderDTO, OrderDetailsDTO.class);
+
+            List<OrderItemDetailDTO> orderItemDetailDTOS = orderDTO.getItems().stream().map(orderItemDTO -> {
+
+                OrderItemDetailDTO orderItemDetailDTO = modelMapper.map(orderItemDTO, OrderItemDetailDTO.class);
+                Bouquet bouquet = bouquetRepository.findById(orderItemDTO.getBouquetId()).orElseThrow();
+                orderItemDetailDTO.setItemNumber(bouquet.getItemNumber());
+                orderItemDetailDTO.setDescription(bouquet.getDescription());
+                orderItemDetailDTO.setUrl(bouquet.getUrl());
+
+                return orderItemDetailDTO;
+
+            }).toList();
+            orderDetailsDTO.setItems(orderItemDetailDTOS);
+            return orderDetailsDTO;
+
+        }).toList();
+
+        return orderDetailsDTOS;
 
     }
+
+
+
+
+
 
     @Override
     public void createOrder(CreateOrderDTO orderDTO) {
