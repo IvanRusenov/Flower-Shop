@@ -36,8 +36,10 @@ public class OrderController {
     @PostMapping("/order/{cartId}")
     public ModelAndView order(@PathVariable("cartId") long cartId) {
 
-        CreateOrderDTO createOrderDTO = orderService.createOrderDTO(cartId);
-        orderService.createOrder(createOrderDTO);
+        orderService.createOrder(cartId);
+
+        //todo: show the order
+        //TODO: clear cart
 
         return new ModelAndView("redirect:/orders");
     }

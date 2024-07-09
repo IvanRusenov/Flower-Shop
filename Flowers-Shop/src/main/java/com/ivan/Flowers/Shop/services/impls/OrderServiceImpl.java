@@ -41,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public CreateOrderDTO createOrderDTO(long cartId) {
+    public void createOrder(long cartId) {
 
         Cart cart = cartRepository.findById(cartId).orElseThrow();
 
@@ -49,7 +49,13 @@ public class OrderServiceImpl implements OrderService {
         createOrderDTO.setUserId(cart.getOwner().getId());
         createOrderDTO.setShippingAddress(cart.getOwner().getShippingAddress());
 
-        return createOrderDTO;
+        LOGGER.info("Creating new order");
+        orderRestClient
+                .post()
+                .uri("/orders")//"http://localhost:8888/orders"
+                .body(createOrderDTO)
+                .retrieve();
+
     }
 
     @Override
@@ -59,7 +65,7 @@ public class OrderServiceImpl implements OrderService {
             throw new RuntimeException("User is not authenticated.");
         }
 
-        LOGGER.info("Get all user orders");
+        LOGGER.info("Get all user orders in ascending order");
 
         User user = userRepository.findByUsername(shopUserDetails.getUsername()).orElseThrow();
 
@@ -100,15 +106,5 @@ public class OrderServiceImpl implements OrderService {
 
 
 
-    @Override
-    public void createOrder(CreateOrderDTO orderDTO) {
 
-        LOGGER.info("Creating new order");
-        orderRestClient
-                .post()
-                .uri("/orders")//"http://localhost:8888/orders"
-//                .accept(MediaType.APPLICATION_JSON)
-                .body(orderDTO)
-                .retrieve();
-    }
 }
