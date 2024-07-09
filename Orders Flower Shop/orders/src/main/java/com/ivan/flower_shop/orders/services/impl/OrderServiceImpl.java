@@ -41,10 +41,15 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
+    /**
+     * @param userId
+     * @return all orders made by user with given userId in descending order
+     */
     @Override
     public List<OrderDTO> getAllOrdersByUser(Long userId) {
 
-        List<Order> allByUserId = orderRepository.findAllByUserId(userId);
+//        List<Order> allByUserId = orderRepository.findAllByUserId(userId);
+        List<Order> allByUserId = orderRepository.findAllByUserIdOrderByIdDesc(userId);
 
         return allByUserId.stream()
                 .map(order -> modelMapper.map(order, OrderDTO.class))
