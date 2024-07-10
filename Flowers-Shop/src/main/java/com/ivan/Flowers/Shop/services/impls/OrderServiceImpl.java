@@ -8,6 +8,7 @@ import com.ivan.Flowers.Shop.models.user.ShopUserDetails;
 import com.ivan.Flowers.Shop.repositories.BouquetRepository;
 import com.ivan.Flowers.Shop.repositories.CartRepository;
 import com.ivan.Flowers.Shop.repositories.UserRepository;
+import com.ivan.Flowers.Shop.services.CartService;
 import com.ivan.Flowers.Shop.services.OrderService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -32,13 +33,15 @@ public class OrderServiceImpl implements OrderService {
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     private final BouquetRepository bouquetRepository;
+    private final CartService cartService;
 
-    public OrderServiceImpl(@Qualifier("ordersRestClient") RestClient orderRestClient, CartRepository cartRepository, ModelMapper modelMapper, UserRepository userRepository, BouquetRepository bouquetRepository) {
+    public OrderServiceImpl(@Qualifier("ordersRestClient") RestClient orderRestClient, CartRepository cartRepository, ModelMapper modelMapper, UserRepository userRepository, BouquetRepository bouquetRepository, CartService cartService) {
         this.orderRestClient = orderRestClient;
         this.cartRepository = cartRepository;
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
         this.bouquetRepository = bouquetRepository;
+        this.cartService = cartService;
     }
 
     @Override
@@ -56,6 +59,8 @@ public class OrderServiceImpl implements OrderService {
                 .uri("/orders")//"http://localhost:8888/orders"
                 .body(createOrderDTO)
                 .retrieve();
+
+        cartService.clearCart(cartId);
 
     }
 

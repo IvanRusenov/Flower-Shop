@@ -24,20 +24,24 @@
 
                                         >
                                     </div>
-                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center text-white">
+                                    <div class="col-md-2 text-center d-flex flex-column justify-content-center align-items-center text-white">
                                         <p class="mb-0 text-white" th:text="${item.getDescription()}">Description</p>
                                     </div>
-                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center text-white">
-                                        <p class="mb-0 small text-white" th:text="|Item No: ${item.getItemNumber()}|">Item number</p>
+                                    <div class="col-md-2 text-center d-flex flex-column justify-content-center align-items-center text-white">
+                                        <p class="mb-0 small text-white" >Item No</p>
+                                        <p class="mb-0 small text-white" th:text="${item.getItemNumber()}">Item number</p>
                                     </div>
-                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center text-white">
-                                        <p class="mb-0 small text-white" th:text="|Quantity: ${item.getQuantity()}|">Qty: 1</p>
+                                    <div class="col-md-2 text-center d-flex flex-column justify-content-center align-items-center text-white">
+                                        <p class="mb-0 small text-white">Quantity</p>
+                                        <p class="mb-0 small text-white" th:text="${item.getQuantity()}">Qty: 1</p>
                                     </div>
-                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center text-white">
-                                        <p class="mb-0 small text-white" th:text="|Price per unit: ${item.getUnitPrice()}|">$499</p>
+                                    <div class="col-md-2 text-center d-flex flex-column justify-content-center align-items-center text-white">
+                                        <p class="mb-0 small text-white"> Price per unit</p>
+                                        <p class="mb-0 small text-white" th:text="${item.getUnitPrice()}">$499</p>
                                     </div>
-                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center text-white">
-                                        <p class="mb-0 small text-white" th:text="|Price: ${item.getUnitPrice() * item.getQuantity()}|">$499</p>
+                                    <div class="col-md-2 text-center d-flex flex-column justify-content-center align-items-center text-white">
+                                        <p class="mb-0 small text-white">Price</p>
+                                        <p class="mb-0 small text-white" th:text="${item.getUnitPrice() * item.getQuantity()}">$499</p>
                                     </div>
                                 </div>
                             </div>

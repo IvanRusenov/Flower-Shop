@@ -40,7 +40,6 @@ public class OrderController {
 
         orderService.createOrder(cartId);
 
-        //todo: show the order
         //TODO: clear cart
 
         return new ModelAndView("redirect:/order/created");

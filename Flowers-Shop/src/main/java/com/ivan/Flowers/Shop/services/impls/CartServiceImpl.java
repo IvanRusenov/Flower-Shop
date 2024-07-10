@@ -14,7 +14,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -77,6 +79,17 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public void clearCart(long cartId) {
+
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new NoSuchElementException("Cart with id " + cartId + " doesn't exist!"));
+
+        cart.getItems().clear();
+        cartRepository.save(cart);
+
+    }
+
+    @Override
     @Transactional
     public List<CartItem> getItems(UserDetails userDetails) {
 
@@ -136,7 +149,5 @@ public class CartServiceImpl implements CartService {
         userRepository.saveAndFlush(user);
 
     }
-
-
 
 }
