@@ -91,7 +91,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public String getTotalSum(UserDetails userDetails) {
+    public double getTotalSum(UserDetails userDetails) {
 
         if (!(userDetails instanceof ShopUserDetails shopUserDetails)) {
             throw new RuntimeException("User is not authenticated.");
@@ -103,7 +103,8 @@ public class CartServiceImpl implements CartService {
                 .mapToDouble(item -> item.getQuantity() * item.getUnitPrice())
                 .sum();
 
-        return String.format("%.2f", sum);
+        return sum;
+//        return String.format("%.2f", sum);
         //TODO: Remove BUG sum is not correct on adding more than one item of the same type
 
     }

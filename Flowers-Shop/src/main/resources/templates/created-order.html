@@ -8,33 +8,36 @@
     <div class="container py-5">
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-lg-10 col-xl-8">
-                <div class="border mb-3" style="border-radius: 10px;" th:each="order: ${orders}">
+                <div class="card-header px-4 py-5">
+<!--                    TODO: show users first name not username -->
+                    <h5 class="text-white text-center mb-0">Thanks for your order, <span style="color: #a8729a;" th:text="${username}">Adi</span> !</h5>
+                </div>
+                <div class="border mb-3" style="border-radius: 10px;">
                     <div class="p-4">
                         <div class="shadow-0 mb-4">
                             <div class="text-white">
                                 <div class="row mb-2" th:each="item: ${order.getItems()}">
                                     <div class="col-md-2">
-                                        <img style="width: 100px; height: 100px;" th:src="${item.getUrl()}"
-                                             class="img-fluid" alt="Picture of bouquet">
+                                        <img th:src="${item.getUrl()}"
+                                             class="img-fluid" alt="Picture of bouquet"
+                                             style="width: 100px; height: 100px;"
+
+                                        >
                                     </div>
-                                    <div class="col-md-2 text-center d-flex flex-column justify-content-center align-items-center text-white">
+                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center text-white">
                                         <p class="mb-0 text-white" th:text="${item.getDescription()}">Description</p>
                                     </div>
-                                    <div class="col-md-2 text-center d-flex flex-column justify-content-center align-items-center text-white">
-                                        <p class="mb-0 small text-white" >Item No</p>
-                                        <p class="mb-0 small text-white" th:text="${item.getItemNumber()}">Item number</p>
+                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center text-white">
+                                        <p class="mb-0 small text-white" th:text="|Item No: ${item.getItemNumber()}|">Item number</p>
                                     </div>
-                                    <div class="col-md-2 text-center d-flex flex-column justify-content-center align-items-center text-white">
-                                        <p class="mb-0 small text-white">Quantity</p>
-                                        <p class="mb-0 small text-white" th:text="${item.getQuantity()}">Qty: 1</p>
+                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center text-white">
+                                        <p class="mb-0 small text-white" th:text="|Quantity: ${item.getQuantity()}|">Qty: 1</p>
                                     </div>
-                                    <div class="col-md-2 text-center d-flex flex-column justify-content-center align-items-center text-white">
-                                        <p class="mb-0 small text-white"> Price per unit</p>
-                                        <p class="mb-0 small text-white" th:text="${item.getUnitPrice()}">$499</p>
+                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center text-white">
+                                        <p class="mb-0 small text-white" th:text="|Price per unit: ${item.getUnitPrice()}|">$499</p>
                                     </div>
-                                    <div class="col-md-2 text-center d-flex flex-column justify-content-center align-items-center text-white">
-                                        <p class="mb-0 small text-white">Price</p>
-                                        <p class="mb-0 small text-white" th:text="${item.getUnitPrice() * item.getQuantity()}">$499</p>
+                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center text-white">
+                                        <p class="mb-0 small text-white" th:text="|Price: ${item.getUnitPrice() * item.getQuantity()}|">$499</p>
                                     </div>
                                 </div>
                             </div>
@@ -47,7 +50,7 @@
                             <p class="mb-0 text-white" th:text="|Total: ${order.getTotalAmount()}|"><span class="fw-bold me-4 text-white">Total</span> $898.00</p>
                         </div>
                         <div class="d-flex justify-content-between text-white">
-<!--                            TODO: format date time - separate date and time -->
+                            <!--                            TODO: format date time - separate date and time -->
                             <p class="mb-0 text-white" th:text="|Order Date and time: ${order.getOrderDateTime()}|">Order Date and time: 22 Dec,2019</p>
                             <p class="mb-0 text-white" th:text="|Status: ${order.getStatus()}|"><span class="fw-bold me-4 text-white">Status</span>PENDING</p>
                         </div>

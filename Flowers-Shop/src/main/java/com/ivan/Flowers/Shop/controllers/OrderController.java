@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.util.StringUtils;
 
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 public class OrderController {
@@ -41,6 +43,20 @@ public class OrderController {
         //todo: show the order
         //TODO: clear cart
 
-        return new ModelAndView("redirect:/orders");
+        return new ModelAndView("redirect:/order/created");
+    }
+
+
+
+    @GetMapping("order/created")
+    public ModelAndView created(@AuthenticationPrincipal UserDetails userDetails) {
+
+        ModelAndView modelAndView = new ModelAndView("created-order");
+        OrderDetailsDTO lastOrderByUser = orderService.getLastOrderByUser(userDetails);
+        modelAndView.addObject("order", lastOrderByUser);
+        modelAndView.addObject("username", StringUtils.capitalize(userDetails.getUsername()));
+
+        return modelAndView;
+
     }
 }

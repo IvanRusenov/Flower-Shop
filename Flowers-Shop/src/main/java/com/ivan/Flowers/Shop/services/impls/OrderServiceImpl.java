@@ -21,6 +21,7 @@ import org.springframework.web.client.RestClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -30,7 +31,7 @@ public class OrderServiceImpl implements OrderService {
     private final CartRepository cartRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
-    private  final BouquetRepository bouquetRepository;
+    private final BouquetRepository bouquetRepository;
 
     public OrderServiceImpl(@Qualifier("ordersRestClient") RestClient orderRestClient, CartRepository cartRepository, ModelMapper modelMapper, UserRepository userRepository, BouquetRepository bouquetRepository) {
         this.orderRestClient = orderRestClient;
@@ -65,9 +66,10 @@ public class OrderServiceImpl implements OrderService {
             throw new RuntimeException("User is not authenticated.");
         }
 
-        LOGGER.info("Get all user orders in ascending order");
+        LOGGER.info("Get all user orders in descending order");
 
-        User user = userRepository.findByUsername(shopUserDetails.getUsername()).orElseThrow();
+        User user = userRepository.findByUsername(shopUserDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         List<OrderDTO> orderDTOS = orderRestClient
                 .get()
@@ -77,14 +79,24 @@ public class OrderServiceImpl implements OrderService {
                 .body(new ParameterizedTypeReference<>() {
                 });
 
-        List<OrderDetailsDTO> orderDetailsDTOS = orderDTOS.stream().map(orderDTO -> {
+
+        if (orderDTOS == null) {
+            throw new RuntimeException("Failed to retrieve orders");
+        }
+
+        return orderDTOS.stream().map(orderDTO -> {
 
             OrderDetailsDTO orderDetailsDTO = modelMapper.map(orderDTO, OrderDetailsDTO.class);
 
             List<OrderItemDetailDTO> orderItemDetailDTOS = orderDTO.getItems().stream().map(orderItemDTO -> {
 
                 OrderItemDetailDTO orderItemDetailDTO = modelMapper.map(orderItemDTO, OrderItemDetailDTO.class);
-                Bouquet bouquet = bouquetRepository.findById(orderItemDTO.getBouquetId()).orElseThrow();
+                Bouquet bouquet = bouquetRepository.findById(orderItemDTO.getBouquetId())
+                        .orElseThrow(
+                                () -> new NoSuchElementException("Bouquet not found for ID "
+                                        + orderItemDTO.getBouquetId())
+                        );
+
                 orderItemDetailDTO.setItemNumber(bouquet.getItemNumber());
                 orderItemDetailDTO.setDescription(bouquet.getDescription());
                 orderItemDetailDTO.setUrl(bouquet.getUrl());
@@ -92,19 +104,27 @@ public class OrderServiceImpl implements OrderService {
                 return orderItemDetailDTO;
 
             }).toList();
+
             orderDetailsDTO.setItems(orderItemDetailDTOS);
             return orderDetailsDTO;
 
         }).toList();
 
-        return orderDetailsDTOS;
+    }
+
+    @Override
+    public OrderDetailsDTO getLastOrderByUser(UserDetails userDetails) {
+
+        LOGGER.info("Get last user order");
+        return getAllOrdersByUser(userDetails).getFirst();
 
     }
 
-
-
-
-
+//    private void validateUser(UserDetails userDetails) {
+//        if (!(userDetails instanceof ShopUserDetails)) {
+//            throw new RuntimeException("User is not authenticated.");
+//        }
+//    }
 
 
 }

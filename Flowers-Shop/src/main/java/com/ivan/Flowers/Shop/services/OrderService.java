@@ -10,4 +10,6 @@ public interface OrderService {
     void createOrder(long cartId);
 
     List<OrderDetailsDTO> getAllOrdersByUser(UserDetails userDetails);
+
+    OrderDetailsDTO getLastOrderByUser(UserDetails userDetails);
 }

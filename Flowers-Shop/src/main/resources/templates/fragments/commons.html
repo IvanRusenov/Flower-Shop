@@ -19,7 +19,8 @@
     <ul>
       <li>
         <img src="/images/orchid_9704101.png" alt="orchid">
-        <a th:href="@{/}">Orchid app</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/home}">Orchid app</a>
+        <a sec:authorize="!isAuthenticated()" th:href="@{/}">Orchid app</a>
       </li>
       <li sec:authorize="hasRole('ROLE_ADMIN')">
         <a class="bn5" th:href="@{/bouquet/add}">Add Bouquet</a>
