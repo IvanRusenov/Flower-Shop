@@ -7,12 +7,21 @@ import java.util.List;
 
 public class OrderDTO {
 
+    private long id;
     private Long userId;
     private LocalDateTime orderDateTime;
     private double totalAmount;
     private StatusType status;
     private String shippingAddress;
     private List<OrderItemDTO> items;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public Long getUserId() {
         return userId;

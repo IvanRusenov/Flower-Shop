@@ -36,6 +36,7 @@ nav {
 nav ul {
     display: flex;
     justify-content: space-around;
+    align-items: center;
     padding-left: 0;
     margin-bottom: 0;
 }
@@ -50,6 +51,10 @@ nav ul li {
 nav ul li a {
     color: white;
     text-decoration: none;
+}
+
+nav ul li form button {
+   padding-top: 0;
 }
 
 footer div {
@@ -122,7 +127,7 @@ button {
   } */
 
   /* CSS */
-  .button-29 {
+  .btn-gold {
     align-items: center;
     appearance: none;
     /* background-image: radial-gradient(100% 100% at 100% 0, #c1c44e 0, #4d4c08 100%); */
@@ -145,7 +150,7 @@ button {
     overflow: hidden;
     padding-left: 16px;
     padding-right: 16px;
-    position: relative;
+    /*position: relative;*/
     text-align: left;
     text-decoration: none;
     transition: box-shadow .15s,transform .15s;
@@ -157,16 +162,16 @@ button {
     /* font-size: 18px; */
   }
 
-  .button-29:focus {
+  .btn-gold:focus {
     box-shadow: #c1c44e 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #4d4c08 0 -3px 0 inset;
   }
 
-  .button-29:hover {
+  .btn-gold:hover {
     box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #4d4c08 0 -3px 0 inset;
     transform: translateY(-2px);
   }
 
-  .button-29:active {
+  .btn-gold:active {
     box-shadow: #4d4c08 0 3px 7px inset;
     transform: translateY(2px);
   }
@@ -285,8 +290,8 @@ button {
   }
 
 
-.bn5 {
-    padding: 0.6em 2em;
+.glowing-gold {
+    padding: 0.5em 2em;
     border: none;
     outline: none;
     color: rgb(255, 255, 255);
@@ -297,10 +302,10 @@ button {
     border-radius: 10px;
 }
 
-.bn5:before {
+.glowing-gold:before {
     content: "";
     background: linear-gradient(
-            45deg,
+            8deg,
             #FEDB37,
             #FDB931,
             #9f7928,
@@ -322,7 +327,7 @@ button {
     animation: glowingbn5 30s linear infinite;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
-    border-radius: 1px;
+    border-radius: 3px;
 }
 
 @keyframes glowingbn5 {
@@ -337,25 +342,26 @@ button {
     }
 }
 
-.bn5:active {
+.glowing-gold:active {
     color: #000;
 }
 
-.bn5:active:after {
+.glowing-gold:active:after {
     background: transparent;
 }
 
-.bn5:hover:before {
+.glowing-gold:hover:before {
     opacity: 1;
 }
 
-.bn5:after {
+.glowing-gold:after {
     z-index: -1;
     content: "";
     position: absolute;
     width: 100%;
     height: 100%;
     background: #191919;
+    /*background: rgba(0,0,0,0);variant 2*/
     left: 0;
     top: 0;
     border-radius: 10px;

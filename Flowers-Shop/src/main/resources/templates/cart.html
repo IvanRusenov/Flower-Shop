@@ -35,7 +35,7 @@
             <p class="fs-3 fw-bold fst-italic m-3" th:text="|Total sum: ${totalSum} $|">Total sum: {totalSum} $</p>
 <!--            TODO: return to home if cart is empty-->
 <!--            TODO: empty cart when order is created -->
-            <button th:unless="0 == ${totalSum}" class="button-29 rounded-pill mb-4 px-5 fs-3 fw-bold fst-italic">BUY</button>
+            <button th:unless="0 == ${totalSum}" class="btn-gold rounded-pill mb-4 px-5 fs-3 fw-bold fst-italic">BUY</button>
             <p style="margin-bottom: 5em;">
                 <a th:href="@{/home}"class="rounded-pill mb-5 px-5 py-2 fs-5 fw-bold fst-italic text-light
                 text-decoration-none border border-light">To gallery</a>

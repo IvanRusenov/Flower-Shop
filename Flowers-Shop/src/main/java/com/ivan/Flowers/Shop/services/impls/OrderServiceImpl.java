@@ -1,5 +1,6 @@
 package com.ivan.Flowers.Shop.services.impls;
 
+import com.ivan.Flowers.Shop.enums.StatusType;
 import com.ivan.Flowers.Shop.models.dtos.*;
 import com.ivan.Flowers.Shop.models.entities.Bouquet;
 import com.ivan.Flowers.Shop.models.entities.Cart;
@@ -65,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDetailsDTO> getAllOrdersByUser(UserDetails userDetails) {
+    public List<OrderDetailsDTO> getAllOrdersFromUser(UserDetails userDetails) {
 
         if (!(userDetails instanceof ShopUserDetails shopUserDetails)) {
             throw new RuntimeException("User is not authenticated.");
@@ -78,7 +79,7 @@ public class OrderServiceImpl implements OrderService {
 
         List<OrderDTO> orderDTOS = orderRestClient
                 .get()
-                .uri("/orders/" + user.getId())
+                .uri("/orders/user/" + user.getId())
                 .accept(MediaType.asMediaType(MediaType.APPLICATION_JSON))
                 .retrieve()
                 .body(new ParameterizedTypeReference<>() {
@@ -121,7 +122,62 @@ public class OrderServiceImpl implements OrderService {
     public OrderDetailsDTO getLastOrderByUser(UserDetails userDetails) {
 
         LOGGER.info("Get last user order");
-        return getAllOrdersByUser(userDetails).getFirst();
+        return getAllOrdersFromUser(userDetails).getFirst();
+
+    }
+
+    @Override
+    public void changOrderStatus(long orderId, StatusType newStatus) {
+
+        orderRestClient
+                .put()
+                .uri("/orders/" + orderId + "/" + newStatus)
+//                .accept(MediaType.asMediaType(MediaType.APPLICATION_JSON))
+                .retrieve();
+
+    }
+
+    @Override
+    public List<OrderDetailsDTO> getAllPendingOrders() {
+
+        List<OrderDTO> orderDTOS =  orderRestClient
+                .get()
+                .uri("/orders/pending")
+                .accept(MediaType.asMediaType(MediaType.APPLICATION_JSON))
+                .retrieve()
+                .body(new ParameterizedTypeReference<>() {
+                });
+
+        if (orderDTOS == null) {
+            throw new RuntimeException("Failed to retrieve orders");
+        }
+
+
+        return orderDTOS.stream().map(orderDTO -> {
+
+            OrderDetailsDTO orderDetailsDTO = modelMapper.map(orderDTO, OrderDetailsDTO.class);
+
+            List<OrderItemDetailDTO> orderItemDetailDTOS = orderDTO.getItems().stream().map(orderItemDTO -> {
+
+                OrderItemDetailDTO orderItemDetailDTO = modelMapper.map(orderItemDTO, OrderItemDetailDTO.class);
+                Bouquet bouquet = bouquetRepository.findById(orderItemDTO.getBouquetId())
+                        .orElseThrow(
+                                () -> new NoSuchElementException("Bouquet not found for ID "
+                                        + orderItemDTO.getBouquetId())
+                        );
+
+                orderItemDetailDTO.setItemNumber(bouquet.getItemNumber());
+                orderItemDetailDTO.setDescription(bouquet.getDescription());
+                orderItemDetailDTO.setUrl(bouquet.getUrl());
+
+                return orderItemDetailDTO;
+
+            }).toList();
+
+            orderDetailsDTO.setItems(orderItemDetailDTOS);
+            return orderDetailsDTO;
+
+        }).toList();
 
     }
 

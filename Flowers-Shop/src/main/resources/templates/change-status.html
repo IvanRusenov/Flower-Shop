@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons::head}"></head>
+<body class="cart">
+<header th:replace="~{fragments/commons::nav}"></header>
+
+<section class="gradient-custom">
+    <div class="container py-5">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-lg-10 col-xl-8 border">
+                <div class="card-header px-4 py-5">
+                    <h5 class="text-white text-center mb-0">Enter the id of the order which status you wont to change</h5>
+                    <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
+
+                    <div class="form-floating mb-3 text-center">
+                        <form th:method="post"
+                              th:action="@{/order/change-status}"
+                              th:object="${changeOrderStatusDTO}"
+                        >
+
+                            <label for="orderId">Order id</label>
+                            <input th:field="*{orderId}" class="form-control" id="orderId" name="orderId" placeholder="orderId">
+
+
+                            <select th:field="*{newStatus}" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="newStatus" name="newStatus">
+                                <option th:value="-1" disabled selected>Select new status</option>
+                                <option th:each="status: ${statusTypes}" th:value="${status}" th:text="${status}">Open this select menu</option>
+                            </select>
+
+<!--                            <select>-->
+<!--                                <options>Select new status</options>-->
+<!--                                <options th:each="status: ${statusTypes}" th:value="status" th:text="status" >status</options>-->
+<!--                            </select>-->
+
+                            <div class="form-floating mb-3 text-center">
+                                <button class="btn-gold rounded-pill p-2 w-50 my-2 ">Change status</button>
+                            </div>
+                        </form>
+                    </div>
+
+
+<!--                    <div>-->
+<!--                        <form>-->
+<!--                            <input type="text">-->
+<!--                            <button>find</button>-->
+<!--                        </form>-->
+<!--                    </div>-->
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<footer th:replace="~{fragments/commons::footer}"></footer>
+</body>
+</html>

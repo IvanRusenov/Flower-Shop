@@ -1,5 +1,6 @@
 package com.ivan.flower_shop.orders.services;
 
+import com.ivan.flower_shop.orders.enums.StatusType;
 import com.ivan.flower_shop.orders.models.dtos.OrderDTO;
 import com.ivan.flower_shop.orders.models.entities.Order;
 
@@ -13,12 +14,13 @@ public interface OrderService {
 
     List<OrderDTO> getAllOrders();
 
-    List<OrderDTO> getAllOrdersByUser(Long userId);
+    List<OrderDTO> getAllOrdersFromUser(Long userId);
 
-//    OrderDTO getOrderById(Long orderId);
+    OrderDTO getOrderById(Long orderId);
 
     void deleteOrder(Long orderId);
 
-    void updateOrder(Long orderId, OrderDTO orderDTO);
+    void updateOrder(Long orderId, StatusType newStatus);
 
+    List<OrderDTO> getAllPendingOrders();
 }

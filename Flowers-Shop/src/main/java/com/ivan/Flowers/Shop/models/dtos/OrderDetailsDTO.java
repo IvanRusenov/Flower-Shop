@@ -7,6 +7,7 @@ import java.util.List;
 
 public class OrderDetailsDTO {
 
+    private long id;
     private LocalDateTime orderDateTime;
     private double totalAmount;
     private StatusType status;
@@ -15,6 +16,14 @@ public class OrderDetailsDTO {
 
     public LocalDateTime getOrderDateTime() {
         return orderDateTime;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setOrderDateTime(LocalDateTime orderDateTime) {

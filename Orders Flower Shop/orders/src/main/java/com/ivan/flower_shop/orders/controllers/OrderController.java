@@ -1,5 +1,6 @@
 package com.ivan.flower_shop.orders.controllers;
 
+import com.ivan.flower_shop.orders.enums.StatusType;
 import com.ivan.flower_shop.orders.models.dtos.OrderDTO;
 import com.ivan.flower_shop.orders.services.OrderService;
 import org.slf4j.Logger;
@@ -43,12 +44,12 @@ public class OrderController {
         return ResponseEntity.ok(allOrders);
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<List<OrderDTO>> getOrderById(@PathVariable Long userId) {
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<OrderDTO>> getAllOrdersFromUser(@PathVariable Long userId) {
 
         LOGGER.info("Get order with id {}", userId);
 
-        List<OrderDTO> allOrdersByUser = orderService.getAllOrdersByUser(userId);
+        List<OrderDTO> allOrdersByUser = orderService.getAllOrdersFromUser(userId);
 
         if (allOrdersByUser == null) {
 
@@ -63,23 +64,23 @@ public class OrderController {
 
 
 
-//    @GetMapping("/{orderId}")
-//    public ResponseEntity<OrderDTO> getOrderById(@PathVariable Long orderId) {
-//
-//        LOGGER.info("Get order with id {}", orderId);
-//
-//        OrderDTO orderById = orderService.getOrderById(orderId);
-//
-//        if (orderById == null) {
-//
-//            LOGGER.info("Cannot find order with id {}", orderId);
-//
-//            return ResponseEntity.notFound().build();
-//
-//        }
-//
-//        return ResponseEntity.ok(orderById);
-//    }
+    @GetMapping("/{orderId}")
+    public ResponseEntity<OrderDTO> getOrderById(@PathVariable Long orderId) {
+
+        LOGGER.info("Get order with id {}", orderId);
+
+        OrderDTO orderById = orderService.getOrderById(orderId);
+
+        if (orderById == null) {
+
+            LOGGER.info("Cannot find order with id {}", orderId);
+
+            return ResponseEntity.notFound().build();
+
+        }
+
+        return ResponseEntity.ok(orderById);
+    }
 
     /**
      * <strong>{@code Deletes}</strong> an order with id {@code @param orderId} from database.
@@ -97,13 +98,33 @@ public class OrderController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{orderId}")
-    public ResponseEntity<Void> updateOrder(@PathVariable Long orderId, @RequestBody OrderDTO orderDTO) {
+    @PutMapping("/{orderId}/{newStatus}")
+    public ResponseEntity<Void> updateOrder(@PathVariable Long orderId, @PathVariable StatusType newStatus) {
 
-        orderService.updateOrder(orderId, orderDTO);
+        orderService.updateOrder(orderId, newStatus);
         LOGGER.info("Order with {} was updated", orderId);
 
         return ResponseEntity.ok().build();
+    }
+
+
+
+    @GetMapping("/pending")
+    public ResponseEntity<List<OrderDTO>> getAllOPendingOrders() {
+
+        LOGGER.info("Get all pending orders");
+
+        List<OrderDTO> allPendingOrders = orderService.getAllPendingOrders();
+
+        if (allPendingOrders == null) {
+
+            LOGGER.info("Cannot find pending orders");
+
+            return ResponseEntity.notFound().build();
+
+        }
+
+        return ResponseEntity.ok(allPendingOrders);
     }
 
 }

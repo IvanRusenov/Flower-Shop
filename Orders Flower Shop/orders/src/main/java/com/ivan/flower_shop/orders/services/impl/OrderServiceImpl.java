@@ -46,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
      * @return all orders made by user with given userId in descending order
      */
     @Override
-    public List<OrderDTO> getAllOrdersByUser(Long userId) {
+    public List<OrderDTO> getAllOrdersFromUser(Long userId) {
 
 //        List<Order> allByUserId = orderRepository.findAllByUserId(userId);
         List<Order> allByUserId = orderRepository.findAllByUserIdOrderByIdDesc(userId);
@@ -57,17 +57,17 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
-//    @Override
-//    public OrderDTO getOrderById(Long orderId) {
-//
-//        Order order = orderRepository.findById(orderId).orElse(null);
-//
-//        if (order==null) {
-//            return null;
-//        }
-//        return mapToOrderDTO(order);
-//
-//    }
+    @Override
+    public OrderDTO getOrderById(Long orderId) {
+
+        Order order = orderRepository.findById(orderId).orElse(null);
+
+        if (order==null) {
+            return null;
+        }
+        return mapToOrderDTO(order);
+
+    }
 
     @Override
     public void saveOrder(Order order) {
@@ -76,19 +76,33 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public void updateOrder(Long orderId, OrderDTO orderDTO) {
+    public void updateOrder(Long orderId, StatusType newStatus) {
 
         Order order = orderRepository.findById(orderId).orElseThrow();
 
-        order.setUserId(orderDTO.getUserId());
-        order.setOrderDateTime(orderDTO.getOrderDateTime());
-        order.setTotalAmount(orderDTO.getTotalAmount());
-        order.setStatus(orderDTO.getStatus());
-        order.setShippingAddress(orderDTO.getShippingAddress());
+        order.setStatus(newStatus);
 
-        mapToOrderItems(orderDTO, order);
+
+//        order.setUserId(orderDTO.getUserId());
+//        order.setOrderDateTime(orderDTO.getOrderDateTime());
+//        order.setTotalAmount(orderDTO.getTotalAmount());
+//        order.setStatus(orderDTO.getStatus());
+//        order.setShippingAddress(orderDTO.getShippingAddress());
+//
+//        mapToOrderItems(orderDTO, order);
 
         saveOrder(order);
+
+    }
+
+    @Override
+    public List<OrderDTO> getAllPendingOrders() {
+
+        List<Order> allByStatus = orderRepository.findAllByStatus(StatusType.PENDING);
+
+        return allByStatus.stream()
+                .map(order -> modelMapper.map(order, OrderDTO.class))
+                .toList();
 
     }
 

@@ -10,7 +10,7 @@
     <h1 class="text-center mt-2 bigFont"><span class="badge badge-pill badge-dark">Login</span></h1>
     <form class="form-floating mx-auto w-75 bg-blur" th:method="post" th:action="@{/login}" th:object="${userLoginDTO}">
       <div class="form-floating mb-3 text-center">
-        <input th:field="*{username}" th:errorclass="is-invalid" class="form-control" id="username" placeholder="Username" value="adi">
+        <input th:field="*{username}" th:errorclass="is-invalid" class="form-control" id="username" placeholder="Username">
         <label for="username">Username</label>
         <small th:errors="*{username}" class="text-danger ">Username error message</small>
       </div>
@@ -30,7 +30,7 @@
 <!--        <small th:errors="*{confirmPassword}" class="text-danger">Email error message</small>-->
 <!--      </div>-->
       <div class="form-floating mb-3 text-center">
-        <button class="button-29 rounded-pill p-2 w-50 my-2 ">LOGIN</button>
+        <button class="btn-gold rounded-pill p-2 w-50 my-2 ">LOGIN</button>
       </div>
     </form>
   </div>

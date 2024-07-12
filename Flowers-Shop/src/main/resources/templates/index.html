@@ -7,11 +7,11 @@
     <main>
         <section class="position-absolute top-50 start-50 translate-middle my-container">
            <div class="mx-auto p-3 text-center">
-                <h1 class="text-white myFont bigFont">Орхидея</h1>
-                <p class="text-white fs-4 m-3 myFont">Онлайн бутик за цветя и букети</p>
+                <h1 class="text-white myFont bigFont" th:text="#{nav_bar_company}">Орхидея</h1>
+                <p class="text-white fs-4 m-3 myFont" th:text="#{index_heading}">Онлайн бутик за цветя и букети</p>
                 <div class="d-flex justify-content-center gap-4 m-3 pt-2">
-                    <a th:href="@{/login}" class="button-29 rounded-pill p-1 col-3 fs-5">Login</a>
-                    <a th:href="@{/register}" class="button-29 rounded-pill p-1 col-3 fs-5">Register</a>
+                    <a th:href="@{/login}" class="btn-gold rounded-pill p-1 col-3 fs-5" th:text="#{nav_bar_login}">Login</a>
+                    <a th:href="@{/register}" class="btn-gold rounded-pill p-1 col-3 fs-5" th:text="#{nav_bar_register}">Register</a>
                 </div>
            </div>
         </section>
