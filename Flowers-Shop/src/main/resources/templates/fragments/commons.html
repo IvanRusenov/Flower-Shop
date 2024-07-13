@@ -16,7 +16,7 @@
 <header >
   <nav>
     <ul>
-      <li class="glowing-gold">
+      <li sec:authorize="!hasRole('ROLE_MODERATOR')" class="glowing-gold">
         <img src="/images/orchid_9704101.png" alt="orchid">
         <a sec:authorize="isAuthenticated()" th:href="@{/home}" th:text="#{nav_bar_company}">Orchid</a>
         <a sec:authorize="!isAuthenticated()" th:href="@{/}" th:text="#{nav_bar_company}">Orchid</a>
@@ -28,9 +28,9 @@
         <a class="glowing-gold" th:href="@{/home}" th:text="#{nav_bar_gallery}">Gallery</a>
       </li>
 
-      <li sec:authorize="hasRole('ROLE_MODERATOR')">
-        <a class="glowing-gold" th:href="@{/order/change-status}">Change status</a>
-      </li>
+<!--      <li sec:authorize="hasRole('ROLE_MODERATOR')">-->
+<!--        <a class="glowing-gold" th:href="@{/order/change-status}">Change status</a>-->
+<!--      </li>-->
 
       <li sec:authorize="isAuthenticated() && !hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')">
         <span class="text-white" th:text="#{nav_bar_welcome}">Welcome, </span>

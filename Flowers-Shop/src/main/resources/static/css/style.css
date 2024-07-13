@@ -367,3 +367,11 @@ button {
     border-radius: 10px;
 }
 
+
+.shipping-order {
+    background-image: url(/images/shipping-background.jpg);
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+

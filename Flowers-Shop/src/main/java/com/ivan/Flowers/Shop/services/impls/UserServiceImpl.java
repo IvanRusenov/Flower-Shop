@@ -67,9 +67,11 @@ public class UserServiceImpl implements UserService {
 
             user.getRoles().add(roleRepository.findByType(RoleType.ROLE_ADMIN));
 
+        }else {
+
+            user.getRoles().add(role);
         }
 
-        user.getRoles().add(role);
 
         userRepository.saveAndFlush(user);
 
@@ -85,13 +87,14 @@ public class UserServiceImpl implements UserService {
             return false;
         }
 
-        boolean isMatches = passwordEncoder.matches(userLoginDTO.getPassword(), optionalUser.get().getPassword());
+        return passwordEncoder.matches(userLoginDTO.getPassword(), optionalUser.get().getPassword());
 
-        if (!isMatches) {
-            return false;
-        }
+    }
 
-
-        return true;
+    @Override
+    public boolean isMod(UserLoginDTO userLoginDTO) {
+        User user = userRepository.findByUsername(userLoginDTO.getUsername()).orElseThrow();
+        Role role = roleRepository.findByType(RoleType.ROLE_MODERATOR);
+        return user.getRoles().contains(role);
     }
 }

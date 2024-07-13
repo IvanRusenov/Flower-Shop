@@ -55,24 +55,32 @@ public class UserController {
         return new ModelAndView("login");
     }
 
-    @PostMapping("/login")
-    public ModelAndView login(@ModelAttribute("userLoginDTO") @Valid UserLoginDTO userLoginDTO,
-                              BindingResult bindingResult) {
-        ModelAndView login = new ModelAndView("login");
-
-        if (bindingResult.hasErrors()) {
-            return login;
-        }
-
-        boolean isLogged = userService.login(userLoginDTO);
-
-        if (!isLogged) {
-            return login;
-        }
-
-        return new ModelAndView("redirect:/home");
-
-    }
+//    @PostMapping("/login")
+//    public ModelAndView login(@ModelAttribute("userLoginDTO") @Valid UserLoginDTO userLoginDTO,
+//                              BindingResult bindingResult) {
+//        ModelAndView login = new ModelAndView("login");
+//
+//        if (bindingResult.hasErrors()) {
+//            return login;
+//        }
+//
+//        boolean isLogged = userService.login(userLoginDTO);
+//
+//        if (!isLogged) {
+//            return login;
+//        }
+//
+//
+//        boolean isModerator = userService.isMod(userLoginDTO);
+//
+//        if (isModerator) {
+//            return new ModelAndView("redirect:/orders/pending");
+//        }
+//
+//
+//        return new ModelAndView("redirect:/home");
+//
+//    }
 
 
     //TODO: implement delete user for admins
