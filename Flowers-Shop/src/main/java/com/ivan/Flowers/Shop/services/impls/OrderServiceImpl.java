@@ -181,6 +181,48 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
+    @Override
+    public List<OrderDetailsDTO> getAllOrdersDesc() {
+
+        List<OrderDTO> orderDTOS =  orderRestClient
+                .get()
+                .uri("/orders")
+                .retrieve()
+                .body(new ParameterizedTypeReference<>() {
+                });
+
+        if (orderDTOS == null) {
+            throw new RuntimeException("Failed to retrieve orders");
+        }
+
+
+        return orderDTOS.stream().map(orderDTO -> {
+
+            OrderDetailsDTO orderDetailsDTO = modelMapper.map(orderDTO, OrderDetailsDTO.class);
+
+            List<OrderItemDetailDTO> orderItemDetailDTOS = orderDTO.getItems().stream().map(orderItemDTO -> {
+
+                OrderItemDetailDTO orderItemDetailDTO = modelMapper.map(orderItemDTO, OrderItemDetailDTO.class);
+                Bouquet bouquet = bouquetRepository.findById(orderItemDTO.getBouquetId())
+                        .orElseThrow(
+                                () -> new NoSuchElementException("Bouquet not found for ID "
+                                        + orderItemDTO.getBouquetId())
+                        );
+
+                orderItemDetailDTO.setItemNumber(bouquet.getItemNumber());
+                orderItemDetailDTO.setDescription(bouquet.getDescription());
+                orderItemDetailDTO.setUrl(bouquet.getUrl());
+
+                return orderItemDetailDTO;
+
+            }).toList();
+
+            orderDetailsDTO.setItems(orderItemDetailDTOS);
+            return orderDetailsDTO;
+
+        }).toList();
+    }
+
 //    private void validateUser(UserDetails userDetails) {
 //        if (!(userDetails instanceof ShopUserDetails)) {
 //            throw new RuntimeException("User is not authenticated.");

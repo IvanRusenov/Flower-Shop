@@ -94,4 +94,15 @@ public class OrderController {
     }
 
 
+    @GetMapping("/orders/all")
+    public ModelAndView getAllOrdersDesc(){
+        ModelAndView orders = new ModelAndView("orders");
+
+        orders.addObject("orders", orderService.getAllOrdersDesc());
+
+        return orders;
+
+    }
+
+
 }

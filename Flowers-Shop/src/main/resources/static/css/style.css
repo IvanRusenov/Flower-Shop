@@ -375,3 +375,10 @@ button {
     background-attachment: fixed;
 }
 
+.all-orders {
+    background-image: url(/images/all-orders-bg4.jpg);
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+

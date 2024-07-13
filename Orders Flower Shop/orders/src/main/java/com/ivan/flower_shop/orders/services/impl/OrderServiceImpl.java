@@ -35,9 +35,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDTO> getAllOrders() {
 
-        List<Order> all = orderRepository.findAll();
+        List<Order> all = orderRepository.findAllByOrderByIdDesc();
 
-        return all.stream().map(this::mapToOrderDTO).toList();
+        return all.stream()
+                .map(order -> modelMapper.map(order, OrderDTO.class))
+                .toList();
 
     }
 

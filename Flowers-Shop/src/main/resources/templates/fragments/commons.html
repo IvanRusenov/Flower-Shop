@@ -48,6 +48,14 @@
       <li sec:authorize="hasRole('ROLE_MODERATOR')">
         <a class="glowing-gold" th:href="@{/orders/pending}">All pending orders</a>
       </li>
+
+      <li sec:authorize="hasRole('ROLE_ADMIN')">
+        <a class="glowing-gold" th:href="@{/users/all}">Users</a>
+      </li>
+      <li sec:authorize="hasRole('ROLE_ADMIN')">
+        <a class="glowing-gold" th:href="@{/orders/all}">Orders</a>
+      </li>
+
       <li sec:authorize="isAuthenticated()">
         <form th:action="@{/logout}" th:method="post">
           <button type="submit" class="text-white bg-black glowing-gold" th:text="#{nav_bar_logout}">Logout</button>
@@ -62,7 +70,7 @@
           </select>
         </form>
       </li>
-      <li sec:authorize="!hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')">
+      <li sec:authorize="isAuthenticated() && !hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')">
         <a class="glowing-gold" th:href="@{/cart}">
 <!--          TODO: show the number of products in the cart-->
           <img src="/images/shopping-cart.png" alt="cart">
