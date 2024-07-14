@@ -6,7 +6,7 @@
 
 <section class="gradient-custom">
 
-    <h1 class="display-6 p-2 border-bottom border-4 m-5 fw-bold fst-italic text-center text-white">Orders for shipping:
+    <h1 class="display-6 p-2 border-bottom border-4 m-5 fw-bold fst-italic text-center text-white">Shipping orders:
         <span class="px-2 text-danger" th:text="${#lists.size(orders)}"></span>
     </h1>
 
@@ -68,7 +68,7 @@
 
                     <form th:method="post" th:action="@{/order/change-status/{id}(id=${order.getId()})}">
                         <p class="text-center">
-                            <button type="submit" class="btn-gold rounded-pill fs-5">Send order</button>
+                            <button type="submit" class="btn-gold rounded-pill fs-5">Ship order</button>
                         </p>
                     </form>
 
