@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons::head}"></head>
+<body class="all-orders">
+<header th:replace="~{fragments/commons::nav}"></header>
+
+<section class="gradient-custom">
+
+    <h1 class="display-6 p-2 border-bottom border-4 m-5 fw-bold fst-italic text-center text-white">All users:
+        <span class="px-2 text-white" th:text="${#lists.size(users)}"></span>
+    </h1>
+
+    <div class="container py-1">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-lg-18 col-xl-12 mb-5">
+                <div class="border mb-3 bg-black" style="border-radius: 10px;">
+                    <form th:method="post"
+                          th:action="@{/users/all}">
+                        <div class="p-4 table-responsive">
+                            <table class="table table-dark table-striped table-bordered">
+                                <thead >
+                                <tr class="text-center fw-bold">
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Shipping Address</th>
+                                    <th scope="col">Role</th>
+                                    <th scope="col" colspan="2">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="user: ${users}">
+                                    <th class="align-middle" scope="row" th:text="${user.getId()}">{id}</th>
+                                    <td class="align-middle" th:text="${user.getUsername()}">{username}</td>
+                                    <td class="align-middle" th:text="${user.getEmail()}">{email}</td>
+                                    <td class="align-middle" th:text="${user.getShippingAddress()}">{shippingAddress}</td>
+                                    <td class="align-middle" th:text="${user.getRoles()[0].getType()}">{shippingAddress}</td>
+                                    <td class="align-middle text-center">
+                                        <form th:method="post" th:action="@{/user/change-role/{id}(id=${user.getId()})}">
+                                            <button type="submit"
+                                                    class="rounded-pill px-3 py-1 bg-dark text-white
+                                                    glowing-gold">Edit</button>
+                                        </form>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <form th:method="post" th:action="@{/user/change-role/{id}(id=${user.getId()})}">
+                                            <button type="submit" class="rounded-pill px-3 py-1 bg-dark text-white glowing-gold">Delete</button>
+                                        </form>
+                                    </td>
+<!--                                        <form class="col" th:method="post" th:action="@{/order/change-shippingAddress/{id}(id=${user.getId()})}">-->
+<!--                                            <p class="text-center">-->
+<!--                                                <button type="submit" class="rounded-pill">Change Shipping Address</button>-->
+<!--                                            </p>-->
+<!--                                        </form>-->
+
+<!--                                        <form class="col" th:method="post" th:action="@{/user/delete/{id}(id=${user.getId()})}">-->
+<!--                                            <p class="text-center">-->
+<!--                                                <button type="submit" class="remove-btn rounded-pill fs-5 px-3 py-1">Delete</button>-->
+<!--                                            </p>-->
+<!--                                        </form>-->
+
+
+                                </tr>
+                                </tbody>
+                            </table>
+
+
+
+
+<!--                            <div class="shadow-0 mb-4">-->
+<!--                                <div class="text-white">-->
+<!--                                    <div class="row mb-2">-->
+<!--&lt;!&ndash;                                        <div class="col-md-2 text-center d-flex flex-column justify-content-center align-items-center text-white">&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <p class="mb-0 small text-white" >Id</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <p class="mb-0 small text-white" th:text="${user.getId()}">{id}}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </div>&ndash;&gt;-->
+<!--                                        <div class="col-md-3 text-center d-flex flex-column justify-content-center align-items-center text-white">-->
+<!--                                            <p class="mb-0 small text-white border-bottom">Username</p>-->
+<!--                                            <p class="mb-0 small text-white" th:text="${user.getUsername()}">{username}</p>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-md-3 text-center d-flex flex-column justify-content-center align-items-center text-white">-->
+<!--                                            <p class="mb-0 small text-white border-bottom">Email</p>-->
+<!--                                            <p class="mb-0 small text-white" th:text="${user.getEmail()}">{email}</p>-->
+<!--                                        </div>-->
+<!--&lt;!&ndash;                                        <div class="col-md-2 text-center d-flex flex-column justify-content-center align-items-center text-white">&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <p class="mb-0 small text-white border-bottom">First name</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <p class="mb-0 small text-white" th:text="${user.getFirstName()}">{firstName}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <div class="col-md-2 text-center d-flex flex-column justify-content-center align-items-center text-white">&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <p class="mb-0 small text-white border-bottom">Last name</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <p class="mb-0 small text-white" th:text="${user.getLastName()}">{lastName}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </div>&ndash;&gt;-->
+<!--                                        <div class="col-md-3 text-center d-flex flex-column justify-content-center align-items-center text-white">-->
+<!--                                            <p class="mb-0 small text-white border-bottom">Shipping Address</p>-->
+<!--                                            <p class="mb-0 small text-white" th:text="${user.getShippingAddress()}">{shippingAddress}</p>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-md-3 text-center d-flex flex-column justify-content-center align-items-center text-white">-->
+<!--                                            <p class="mb-0 small text-white border-bottom">Role</p>-->
+<!--                                            <p class="mb-0 small text-white" th:text="${user.getRoles()[0].getType()}">{shippingAddress}</p>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                            </div>-->
+
+<!--                            <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">-->
+
+<!--                            &lt;!&ndash;                        TODO: SHOW ORDER ID&ndash;&gt;-->
+<!--                            <div class="d-flex justify-content-between pt-2 text-white">-->
+<!--                                <p class="fw-bold mb-0 text-white">Order Details</p>-->
+<!--                                <p class="mb-0 text-white" th:text="|Total: ${order.getTotalAmount()}|"><span class="fw-bold me-4 text-white">Total</span> $898.00</p>-->
+<!--                            </div>-->
+<!--                            <div class="d-flex justify-content-between text-white">-->
+<!--                                &lt;!&ndash;                            TODO: format date time - separate date and time &ndash;&gt;-->
+<!--                                <p class="mb-0 text-white" th:text="|Order Date and time: ${order.getOrderDateTime()}|">Order Date and time: 22 Dec,2019</p>-->
+<!--                                <p class="mb-0 text-white" th:text="|Status: ${order.getStatus()}|"><span class="fw-bold me-4 text-white">Status</span>PENDING</p>-->
+<!--                            </div>-->
+<!--                            <p class="fw-bold mb-0 text-white" th:text="|Shipping address: ${order.getShippingAddress()}|">Address</p>-->
+
+                        </div>
+                    </form>
+                    <div class="row">
+
+<!--                        <form class="col" th:method="post" th:action="@{/user/change-role/{id}(id=${user.getId()})}">-->
+<!--                            <p class="text-center">-->
+<!--                                <button type="submit" class="btn-gold rounded-pill fs-5">Change role</button>-->
+<!--                            </p>-->
+<!--                        </form>-->
+
+<!--                        <form class="col" th:method="post" th:action="@{/order/change-shippingAddress/{id}(id=${user.getId()})}">-->
+<!--                            <p class="text-center">-->
+<!--                                <button type="submit" class="btn-gold rounded-pill fs-5">Change Shipping Address</button>-->
+<!--                            </p>-->
+<!--                        </form>-->
+
+<!--                        <form class="col" th:method="post" th:action="@{/user/delete/{id}(id=${user.getId()})}">-->
+<!--                            <p class="text-center">-->
+<!--                                <button type="submit" class="remove-btn rounded-pill fs-5 px-3 py-1">Delete</button>-->
+<!--                            </p>-->
+<!--                        </form>-->
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer th:replace="~{fragments/commons::footer}"></footer>
+</body>
+</html>

@@ -84,4 +84,14 @@ public class UserController {
 
 
     //TODO: implement delete user for admins
+
+    @GetMapping("users/all")
+    public ModelAndView getAllUsers() {
+
+        ModelAndView users = new ModelAndView("users");
+
+        users.addObject("users", userService.getAllUsers());
+
+        return users;
+    }
 }

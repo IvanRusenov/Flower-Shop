@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -96,5 +97,10 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUsername(userLoginDTO.getUsername()).orElseThrow();
         Role role = roleRepository.findByType(RoleType.ROLE_MODERATOR);
         return user.getRoles().contains(role);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }
