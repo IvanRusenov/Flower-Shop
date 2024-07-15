@@ -2,25 +2,19 @@ package com.ivan.Flowers.Shop.controllers;
 
 import com.ivan.Flowers.Shop.enums.StatusType;
 import com.ivan.Flowers.Shop.models.dtos.ChangeOrderStatusDTO;
-import com.ivan.Flowers.Shop.models.dtos.CreateOrderDTO;
-import com.ivan.Flowers.Shop.models.dtos.OrderDTO;
 import com.ivan.Flowers.Shop.models.dtos.OrderDetailsDTO;
 import com.ivan.Flowers.Shop.services.OrderService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.thymeleaf.util.StringUtils;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 @Controller
 public class OrderController {
@@ -102,6 +96,15 @@ public class OrderController {
 
         return orders;
 
+    }
+
+    @PostMapping("/orders/{id}")
+    public ModelAndView delete(@PathVariable("id") long id) {
+
+        orderService.delete(id);
+        //todo: Show message {order with id was deleted}
+
+        return new ModelAndView("redirect:/orders/all");
     }
 
 

@@ -18,7 +18,8 @@
                     <form th:method="post"
                           th:action="@{/order/change-status}">
                         <div class="d-flex justify-content-center pt-4 text-white">
-                            <p class="fw-bold mb-0 text-white text-center" th:text="|Order id: ${order.getId()}|">Order Id: {order.id}</p>
+                            <p class="fw-bold mb-0 text-white text-center"
+                               th:text="|Order id: ${order.getId()}|">Order Id: {order.id}</p>
                         </div>
                         <div class="p-4">
                             <div class="shadow-0 mb-4">
@@ -68,25 +69,36 @@
 
                         </div>
                     </form>
-                    <div class="row">
+                    <div class="d-flex justify-content-center gap-5 pb-2 text-center">
 
-                        <form class="col" th:method="post" th:action="@{/order/change-status/{id}(id=${order.getId()})}">
-                            <p class="text-center">
-                                <button type="submit" class="btn-gold rounded-pill fs-5">Change status</button>
-                            </p>
+                        <form class="" th:method="post" th:action="@{/orders/edit/{id}(id=${order.getId()})}">
+                            <button type="submit"
+                                    class="btn-gold rounded-pill">Edit</button>
                         </form>
 
-                        <form class="col" th:method="post" th:action="@{/order/change-status/{id}(id=${order.getId()})}">
-                            <p class="text-center">
-                                <button type="submit" class="btn-gold rounded-pill fs-5">Edit</button>
-                            </p>
+                        <form class="" th:method="post" th:action="@{/orders/{id}(id=${order.getId()})}">
+                            <button type="submit"
+                                    class="remove-btn rounded-pill
+                                     ">Delete</button>
                         </form>
 
-                        <form class="col" th:method="post" th:action="@{/order/change-status/{id}(id=${order.getId()})}">
-                            <p class="text-center">
-                                <button type="submit" class="remove-btn rounded-pill fs-5 px-3 py-1">Delete</button>
-                            </p>
-                        </form>
+<!--                        <form class="col" th:method="post" th:action="@{/order/change-status/{id}(id=${order.getId()})}">-->
+<!--                            <p class="text-center">-->
+<!--                                <button type="submit" class="btn-gold rounded-pill fs-5">Change status</button>-->
+<!--                            </p>-->
+<!--                        </form>-->
+
+<!--                        <form class="col" th:method="post" th:action="@{/order/change-status/{id}(id=${order.getId()})}">-->
+<!--                            <p class="text-center">-->
+<!--                                <button type="submit" class="btn-gold rounded-pill fs-5">Edit</button>-->
+<!--                            </p>-->
+<!--                        </form>-->
+
+<!--                        <form class="col" th:method="post" th:action="@{/order/change-status/{id}(id=${order.getId()})}">-->
+<!--                            <p class="text-center">-->
+<!--                                <button type="submit" class="remove-btn rounded-pill fs-5 px-3 py-1">Delete</button>-->
+<!--                            </p>-->
+<!--                        </form>-->
 
                     </div>
 

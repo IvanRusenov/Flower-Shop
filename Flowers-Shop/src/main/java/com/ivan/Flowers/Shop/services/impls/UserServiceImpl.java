@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -101,6 +102,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
+
+        //TODO: return userInfoDTO ?
         return userRepository.findAll();
+    }
+
+    @Override
+    public void delete(long id) {
+
+        User user = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Not found user with id " + id));
+        userRepository.delete(user);
+
     }
 }

@@ -43,7 +43,7 @@
                                         </form>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <form th:method="post" th:action="@{/user/change-role/{id}(id=${user.getId()})}">
+                                        <form th:method="delete" th:action="@{/user/delete/{id}(id=${user.getId()})}">
                                             <button type="submit" class="rounded-pill px-3 py-1 bg-dark text-white glowing-gold">Delete</button>
                                         </form>
                                     </td>

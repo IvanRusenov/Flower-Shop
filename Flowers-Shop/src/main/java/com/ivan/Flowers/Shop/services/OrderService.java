@@ -19,4 +19,6 @@ public interface OrderService {
     List<OrderDetailsDTO> getAllPendingOrders();
 
     List<OrderDetailsDTO> getAllOrdersDesc();
+
+    void delete(long id);
 }

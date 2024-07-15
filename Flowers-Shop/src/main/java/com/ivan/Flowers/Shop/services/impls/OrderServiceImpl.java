@@ -223,6 +223,15 @@ public class OrderServiceImpl implements OrderService {
         }).toList();
     }
 
+    @Override
+    public void delete(long id) {
+        orderRestClient
+                .delete()
+                .uri("/orders/" + id)
+                .retrieve();
+
+    }
+
 //    private void validateUser(UserDetails userDetails) {
 //        if (!(userDetails instanceof ShopUserDetails)) {
 //            throw new RuntimeException("User is not authenticated.");

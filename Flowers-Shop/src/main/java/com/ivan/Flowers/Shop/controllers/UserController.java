@@ -6,9 +6,7 @@ import com.ivan.Flowers.Shop.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -93,5 +91,11 @@ public class UserController {
         users.addObject("users", userService.getAllUsers());
 
         return users;
+    }
+
+    @DeleteMapping("user/delete/{id}")
+    public ModelAndView deleteUser(@PathVariable("id") long id) {
+        userService.delete(id);
+        return new ModelAndView("redirect:/users/all");
     }
 }

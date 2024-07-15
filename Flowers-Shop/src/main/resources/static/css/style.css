@@ -135,7 +135,7 @@ button {
     background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
                 radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
     border: 0;
-    border-radius: 6px;
+    /*border-radius: 6px;*/
     box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
     box-sizing: border-box;
     color: white;
@@ -143,15 +143,18 @@ button {
     cursor: pointer;
     display: inline-flex;
     font-family: "JetBrains Mono",monospace;
-    height: 48px;
+    /*height: 48px;*/
     justify-content: center;
-    line-height: 1;
+    /*line-height: 1;*/
     list-style: none;
     overflow: hidden;
-    padding-left: 16px;
-    padding-right: 16px;
+      line-height: 1;
+      position: relative;
+
+    /*padding-left: 16px;*/
+    /*padding-right: 16px;*/
     /*position: relative;*/
-    text-align: left;
+    text-align: center;
     text-decoration: none;
     transition: box-shadow .15s,transform .15s;
     user-select: none;
@@ -272,7 +275,7 @@ button {
     touch-action: manipulation;
     white-space: nowrap;
     will-change: box-shadow,transform;
-    font-size: calc(0.1em + 1.5vw);
+    /*font-size: calc(0.1em + 1.5vw);*/
   }
 
   .remove-btn:hover {
