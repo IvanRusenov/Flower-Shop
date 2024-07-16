@@ -8,10 +8,7 @@ import com.ivan.Flowers.Shop.services.OrderService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.thymeleaf.util.StringUtils;
 
@@ -39,7 +36,7 @@ public class OrderController {
 
     @PostMapping("/order/{cartId}")
     public ModelAndView order(@PathVariable("cartId") long cartId) {
-
+        //TODO: change method name to create
         orderService.createOrder(cartId);
 
         return new ModelAndView("redirect:/order/created");
@@ -123,10 +120,10 @@ public class OrderController {
     }
 
 
-    @PostMapping("/orders/edit")
-    public ModelAndView edit(OrderDetailsDTO orderDetailsDTO) {
+    @PostMapping("/order/edit")
+    public ModelAndView edit(OrderDetailsDTO order) {
 
-//        orderService.edit();
+        orderService.edit(order);
         //todo: Show message {order with id was edited}
 
         return new ModelAndView("redirect:/orders/all");

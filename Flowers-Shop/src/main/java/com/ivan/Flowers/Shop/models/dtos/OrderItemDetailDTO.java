@@ -2,11 +2,20 @@ package com.ivan.Flowers.Shop.models.dtos;
 
 public class OrderItemDetailDTO {
 
+    private long id;
     private int quantity;
     private double unitPrice;
     private String description;
     private String url;
     private int itemNumber;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public int getQuantity() {
         return quantity;

@@ -274,6 +274,18 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
+    @Override
+    public void edit(OrderDetailsDTO orderDetailsDTO) {
+
+        OrderDTO orderDTO = modelMapper.map(orderDetailsDTO, OrderDTO.class);
+
+        orderRestClient
+                .put()
+                .uri("/orders/update")
+                .body(orderDTO)
+                .retrieve();
+    }
+
 //    private void validateUser(UserDetails userDetails) {
 //        if (!(userDetails instanceof ShopUserDetails)) {
 //            throw new RuntimeException("User is not authenticated.");

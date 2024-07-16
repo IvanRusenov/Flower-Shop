@@ -99,10 +99,10 @@ public class OrderController {
     }
 
     @PutMapping("/{orderId}/{newStatus}")
-    public ResponseEntity<Void> updateOrder(@PathVariable Long orderId, @PathVariable StatusType newStatus) {
+    public ResponseEntity<Void> changeStatus(@PathVariable Long orderId, @PathVariable StatusType newStatus) {
 
-        orderService.updateOrder(orderId, newStatus);
-        LOGGER.info("Order with {} was updated", orderId);
+        orderService.changeStatus(orderId, newStatus);
+        LOGGER.info("Changed status of order with id {}. New status {}", orderId, newStatus);
 
         return ResponseEntity.ok().build();
     }
@@ -128,13 +128,13 @@ public class OrderController {
     }
 
 
-//    @PutMapping("/{orderId}")
-//    public ResponseEntity<Void> updateOrder(@PathVariable Long orderId) {
-//
-//        orderService.updateOrder(orderId, newStatus);
-//        LOGGER.info("Order with {} was updated", orderId);
-//
-//        return ResponseEntity.ok().build();
-//    }
+    @PutMapping("/update")
+    public ResponseEntity<Void> updateOrder(@RequestBody OrderDTO orderDTO) {
+
+        orderService.updateOrder(orderDTO);
+        LOGGER.info("Order with {} was updated", orderDTO.getId());
+
+        return ResponseEntity.ok().build();
+    }
 
 }

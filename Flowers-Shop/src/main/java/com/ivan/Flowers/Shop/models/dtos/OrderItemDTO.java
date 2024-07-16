@@ -2,9 +2,18 @@ package com.ivan.Flowers.Shop.models.dtos;
 
 public class OrderItemDTO {
 
+    private long id;
     private long bouquetId;
     private int quantity;
     private double unitPrice;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public long getBouquetId() {
         return bouquetId;

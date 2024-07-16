@@ -80,7 +80,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public void updateOrder(Long orderId, StatusType newStatus) {
+    public void changeStatus(Long orderId, StatusType newStatus) {
 
         Order order = orderRepository.findById(orderId).orElseThrow();
 
@@ -107,6 +107,32 @@ public class OrderServiceImpl implements OrderService {
         return allByStatus.stream()
                 .map(order -> modelMapper.map(order, OrderDTO.class))
                 .toList();
+
+    }
+
+    @Override
+    public void updateOrder(OrderDTO orderDTO) {
+
+        Order order = orderRepository.findById(orderDTO.getId()).orElseThrow();
+
+        Order map = modelMapper.map(orderDTO, Order.class);
+        order.setStatus(map.getStatus());
+        order.setShippingAddress(map.getShippingAddress());
+
+        for (OrderItem item : order.getItems()) {
+            for (OrderItem mapItem : map.getItems()) {
+                if (item.getId() == mapItem.getId()) {
+                    item.setQuantity(mapItem.getQuantity());
+                    item.setTotalPrice(item.getQuantity()* item.getUnitPrice());
+                    break;
+                }
+            }
+        }
+
+        double totalAmount = order.getItems().stream().mapToDouble(OrderItem::getTotalPrice).sum();
+
+        order.setTotalAmount(totalAmount);
+        orderRepository.save(order);
 
     }
 

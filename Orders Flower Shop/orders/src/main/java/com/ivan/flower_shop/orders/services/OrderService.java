@@ -20,7 +20,9 @@ public interface OrderService {
 
     void deleteOrder(Long orderId);
 
-    void updateOrder(Long orderId, StatusType newStatus);
+    void changeStatus(Long orderId, StatusType newStatus);
 
     List<OrderDTO> getAllPendingOrders();
+
+    void updateOrder(OrderDTO orderDTO);
 }
