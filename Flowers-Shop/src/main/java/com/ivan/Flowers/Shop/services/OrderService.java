@@ -1,6 +1,7 @@
 package com.ivan.Flowers.Shop.services;
 
 import com.ivan.Flowers.Shop.enums.StatusType;
+import com.ivan.Flowers.Shop.models.dtos.OrderDTO;
 import com.ivan.Flowers.Shop.models.dtos.OrderDetailsDTO;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -21,4 +22,8 @@ public interface OrderService {
     List<OrderDetailsDTO> getAllOrdersDesc();
 
     void delete(long id);
+
+//    void edit(long id);
+
+    OrderDetailsDTO getOrder(long id);
 }

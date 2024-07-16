@@ -2,6 +2,7 @@ package com.ivan.Flowers.Shop.controllers;
 
 import com.ivan.Flowers.Shop.enums.StatusType;
 import com.ivan.Flowers.Shop.models.dtos.ChangeOrderStatusDTO;
+import com.ivan.Flowers.Shop.models.dtos.OrderDTO;
 import com.ivan.Flowers.Shop.models.dtos.OrderDetailsDTO;
 import com.ivan.Flowers.Shop.services.OrderService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.thymeleaf.util.StringUtils;
 
@@ -108,4 +110,25 @@ public class OrderController {
     }
 
 
+    @GetMapping("/order/edit/{id}")
+    public ModelAndView edit(@PathVariable("id") long id) {
+        ModelAndView editOrder = new ModelAndView("edit-order");
+
+        OrderDetailsDTO order = orderService.getOrder(id);
+        editOrder.addObject("order",order );
+        editOrder.addObject("statuses",StatusType.values());
+
+        return editOrder;
+
+    }
+
+
+    @PostMapping("/orders/edit")
+    public ModelAndView edit(OrderDetailsDTO orderDetailsDTO) {
+
+//        orderService.edit();
+        //todo: Show message {order with id was edited}
+
+        return new ModelAndView("redirect:/orders/all");
+    }
 }

@@ -67,7 +67,9 @@ public class OrderServiceImpl implements OrderService {
         if (order==null) {
             return null;
         }
-        return mapToOrderDTO(order);
+
+        return modelMapper.map(order, OrderDTO.class);
+//        return mapToOrderDTO(order);
 
     }
 
@@ -150,6 +152,7 @@ public class OrderServiceImpl implements OrderService {
 
     private OrderDTO mapToOrderDTO(Order order) {
         OrderDTO orderDTO = new OrderDTO();
+//        orderDTO.setId(order.getId());
         orderDTO.setUserId(order.getUserId());
         orderDTO.setOrderDateTime(order.getOrderDateTime());
         orderDTO.setTotalAmount(order.getTotalAmount());

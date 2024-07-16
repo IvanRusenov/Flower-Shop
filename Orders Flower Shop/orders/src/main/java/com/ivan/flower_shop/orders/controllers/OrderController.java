@@ -127,4 +127,14 @@ public class OrderController {
         return ResponseEntity.ok(allPendingOrders);
     }
 
+
+//    @PutMapping("/{orderId}")
+//    public ResponseEntity<Void> updateOrder(@PathVariable Long orderId) {
+//
+//        orderService.updateOrder(orderId, newStatus);
+//        LOGGER.info("Order with {} was updated", orderId);
+//
+//        return ResponseEntity.ok().build();
+//    }
+
 }

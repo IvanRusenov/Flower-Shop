@@ -232,6 +232,48 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
+//    @Override
+//    public void edit(long id) {
+//
+//
+//        orderRestClient.edit();
+//    }
+
+    @Override
+    public OrderDetailsDTO getOrder(long id) {
+
+        OrderDTO orderDTO = orderRestClient
+                .get()
+                .uri("/orders/" + id)
+                .retrieve()
+                .body(new ParameterizedTypeReference<>() {
+                });
+
+
+        OrderDetailsDTO orderDetailsDTO = modelMapper.map(orderDTO, OrderDetailsDTO.class);
+
+        List<OrderItemDetailDTO> orderItemDetailDTOS = orderDTO.getItems().stream().map(orderItemDTO -> {
+
+            OrderItemDetailDTO orderItemDetailDTO = modelMapper.map(orderItemDTO, OrderItemDetailDTO.class);
+            Bouquet bouquet = bouquetRepository.findById(orderItemDTO.getBouquetId())
+                    .orElseThrow(
+                            () -> new NoSuchElementException("Bouquet not found for ID "
+                                    + orderItemDTO.getBouquetId())
+                    );
+
+            orderItemDetailDTO.setItemNumber(bouquet.getItemNumber());
+            orderItemDetailDTO.setDescription(bouquet.getDescription());
+            orderItemDetailDTO.setUrl(bouquet.getUrl());
+
+            return orderItemDetailDTO;
+
+        }).toList();
+
+        orderDetailsDTO.setItems(orderItemDetailDTOS);
+        return orderDetailsDTO;
+
+    }
+
 //    private void validateUser(UserDetails userDetails) {
 //        if (!(userDetails instanceof ShopUserDetails)) {
 //            throw new RuntimeException("User is not authenticated.");
@@ -240,3 +282,4 @@ public class OrderServiceImpl implements OrderService {
 
 
 }
+//TODO: IMPLEMENT CALENDAR WITH NAME DAYS
