@@ -370,6 +370,9 @@ button {
     border-radius: 10px;
 }
 
+.deleted {
+    display: none;
+}
 
 .shipping-order {
     background-image: url(/images/shipping-background.jpg);

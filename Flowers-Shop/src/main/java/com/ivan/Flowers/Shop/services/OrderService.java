@@ -26,5 +26,11 @@ public interface OrderService {
 
     OrderDetailsDTO getOrder(long id);
 
-    void edit(OrderDetailsDTO orderDetailsDTO);
+    OrderDetailsDTO edit(OrderDetailsDTO orderDetailsDTO);
+
+    OrderDetailsDTO deleteItem(Long itemId, Long orderId);
+
+    void cancelOrder();
+
+    void save(OrderDetailsDTO orderDetailsDTO);
 }

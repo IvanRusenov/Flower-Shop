@@ -5,9 +5,11 @@ import com.ivan.Flowers.Shop.models.dtos.ChangeOrderStatusDTO;
 import com.ivan.Flowers.Shop.models.dtos.OrderDTO;
 import com.ivan.Flowers.Shop.models.dtos.OrderDetailsDTO;
 import com.ivan.Flowers.Shop.services.OrderService;
+import jakarta.persistence.criteria.Order;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.thymeleaf.util.StringUtils;
@@ -41,7 +43,6 @@ public class OrderController {
 
         return new ModelAndView("redirect:/order/created");
     }
-
 
 
     @GetMapping("order/created")
@@ -88,7 +89,7 @@ public class OrderController {
 
 
     @GetMapping("/orders/all")
-    public ModelAndView getAllOrdersDesc(){
+    public ModelAndView getAllOrdersDesc() {
         ModelAndView orders = new ModelAndView("orders");
 
         orders.addObject("orders", orderService.getAllOrdersDesc());
@@ -112,8 +113,8 @@ public class OrderController {
         ModelAndView editOrder = new ModelAndView("edit-order");
 
         OrderDetailsDTO order = orderService.getOrder(id);
-        editOrder.addObject("order",order );
-        editOrder.addObject("statuses",StatusType.values());
+        editOrder.addObject("order", order);
+        editOrder.addObject("statuses", StatusType.values());
 
         return editOrder;
 
@@ -123,7 +124,39 @@ public class OrderController {
     @PostMapping("/order/edit")
     public ModelAndView edit(OrderDetailsDTO order) {
 
-        orderService.edit(order);
+        ModelAndView editOrder = new ModelAndView("edit-order");
+
+        editOrder.addObject("order", order);
+
+        return editOrder;
+
+        //todo: Show message {order with id was edited}
+
+//        return new ModelAndView("redirect:/orders/all");
+    }
+
+    @PostMapping("/order/deleteItem")
+    public ModelAndView deleteItem(@RequestParam Long itemId, @RequestParam Long orderId) {
+
+        ModelAndView editOrder = new ModelAndView("edit-order");
+
+        OrderDetailsDTO orderDetailsDTO = orderService.deleteItem(itemId, orderId);
+        editOrder.addObject("order", orderDetailsDTO);
+        editOrder.addObject("statuses", StatusType.values());
+        return editOrder;
+    }
+
+    @GetMapping("/order/cancel")
+    public ModelAndView cansel() {
+        orderService.cancelOrder();
+        return new ModelAndView("redirect:/orders/all");
+    }
+
+
+    @PostMapping("/order/save")
+    public ModelAndView save(OrderDetailsDTO order) {
+
+        orderService.save(order);
         //todo: Show message {order with id was edited}
 
         return new ModelAndView("redirect:/orders/all");

@@ -5,12 +5,14 @@ import com.ivan.flower_shop.orders.models.dtos.OrderDTO;
 import com.ivan.flower_shop.orders.models.dtos.OrderItemDTO;
 import com.ivan.flower_shop.orders.models.entities.Order;
 import com.ivan.flower_shop.orders.models.entities.OrderItem;
+import com.ivan.flower_shop.orders.repositories.OrderItemRepository;
 import com.ivan.flower_shop.orders.repositories.OrderRepository;
 import com.ivan.flower_shop.orders.services.OrderService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,10 +20,12 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final ModelMapper modelMapper;
+    private final OrderItemRepository orderItemRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository, ModelMapper modelMapper) {
+    public OrderServiceImpl(OrderRepository orderRepository, ModelMapper modelMapper, OrderItemRepository orderItemRepository) {
         this.orderRepository = orderRepository;
         this.modelMapper = modelMapper;
+        this.orderItemRepository = orderItemRepository;
     }
 
     @Override
@@ -116,24 +120,50 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findById(orderDTO.getId()).orElseThrow();
 
         Order map = modelMapper.map(orderDTO, Order.class);
+
         order.setStatus(map.getStatus());
         order.setShippingAddress(map.getShippingAddress());
 
+        List<OrderItem> items = new ArrayList<>();
+
         for (OrderItem item : order.getItems()) {
             for (OrderItem mapItem : map.getItems()) {
+
                 if (item.getId() == mapItem.getId()) {
                     item.setQuantity(mapItem.getQuantity());
                     item.setTotalPrice(item.getQuantity()* item.getUnitPrice());
+                    items.add(item);
                     break;
                 }
             }
         }
 
+
+
+        for (OrderItem item : order.getItems()) {
+            order.getItems().remove(item);
+            orderItemRepository.delete(item);
+
+        }
+        order.setItems(items);
+//        orderItemRepository.saveAll(items);
+
+//        for (OrderItem item : order.getItems()) {
+//            for (OrderItem mapItem : map.getItems()) {
+//
+//                if (item.getId() == mapItem.getId()) {
+//                    item.setQuantity(mapItem.getQuantity());
+//                    item.setTotalPrice(item.getQuantity()* item.getUnitPrice());
+//                }
+//            }
+//        }
+
         double totalAmount = order.getItems().stream().mapToDouble(OrderItem::getTotalPrice).sum();
 
         order.setTotalAmount(totalAmount);
-        orderRepository.save(order);
+        orderItemRepository.saveAll(order.getItems());
 
+        saveOrder(order);
     }
 
     @Override

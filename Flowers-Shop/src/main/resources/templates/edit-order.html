@@ -10,7 +10,7 @@
 <!--        <span class="px-2 text-white" th:text="${#lists.size(orders)}"></span>-->
 <!--    </h1>-->
     <form th:method="post"
-          th:action="@{/order/edit}"
+          th:action="@{/order/save}"
           th:object="${order}"
     >
 
@@ -43,9 +43,11 @@
                                             </p>
                                         </div>
 
-                                        <div class="col-lg-3 text-center d-flex flex-column justify-content-center align-items-center text-white">
-                                            <form class="" th:method="post" th:action="@{/orders/{id}(id=${order.getId()})}">
-                                                <button type="submit"
+                                        <div  class="col-lg-3 text-center d-flex flex-column justify-content-center align-items-center text-white">
+                                            <form th:method="post" th:action="@{/order/deleteItem}">
+                                                <input type="hidden" name="itemId" th:value="${item.id}">
+                                                <input type="hidden" name="orderId" th:value="${order.id}">
+                                                <button th:if="(*{items.size()} != 1)" type="submit"
                                                         class="remove-btn rounded-pill
                                                             ">Delete</button>
                                             </form>
@@ -62,7 +64,7 @@
                                 <label for="status">Status:</label>
                                 <select th:field="*{status}" class="mb-3" id="status" name="status">
                                     <option th:value="-1" disabled selected>Select new status</option>
-                                    <option th:each="status: ${statuses}" th:value="${status}" th:text="${status}">Open this select menu</option>
+                                    <option th:each="status: ${statuses}" th:value="${status}" th:text="${status}">{status}</option>
                                 </select>
 
 <!--                                <input type="text" id="status" name="status" th:field="*{status}" /><br/>-->
@@ -82,13 +84,21 @@
 <!--                    </form>-->
                     <div class="d-flex justify-content-center gap-5 pb-2 text-center">
 
-                        <form class="" th:method="get" th:action="@{/orders/all}">
-                            <button type="submit"
-                                    class="btn-gold rounded-pill">Cancel</button>
-                        </form>
 
-                            <button type="submit"
-                                    class="btn-gold rounded-pill">Save</button>
+                        <div class="d-flex justify-content-center gap-5 pb-2 text-center">
+                            <form th:method="get" th:action="@{/order/cancel}">
+                                <button type="submit" class="btn-gold rounded-pill">Cancel</button>
+                            </form>
+                            <button type="submit" class="btn-gold rounded-pill">Save</button>
+                        </div>
+
+<!--                        <form class="" th:method="get" th:action="@{/orders/all}">-->
+<!--                            <button type="submit"-->
+<!--                                    class="btn-gold rounded-pill">Cancel</button>-->
+<!--                        </form>-->
+
+<!--                            <button type="submit"-->
+<!--                                    class="btn-gold rounded-pill">Save</button>-->
 
                     </div>
 

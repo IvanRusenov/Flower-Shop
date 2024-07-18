@@ -71,12 +71,12 @@
                     </form>
                     <div class="d-flex justify-content-center gap-5 pb-2 text-center">
 
-                        <form class="" th:action="@{/order/edit/{id}(id=*{order.getId()})}">
+                        <form th:method="get" th:action="@{/order/edit/{id}(id=*{order.getId()})}">
                             <button type="submit"
                                     class="btn-gold rounded-pill">Edit</button>
                         </form>
 
-                        <form class="" th:method="post" th:action="@{/orders/{id}(id=*{order.getId()})}">
+                        <form th:method="post" th:action="@{/orders/{id}(id=*{order.getId()})}">
                             <button type="submit"
                                     class="remove-btn rounded-pill
                                      ">Delete</button>

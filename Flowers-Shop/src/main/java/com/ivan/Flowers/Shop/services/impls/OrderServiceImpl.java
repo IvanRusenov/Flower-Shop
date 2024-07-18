@@ -35,6 +35,8 @@ public class OrderServiceImpl implements OrderService {
     private final UserRepository userRepository;
     private final BouquetRepository bouquetRepository;
     private final CartService cartService;
+    private OrderDetailsDTO currentOrder;
+
 
     public OrderServiceImpl(@Qualifier("ordersRestClient") RestClient orderRestClient, CartRepository cartRepository, ModelMapper modelMapper, UserRepository userRepository, BouquetRepository bouquetRepository, CartService cartService) {
         this.orderRestClient = orderRestClient;
@@ -275,7 +277,47 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void edit(OrderDetailsDTO orderDetailsDTO) {
+    public OrderDetailsDTO edit(OrderDetailsDTO orderDetailsDTO) {
+
+
+    return new OrderDetailsDTO();
+
+//        OrderDTO orderDTO = modelMapper.map(orderDetailsDTO, OrderDTO.class);
+//
+//        orderRestClient
+//                .put()
+//                .uri("/orders/update")
+//                .body(orderDTO)
+//                .retrieve();
+//
+    }
+
+    @Override
+    public OrderDetailsDTO deleteItem(Long itemId, Long orderId) {
+
+        if (this.currentOrder == null) {
+            this.currentOrder = getOrder(orderId);
+        }
+
+//        OrderItemDetailDTO item = currentOrder.getItems().stream().filter(i -> i.getId() == itemId).findFirst().orElseThrow();
+
+
+        List<OrderItemDetailDTO> orderItemDetailDTOS = currentOrder.getItems().stream().filter(i -> i.getId() != itemId).toList();
+
+        currentOrder.setItems(orderItemDetailDTOS);
+
+        return currentOrder;
+    }
+
+    @Override
+    public void cancelOrder() {
+        currentOrder = null;
+    }
+
+
+
+    @Override
+    public void save(OrderDetailsDTO orderDetailsDTO) {
 
         OrderDTO orderDTO = modelMapper.map(orderDetailsDTO, OrderDTO.class);
 
@@ -284,7 +326,12 @@ public class OrderServiceImpl implements OrderService {
                 .uri("/orders/update")
                 .body(orderDTO)
                 .retrieve();
+
+        currentOrder = null;
+
     }
+
+
 
 //    private void validateUser(UserDetails userDetails) {
 //        if (!(userDetails instanceof ShopUserDetails)) {
