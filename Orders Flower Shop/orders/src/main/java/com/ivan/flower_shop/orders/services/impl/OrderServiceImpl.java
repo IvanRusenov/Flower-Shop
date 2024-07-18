@@ -54,7 +54,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDTO> getAllOrdersFromUser(Long userId) {
 
-//        List<Order> allByUserId = orderRepository.findAllByUserId(userId);
         List<Order> allByUserId = orderRepository.findAllByUserIdOrderByIdDesc(userId);
 
         return allByUserId.stream()
@@ -73,7 +72,6 @@ public class OrderServiceImpl implements OrderService {
         }
 
         return modelMapper.map(order, OrderDTO.class);
-//        return mapToOrderDTO(order);
 
     }
 
@@ -89,15 +87,6 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findById(orderId).orElseThrow();
 
         order.setStatus(newStatus);
-
-
-//        order.setUserId(orderDTO.getUserId());
-//        order.setOrderDateTime(orderDTO.getOrderDateTime());
-//        order.setTotalAmount(orderDTO.getTotalAmount());
-//        order.setStatus(orderDTO.getStatus());
-//        order.setShippingAddress(orderDTO.getShippingAddress());
-//
-//        mapToOrderItems(orderDTO, order);
 
         saveOrder(order);
 
@@ -119,15 +108,15 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = orderRepository.findById(orderDTO.getId()).orElseThrow();
 
-        Order map = modelMapper.map(orderDTO, Order.class);
+        Order newData = modelMapper.map(orderDTO, Order.class);
 
-        order.setStatus(map.getStatus());
-        order.setShippingAddress(map.getShippingAddress());
+        order.setStatus(newData.getStatus());
+        order.setShippingAddress(newData.getShippingAddress());
 
         List<OrderItem> items = new ArrayList<>();
 
         for (OrderItem item : order.getItems()) {
-            for (OrderItem mapItem : map.getItems()) {
+            for (OrderItem mapItem : newData.getItems()) {
 
                 if (item.getId() == mapItem.getId()) {
                     item.setQuantity(mapItem.getQuantity());
@@ -138,31 +127,13 @@ public class OrderServiceImpl implements OrderService {
             }
         }
 
-
-
-        for (OrderItem item : order.getItems()) {
-            order.getItems().remove(item);
-            orderItemRepository.delete(item);
-
-        }
+        orderItemRepository.deleteAll(order.getItems());
         order.setItems(items);
-//        orderItemRepository.saveAll(items);
-
-//        for (OrderItem item : order.getItems()) {
-//            for (OrderItem mapItem : map.getItems()) {
-//
-//                if (item.getId() == mapItem.getId()) {
-//                    item.setQuantity(mapItem.getQuantity());
-//                    item.setTotalPrice(item.getQuantity()* item.getUnitPrice());
-//                }
-//            }
-//        }
 
         double totalAmount = order.getItems().stream().mapToDouble(OrderItem::getTotalPrice).sum();
-
         order.setTotalAmount(totalAmount);
-        orderItemRepository.saveAll(order.getItems());
 
+        orderItemRepository.saveAll(order.getItems());
         saveOrder(order);
     }
 
@@ -208,7 +179,6 @@ public class OrderServiceImpl implements OrderService {
 
     private OrderDTO mapToOrderDTO(Order order) {
         OrderDTO orderDTO = new OrderDTO();
-//        orderDTO.setId(order.getId());
         orderDTO.setUserId(order.getUserId());
         orderDTO.setOrderDateTime(order.getOrderDateTime());
         orderDTO.setTotalAmount(order.getTotalAmount());
