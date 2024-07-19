@@ -121,4 +121,21 @@ public class UserController {
         return editUser;
 
     }
+
+
+    @PostMapping("user/save")
+    public ModelAndView save(EditUserDTO editUserDTO, BindingResult bindingResult) {
+
+
+        if (bindingResult.hasErrors()){
+            return new ModelAndView("redirect:/user/edit/"+editUserDTO.getId());
+        }
+
+
+        if (!userService.save(editUserDTO)) {
+            return new ModelAndView("redirect:/user/edit/"+editUserDTO.getId());
+        }
+
+        return new ModelAndView("redirect:/users/all");
+    }
 }

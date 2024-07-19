@@ -7,10 +7,11 @@
 <section class="gradient-custom mb-5">
     <div class="position-absolute top-50 start-50 translate-middle content-wrap w-25 mx-auto bg-opacity-75 bg-black border custom-round">
         <h1 class="text-center mt-2 "><span class="badge badge-pill badge-dark">Edit user data</span></h1>
-        <form class="form-floating mx-auto w-75 bg-blur" th:method="post" th:action="@{/user/edit}" th:object="${editUserDTO}">
+        <form class="form-floating mx-auto w-75 bg-blur" th:method="post" th:action="@{/user/save}" th:object="${editUserDTO}">
             <div class="form-floating mb-3 text-center">
+                <input th:field="*{id}" type="hidden">
                 <p class="fw-bold mb-0 text-white text-center"
-                   th:text="|User id: *{id}|">User Id: {user.id}</p>
+                th:text="|User id: *{id}|">User Id: {user.id}</p>
             </div>
             <div class="form-floating mb-3 text-center">
                 <input th:field="*{username}" th:errorclass="is-invalid" class="form-control" id="username" placeholder="Username">

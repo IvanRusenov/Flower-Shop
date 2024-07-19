@@ -1,6 +1,7 @@
 package com.ivan.Flowers.Shop.services.impls;
 
 import com.ivan.Flowers.Shop.enums.RoleType;
+import com.ivan.Flowers.Shop.models.dtos.EditUserDTO;
 import com.ivan.Flowers.Shop.models.dtos.UserLoginDTO;
 import com.ivan.Flowers.Shop.models.dtos.UserRegisterDTO;
 import com.ivan.Flowers.Shop.models.entities.Cart;
@@ -10,6 +11,7 @@ import com.ivan.Flowers.Shop.repositories.CartRepository;
 import com.ivan.Flowers.Shop.repositories.RoleRepository;
 import com.ivan.Flowers.Shop.repositories.UserRepository;
 import com.ivan.Flowers.Shop.services.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,13 +28,14 @@ public class UserServiceImpl implements UserService {
 
     private final CartRepository cartRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ModelMapper modelMapper;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, CartRepository cartRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, CartRepository cartRepository, PasswordEncoder passwordEncoder, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.cartRepository = cartRepository;
         this.passwordEncoder = passwordEncoder;
-
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -119,5 +122,33 @@ public class UserServiceImpl implements UserService {
     public User getUser(Long userId) {
 
        return userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("Not found user with id " + userId));
+    }
+
+    @Override
+    public boolean save(EditUserDTO editUserDTO) {
+
+
+        Optional<User> oldUser = userRepository.findById(editUserDTO.getId());
+//        Optional<User> byUsername = userRepository.findByUsername(editUserDTO.getUsername());
+//        Optional<User> byEmail = userRepository.findByEmail(editUserDTO.getEmail());
+
+
+
+
+//        if (byUsername.isPresent() || byEmail.isPresent()){
+//            return false;
+//        }
+        User user = oldUser.get();
+        user.setEmail(editUserDTO.getEmail());
+        user.setShippingAddress(editUserDTO.getShippingAddress());
+        user.setUsername(editUserDTO.getUsername());
+        Role role = roleRepository.findByType(editUserDTO.getRole());
+        user.setRoles(List.of(role));
+
+        userRepository.save(user);
+
+        return true;
+
+
     }
 }
