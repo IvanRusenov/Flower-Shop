@@ -4,21 +4,12 @@
 <body class="all-orders">
 <header th:replace="~{fragments/commons::nav}"></header>
 
-<section class="gradient-custom">
-
-<!--    <h1 class="display-6 p-2 border-bottom border-4 m-5 fw-bold fst-italic text-center text-white">All orders:-->
-<!--        <span class="px-2 text-white" th:text="${#lists.size(orders)}"></span>-->
-<!--    </h1>-->
-    <form th:method="post"
-          th:action="@{/order/save}"
-          th:object="${order}"
-    >
-
-    <div class="container py-1">
-        <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-lg-8 col-xl-6">
-                <div class="border mb-3  bg-black" style="border-radius: 10px;">
-
+<section class="gradient-custom mb-5">
+    <form th:method="post" th:action="@{/order/save}" th:object="${order}">
+        <div class="container py-1">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-lg-8 col-xl-6">
+                    <div class="border mb-3 bg-black" style="border-radius: 10px;">
                         <input type="hidden" th:field="*{id}">
                         <div class="d-flex justify-content-center pt-4 text-white">
                             <p class="fw-bold mb-0 text-white text-center"
@@ -30,7 +21,7 @@
                                     <div class="row mb-2" th:each="item, i : *{items}">
                                         <div class="col-lg-3">
                                             <img style="width: 100px; height: 100px;" th:src="${item.getUrl()}"
-                                            class="img-fluid" alt="Picture of bouquet">
+                                                 class="img-fluid" alt="Picture of bouquet">
                                         </div>
                                         <input type="hidden" th:field="*{items[__${i.index}__].id}">
                                         <div class="col-lg-3 text-center d-flex flex-column justify-content-center align-items-center text-white">
@@ -43,19 +34,14 @@
                                             </p>
                                         </div>
 
-                                        <div  class="col-lg-3 text-center d-flex flex-column justify-content-center align-items-center text-white">
-                                            <form th:method="post" th:action="@{/order/deleteItem}">
-                                                <input type="hidden" name="itemId" th:value="${item.id}">
-                                                <input type="hidden" name="orderId" th:value="${order.id}">
-                                                <button th:if="(*{items.size()} != 1)" type="submit"
-                                                        class="remove-btn rounded-pill
-                                                            ">Delete</button>
-                                            </form>
+                                        <div class="col-lg-3 text-center d-flex flex-column justify-content-center align-items-center text-white">
+                                            <input type="hidden" id="itemId" name="itemId" th:value="${item.id}">
+                                            <input type="hidden" id="orderId" name="orderId" th:value="${order.id}">
+                                            <input type="hidden" id="csrfToken" th:value="${_csrf.token}" />
+                                            <button th:if="(*{items.size()} != 1)" type="button" class="remove-btn rounded-pill" onclick="deleteItem()">Delete</button>
                                         </div>
-
                                     </div>
                                 </div>
-
                             </div>
 
                             <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
@@ -66,51 +52,61 @@
                                     <option th:value="-1" disabled selected>Select new status</option>
                                     <option th:each="status: ${statuses}" th:value="${status}" th:text="${status}">{status}</option>
                                 </select>
-
-<!--                                <input type="text" id="status" name="status" th:field="*{status}" /><br/>-->
-
                             </div>
 
                             <div class="col-lg-12 text-white">
-<!--                                <p>Shipping address:</p>-->
                                 <p class="col-lg-12 text-white">
                                     <label for="shippingAddress">Shipping Address</label>
                                     <input class="col-lg-12" type="text" id="shippingAddress" name="shippingAddress" th:field="*{shippingAddress}" /><br/>
                                 </p>
                             </div>
-<!--                            <p class="fw-bold mb-0 text-white" th:text="|Shipping address: ${order.getShippingAddress()}|">Address</p>-->
-
                         </div>
-<!--                    </form>-->
-                    <div class="d-flex justify-content-center gap-5 pb-2 text-center">
-
-
                         <div class="d-flex justify-content-center gap-5 pb-2 text-center">
                             <form th:method="get" th:action="@{/order/cancel}">
                                 <button type="submit" class="btn-gold rounded-pill">Cancel</button>
                             </form>
                             <button type="submit" class="btn-gold rounded-pill">Save</button>
                         </div>
-
-<!--                        <form class="" th:method="get" th:action="@{/orders/all}">-->
-<!--                            <button type="submit"-->
-<!--                                    class="btn-gold rounded-pill">Cancel</button>-->
-<!--                        </form>-->
-
-<!--                            <button type="submit"-->
-<!--                                    class="btn-gold rounded-pill">Save</button>-->
-
                     </div>
-
-
-
                 </div>
             </div>
         </div>
-    </div>
     </form>
-
 </section>
 <footer th:replace="~{fragments/commons::footer}"></footer>
+
+<script>
+
+    const csrfToken = document.getElementById('csrfToken').value;
+    const itemId = document.getElementById('itemId').value;
+    const orderId = document.getElementById('orderId').value;
+
+    function deleteItem() {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/order/deleteItem';
+
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = '_csrf';
+        csrfInput.value = csrfToken;
+        form.appendChild(csrfInput);
+
+        const inputItemId = document.createElement('input');
+        inputItemId.type = 'hidden';
+        inputItemId.name = 'itemId';
+        inputItemId.value = itemId;
+        form.appendChild(inputItemId);
+
+        const inputOrderId = document.createElement('input');
+        inputOrderId.type = 'hidden';
+        inputOrderId.name = 'orderId';
+        inputOrderId.value = orderId;
+        form.appendChild(inputOrderId);
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
 </body>
 </html>
