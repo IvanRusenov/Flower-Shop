@@ -1,9 +1,6 @@
 package com.ivan.Flowers.Shop.models.dtos;
 
 import com.ivan.Flowers.Shop.enums.RoleType;
-import com.ivan.Flowers.Shop.models.entities.Role;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
