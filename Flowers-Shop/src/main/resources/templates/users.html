@@ -36,15 +36,15 @@
                                     <td class="align-middle" th:text="${user.getShippingAddress()}">{shippingAddress}</td>
                                     <td class="align-middle" th:text="${user.getRoles()[0].getType()}">{shippingAddress}</td>
                                     <td class="align-middle text-center">
-                                        <form th:method="post" th:action="@{/user/change-role/{id}(id=${user.getId()})}">
-                                            <button type="submit"
+                                        <form th:method="get" th:action="@{/user/edit/{id}(id=${user.getId()})}">
+                                            <button th:if="${user.id} != 1" type="submit"
                                                     class="rounded-pill px-3 py-1 bg-dark text-white
                                                     glowing-gold">Edit</button>
                                         </form>
                                     </td>
                                     <td class="align-middle text-center">
                                         <form th:method="delete" th:action="@{/user/delete/{id}(id=${user.getId()})}">
-                                            <button type="submit" class="rounded-pill px-3 py-1 bg-dark text-white glowing-gold">Delete</button>
+                                            <button th:if="${user.id} != 1" type="submit" class="rounded-pill px-3 py-1 bg-dark text-white glowing-gold">Delete</button>
                                         </form>
                                     </td>
 <!--                                        <form class="col" th:method="post" th:action="@{/order/change-shippingAddress/{id}(id=${user.getId()})}">-->

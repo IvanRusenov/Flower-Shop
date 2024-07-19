@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons::head}"></head>
+<body class="all-orders">
+<header th:replace="~{fragments/commons::nav}"></header>
+
+<section class="gradient-custom mb-5">
+    <div class="position-absolute top-50 start-50 translate-middle content-wrap w-25 mx-auto bg-opacity-75 bg-black border custom-round">
+        <h1 class="text-center mt-2 "><span class="badge badge-pill badge-dark">Edit user data</span></h1>
+        <form class="form-floating mx-auto w-75 bg-blur" th:method="post" th:action="@{/user/edit}" th:object="${editUserDTO}">
+            <div class="form-floating mb-3 text-center">
+                <p class="fw-bold mb-0 text-white text-center"
+                   th:text="|User id: *{id}|">User Id: {user.id}</p>
+            </div>
+            <div class="form-floating mb-3 text-center">
+                <input th:field="*{username}" th:errorclass="is-invalid" class="form-control" id="username" placeholder="Username">
+                <label for="username">Username</label>
+                <small th:errors="*{username}" class="text-danger ">Username error message</small>
+            </div>
+            <div class="form-floating mb-3 text-center">
+                <input th:field="*{email}" th:errorclass="is-invalid" type="email" class="form-control" id="email" placeholder="name@example.com">
+                <label for="email">Email address</label>
+                <small th:errors="*{email}" class="text-danger">Email error message</small>
+            </div>
+            <div class="form-floating mb-3 text-center">
+                <input th:field="*{shippingAddress}" th:errorclass="is-invalid" class="form-control" id="shippingAddress" placeholder="Shipping Address">
+                <label for="shippingAddress">Shipping address</label>
+                <small th:errors="*{shippingAddress}" class="text-danger ">Shipping address error message</small>
+            </div>
+            <div class="form-floating mb-3 text-center">
+                <select th:field="*{role}" class="form-control" id="role" name="role">
+                    <option th:value="-1" disabled selected>Select new role</option>
+                    <option th:each="role: ${roles}" th:value="${role}" th:text="${role}">{role}</option>
+                </select>
+                <label for="role">Role:</label>
+                <small th:errors="*{role}" class="text-danger">Role error message</small>
+            </div>
+            <div class="form-floating mb-3 text-center">
+                <a th:href="@{/users/all}" type="submit" class="btn-gold rounded-pill">Cancel</a>
+                <button class="btn-gold rounded-pill ">Save</button>
+            </div>
+        </form>
+    </div>
+</section>
+<footer th:replace="~{fragments/commons::footer}"></footer>
+</body>
+</html>

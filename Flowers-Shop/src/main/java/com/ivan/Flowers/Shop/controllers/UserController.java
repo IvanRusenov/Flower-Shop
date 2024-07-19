@@ -1,9 +1,13 @@
 package com.ivan.Flowers.Shop.controllers;
 
+import com.ivan.Flowers.Shop.enums.RoleType;
+import com.ivan.Flowers.Shop.models.dtos.EditUserDTO;
 import com.ivan.Flowers.Shop.models.dtos.UserLoginDTO;
 import com.ivan.Flowers.Shop.models.dtos.UserRegisterDTO;
+import com.ivan.Flowers.Shop.models.entities.User;
 import com.ivan.Flowers.Shop.services.UserService;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +17,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
 
     private final UserService userService;
+    private final ModelMapper modelMapper;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, ModelMapper modelMapper) {
         this.userService = userService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/")
@@ -97,5 +103,22 @@ public class UserController {
     public ModelAndView deleteUser(@PathVariable("id") long id) {
         userService.delete(id);
         return new ModelAndView("redirect:/users/all");
+    }
+
+
+    @GetMapping("/user/edit/{userId}")
+    public ModelAndView editUser(@PathVariable("userId") Long userId) {
+        ModelAndView editUser = new ModelAndView("edit-user");
+
+        User user = userService.getUser(userId);
+        EditUserDTO editUserDTO = modelMapper.map(user, EditUserDTO.class);
+        editUserDTO.setRole(user.getRoles().getFirst().getType());
+        //TODO: change User to have only one role
+
+        editUser.addObject("roles", RoleType.values());
+        editUser.addObject("editUserDTO", editUserDTO);
+
+        return editUser;
+
     }
 }
