@@ -4,9 +4,9 @@
 >
 
 <head th:replace="~{fragments/commons::head}"></head>
-<body>
+<body class="home">
 <header th:replace="~{fragments/commons::nav}"></header>
-<main class="home">
+<main>
     <div class="container text-center my-5">
         <div th:object="${bouquets}" class="row g-5">
             <div th:each="bouquet: ${bouquets}" class="col-12 col-md-6 col-lg-4">

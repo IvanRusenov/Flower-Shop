@@ -209,11 +209,7 @@ button {
      transform: scale(1.05);
  }
 
-  .home {
-   background-color: rgba(0, 0, 0, 1);
-   background-blend-mode: overlay;
 
- }
 
 .card {
    height: 70vh;
@@ -375,16 +371,23 @@ button {
 }
 
 .shipping-order {
-    background-image: url(/images/shipping-background.jpg);
+    background-image: url(/images/shipping-bg.jpg);
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
 }
 
 .all-orders {
-    background-image: url(/images/all-orders-bg4.jpg);
+    background-image: url(/images/all-orders-bg6.jpg);
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
 }
 
+.bouquet-add {
+    background-image: url(/images/bouquet-add-bg2.jpg);
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+
+}
