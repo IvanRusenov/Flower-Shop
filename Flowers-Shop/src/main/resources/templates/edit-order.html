@@ -5,7 +5,7 @@
 <header th:replace="~{fragments/commons::nav}"></header>
 
 <section class="gradient-custom mb-5">
-    <form th:method="post" th:action="@{/order/save}" th:object="${order}">
+    <form id="formData" th:method="post" th:action="@{/order/save}" th:object="${order}">
         <div class="container py-1">
             <div class="row d-flex justify-content-center align-items-center">
                 <div class="col-lg-8 col-xl-6">
@@ -24,21 +24,27 @@
                                                  class="img-fluid" alt="Picture of bouquet">
                                         </div>
                                         <input type="hidden" th:field="*{items[__${i.index}__].id}">
-                                        <div class="col-lg-3 text-center d-flex flex-column justify-content-center align-items-center text-white">
-                                            <p class="mb-0 small text-white" th:text="|Item No: ${item.getItemNumber()}|">Item number</p>
+                                        <div class="col-lg-3 text-center d-flex flex-column justify-content-center
+                                        align-items-center text-white">
+                                            <p class="mb-0 small text-white"
+                                               th:text="|Item No: ${item.getItemNumber()}|">Item number</p>
                                         </div>
-                                        <div class="col-lg-3 text-center d-flex flex-column justify-content-center align-items-center text-white">
+                                        <div class="col-lg-3 text-center d-flex flex-column justify-content-center
+                                        align-items-center text-white">
                                             <p class="col-10">
                                                 <label for="quantity">Quantity:</label>
-                                                <input class="col-5" type="number" step="1" id="quantity" name="quantity" th:field="*{items[__${i.index}__].quantity}"/><br/>
+                                                <input class="col-5" type="number" step="1" min="1" id="quantity"
+                                                       name="quantity"
+                                                       th:field="*{items[__${i.index}__].quantity}"/><br/>
                                             </p>
                                         </div>
 
-                                        <div class="col-lg-3 text-center d-flex flex-column justify-content-center align-items-center text-white">
-                                            <input type="hidden" id="itemId" name="itemId" th:value="${item.id}">
-                                            <input type="hidden" id="orderId" name="orderId" th:value="${order.id}">
-                                            <input type="hidden" id="csrfToken" th:value="${_csrf.token}" />
-                                            <button th:if="(*{items.size()} != 1)" type="button" class="remove-btn rounded-pill" onclick="deleteItem()">Delete</button>
+                                        <div class="col-lg-3 text-center d-flex flex-column justify-content-center
+                                         align-items-center text-white">
+                                            <a class="remove-btn rounded-pill" th:if="(*{items.size()} != 1)"
+                                               th:href="@{/order/deleteItem/{itemId}/{orderId}(itemId=${item.getId()},
+                                                orderId=${order.getId()})}">Delete</a>
+                                            <!--TODO:active only if status is PENDING-->
                                         </div>
                                     </div>
                                 </div>
@@ -50,21 +56,21 @@
                                 <label for="status">Status:</label>
                                 <select th:field="*{status}" class="mb-3" id="status" name="status">
                                     <option th:value="-1" disabled selected>Select new status</option>
-                                    <option th:each="status: ${statuses}" th:value="${status}" th:text="${status}">{status}</option>
+                                    <option th:each="status: ${statuses}" th:value="${status}" th:text="${status}">
+                                        {status}
+                                    </option>
                                 </select>
                             </div>
-
                             <div class="col-lg-12 text-white">
                                 <p class="col-lg-12 text-white">
                                     <label for="shippingAddress">Shipping Address</label>
-                                    <input class="col-lg-12" type="text" id="shippingAddress" name="shippingAddress" th:field="*{shippingAddress}" /><br/>
+                                    <input class="col-lg-12" type="text" id="shippingAddress" name="shippingAddress"
+                                           th:field="*{shippingAddress}"/><br/>
                                 </p>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center gap-5 pb-2 text-center">
-                            <form th:method="get" th:action="@{/order/cancel}">
-                                <button type="submit" class="btn-gold rounded-pill">Cancel</button>
-                            </form>
+                            <a class="btn-gold rounded-pill" th:href="@{/order/cancel}">Cancel</a>
                             <button type="submit" class="btn-gold rounded-pill">Save</button>
                         </div>
                     </div>
@@ -74,39 +80,5 @@
     </form>
 </section>
 <footer th:replace="~{fragments/commons::footer}"></footer>
-
-<script>
-
-    const csrfToken = document.getElementById('csrfToken').value;
-    const itemId = document.getElementById('itemId').value;
-    const orderId = document.getElementById('orderId').value;
-
-    function deleteItem() {
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = '/order/deleteItem';
-
-        const csrfInput = document.createElement('input');
-        csrfInput.type = 'hidden';
-        csrfInput.name = '_csrf';
-        csrfInput.value = csrfToken;
-        form.appendChild(csrfInput);
-
-        const inputItemId = document.createElement('input');
-        inputItemId.type = 'hidden';
-        inputItemId.name = 'itemId';
-        inputItemId.value = itemId;
-        form.appendChild(inputItemId);
-
-        const inputOrderId = document.createElement('input');
-        inputOrderId.type = 'hidden';
-        inputOrderId.name = 'orderId';
-        inputOrderId.value = orderId;
-        form.appendChild(inputOrderId);
-
-        document.body.appendChild(form);
-        form.submit();
-    }
-</script>
 </body>
 </html>

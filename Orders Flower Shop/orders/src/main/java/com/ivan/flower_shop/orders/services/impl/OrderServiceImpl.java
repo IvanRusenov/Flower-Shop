@@ -67,7 +67,7 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = orderRepository.findById(orderId).orElse(null);
 
-        if (order==null) {
+        if (order == null) {
             return null;
         }
 
@@ -120,7 +120,7 @@ public class OrderServiceImpl implements OrderService {
 
                 if (item.getId() == mapItem.getId()) {
                     item.setQuantity(mapItem.getQuantity());
-                    item.setTotalPrice(item.getQuantity()* item.getUnitPrice());
+                    item.setTotalPrice(item.getQuantity() * item.getUnitPrice());
                     items.add(item);
                     break;
                 }

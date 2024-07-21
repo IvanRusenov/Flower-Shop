@@ -47,6 +47,14 @@ public class OrderServiceImpl implements OrderService {
         this.cartService = cartService;
     }
 
+    public OrderDetailsDTO getCurrentOrder() {
+        return currentOrder;
+    }
+
+    public void setCurrentOrder(OrderDetailsDTO currentOrder) {
+        this.currentOrder = currentOrder;
+    }
+
     @Override
     public void createOrder(long cartId) {
 
@@ -88,36 +96,16 @@ public class OrderServiceImpl implements OrderService {
                 });
 
 
+        return getOrderDetailsDTOS(orderDTOS);
+
+    }
+
+    private List<OrderDetailsDTO> getOrderDetailsDTOS(List<OrderDTO> orderDTOS) {
         if (orderDTOS == null) {
             throw new RuntimeException("Failed to retrieve orders");
         }
 
-        return orderDTOS.stream().map(orderDTO -> {
-
-            OrderDetailsDTO orderDetailsDTO = modelMapper.map(orderDTO, OrderDetailsDTO.class);
-
-            List<OrderItemDetailDTO> orderItemDetailDTOS = orderDTO.getItems().stream().map(orderItemDTO -> {
-
-                OrderItemDetailDTO orderItemDetailDTO = modelMapper.map(orderItemDTO, OrderItemDetailDTO.class);
-                Bouquet bouquet = bouquetRepository.findById(orderItemDTO.getBouquetId())
-                        .orElseThrow(
-                                () -> new NoSuchElementException("Bouquet not found for ID "
-                                        + orderItemDTO.getBouquetId())
-                        );
-
-                orderItemDetailDTO.setItemNumber(bouquet.getItemNumber());
-                orderItemDetailDTO.setDescription(bouquet.getDescription());
-                orderItemDetailDTO.setUrl(bouquet.getUrl());
-
-                return orderItemDetailDTO;
-
-            }).toList();
-
-            orderDetailsDTO.setItems(orderItemDetailDTOS);
-            return orderDetailsDTO;
-
-        }).toList();
-
+        return orderDTOS.stream().map(this::getOrderDetailsDTO).toList();
     }
 
     @Override
@@ -142,7 +130,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDetailsDTO> getAllPendingOrders() {
 
-        List<OrderDTO> orderDTOS =  orderRestClient
+        List<OrderDTO> orderDTOS = orderRestClient
                 .get()
                 .uri("/orders/pending")
                 .accept(MediaType.asMediaType(MediaType.APPLICATION_JSON))
@@ -150,79 +138,21 @@ public class OrderServiceImpl implements OrderService {
                 .body(new ParameterizedTypeReference<>() {
                 });
 
-        if (orderDTOS == null) {
-            throw new RuntimeException("Failed to retrieve orders");
-        }
-
-
-        return orderDTOS.stream().map(orderDTO -> {
-
-            OrderDetailsDTO orderDetailsDTO = modelMapper.map(orderDTO, OrderDetailsDTO.class);
-
-            List<OrderItemDetailDTO> orderItemDetailDTOS = orderDTO.getItems().stream().map(orderItemDTO -> {
-
-                OrderItemDetailDTO orderItemDetailDTO = modelMapper.map(orderItemDTO, OrderItemDetailDTO.class);
-                Bouquet bouquet = bouquetRepository.findById(orderItemDTO.getBouquetId())
-                        .orElseThrow(
-                                () -> new NoSuchElementException("Bouquet not found for ID "
-                                        + orderItemDTO.getBouquetId())
-                        );
-
-                orderItemDetailDTO.setItemNumber(bouquet.getItemNumber());
-                orderItemDetailDTO.setDescription(bouquet.getDescription());
-                orderItemDetailDTO.setUrl(bouquet.getUrl());
-
-                return orderItemDetailDTO;
-
-            }).toList();
-
-            orderDetailsDTO.setItems(orderItemDetailDTOS);
-            return orderDetailsDTO;
-
-        }).toList();
+        return getOrderDetailsDTOS(orderDTOS);
 
     }
 
     @Override
     public List<OrderDetailsDTO> getAllOrdersDesc() {
 
-        List<OrderDTO> orderDTOS =  orderRestClient
+        List<OrderDTO> orderDTOS = orderRestClient
                 .get()
                 .uri("/orders")
                 .retrieve()
                 .body(new ParameterizedTypeReference<>() {
                 });
 
-        if (orderDTOS == null) {
-            throw new RuntimeException("Failed to retrieve orders");
-        }
-
-
-        return orderDTOS.stream().map(orderDTO -> {
-
-            OrderDetailsDTO orderDetailsDTO = modelMapper.map(orderDTO, OrderDetailsDTO.class);
-
-            List<OrderItemDetailDTO> orderItemDetailDTOS = orderDTO.getItems().stream().map(orderItemDTO -> {
-
-                OrderItemDetailDTO orderItemDetailDTO = modelMapper.map(orderItemDTO, OrderItemDetailDTO.class);
-                Bouquet bouquet = bouquetRepository.findById(orderItemDTO.getBouquetId())
-                        .orElseThrow(
-                                () -> new NoSuchElementException("Bouquet not found for ID "
-                                        + orderItemDTO.getBouquetId())
-                        );
-
-                orderItemDetailDTO.setItemNumber(bouquet.getItemNumber());
-                orderItemDetailDTO.setDescription(bouquet.getDescription());
-                orderItemDetailDTO.setUrl(bouquet.getUrl());
-
-                return orderItemDetailDTO;
-
-            }).toList();
-
-            orderDetailsDTO.setItems(orderItemDetailDTOS);
-            return orderDetailsDTO;
-
-        }).toList();
+        return getOrderDetailsDTOS(orderDTOS);
     }
 
     @Override
@@ -234,13 +164,6 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
-//    @Override
-//    public void edit(long id) {
-//
-//
-//        orderRestClient.edit();
-//    }
-
     @Override
     public OrderDetailsDTO getOrder(long id) {
 
@@ -251,7 +174,11 @@ public class OrderServiceImpl implements OrderService {
                 .body(new ParameterizedTypeReference<>() {
                 });
 
+        return getOrderDetailsDTO(orderDTO);
 
+    }
+
+    private OrderDetailsDTO getOrderDetailsDTO(OrderDTO orderDTO) {
         OrderDetailsDTO orderDetailsDTO = modelMapper.map(orderDTO, OrderDetailsDTO.class);
 
         List<OrderItemDetailDTO> orderItemDetailDTOS = orderDTO.getItems().stream().map(orderItemDTO -> {
@@ -273,48 +200,67 @@ public class OrderServiceImpl implements OrderService {
 
         orderDetailsDTO.setItems(orderItemDetailDTOS);
         return orderDetailsDTO;
-
     }
 
     @Override
-    public OrderDetailsDTO edit(OrderDetailsDTO orderDetailsDTO) {
+    public void edit(OrderDetailsDTO orderDetailsDTO) {
 
+        if (currentOrder != null) {
+            for (OrderItemDetailDTO item : currentOrder.getItems()) {
 
-    return new OrderDetailsDTO();
+                for (OrderItemDetailDTO dtoItem : orderDetailsDTO.getItems()) {
+                    if (item.getId() == dtoItem.getId()) {
+                        item.setQuantity(dtoItem.getQuantity());
+                        break;
+                    }
+                }
+            }
 
-//        OrderDTO orderDTO = modelMapper.map(orderDetailsDTO, OrderDTO.class);
-//
-//        orderRestClient
-//                .put()
-//                .uri("/orders/update")
-//                .body(orderDTO)
-//                .retrieve();
-//
-    }
-
-    @Override
-    public OrderDetailsDTO deleteItem(Long itemId, Long orderId) {
-
-        if (this.currentOrder == null) {
-            this.currentOrder = getOrder(orderId);
+            currentOrder.setStatus(orderDetailsDTO.getStatus());
+            currentOrder.setShippingAddress(orderDetailsDTO.getShippingAddress());
         }
 
-//        OrderItemDetailDTO item = currentOrder.getItems().stream().filter(i -> i.getId() == itemId).findFirst().orElseThrow();
+        currentOrder = orderDetailsDTO;
 
+        OrderDTO orderDTO = modelMapper.map(currentOrder, OrderDTO.class);
 
-        List<OrderItemDetailDTO> orderItemDetailDTOS = currentOrder.getItems().stream().filter(i -> i.getId() != itemId).toList();
+        orderRestClient
+                .put()
+                .uri("/orders/update")
+                .body(orderDTO)
+                .retrieve();
 
-        currentOrder.setItems(orderItemDetailDTOS);
+        currentOrder = null;
 
-        return currentOrder;
+    }
+
+    @Override
+    public void deleteItem(Long itemId, long orderId) {
+
+        if (currentOrder == null) {
+            currentOrder = getOrder(orderId);
+        }
+
+        List<OrderItemDetailDTO> newItems = new ArrayList<>();
+        for (OrderItemDetailDTO item : currentOrder.getItems()) {
+            if (item.getId() != itemId) {
+                newItems.add(item);
+
+            }
+        }
+        currentOrder.setItems(newItems);
+
+        //       orderRestClient
+//                .delete()
+//                .uri("/order-items/" + itemId)
+//                .retrieve();
+
     }
 
     @Override
     public void cancelOrder() {
         currentOrder = null;
     }
-
-
 
     @Override
     public void save(OrderDetailsDTO orderDetailsDTO) {
@@ -331,14 +277,18 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
+    @Override
+    public OrderItemDetailDTO getOrderItem(long itemId) {
+        OrderItemDTO orderItemDTO = orderRestClient
+                .get()
+                .uri("/order-items/" + itemId)
+                .retrieve()
+                .body(new ParameterizedTypeReference<>() {
+                });
 
+        return modelMapper.map(orderItemDTO, OrderItemDetailDTO.class);
 
-//    private void validateUser(UserDetails userDetails) {
-//        if (!(userDetails instanceof ShopUserDetails)) {
-//            throw new RuntimeException("User is not authenticated.");
-//        }
-//    }
+    }
 
-
-}
 //TODO: IMPLEMENT CALENDAR WITH NAME DAYS
+}

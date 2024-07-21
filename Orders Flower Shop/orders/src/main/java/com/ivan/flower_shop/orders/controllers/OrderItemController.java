@@ -1,5 +1,6 @@
 package com.ivan.flower_shop.orders.controllers;
 
+import com.ivan.flower_shop.orders.models.dtos.OrderItemDTO;
 import com.ivan.flower_shop.orders.models.entities.OrderItem;
 import com.ivan.flower_shop.orders.services.OrderItemService;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +23,17 @@ public class OrderItemController {
     }
 
     @GetMapping("/{orderItemId}")
-    public OrderItem getOrderItemById(@PathVariable Long orderItemId) {
-        return orderItemService.getOrderItemById(orderItemId);
+    public OrderItemDTO getOrderItemById(@PathVariable Long orderItemId) {
+
+        OrderItem item = orderItemService.getOrderItemById(orderItemId);
+
+        OrderItemDTO orderItemDTO = new OrderItemDTO();
+        orderItemDTO.setBouquetId(item.getBouquetId());
+        orderItemDTO.setId(item.getId());
+        orderItemDTO.setQuantity(item.getQuantity());
+        orderItemDTO.setUnitPrice(item.getUnitPrice());
+
+        return orderItemDTO;
     }
 
     @PostMapping
@@ -33,7 +43,9 @@ public class OrderItemController {
 
     @PutMapping("/{orderItemId}")
     public OrderItem updateOrderItem(@PathVariable Long orderItemId, @RequestBody OrderItem orderItemDetails) {
+
         OrderItem orderItem = orderItemService.getOrderItemById(orderItemId);
+
         if (orderItem != null) {
             orderItem.setBouquetId(orderItemDetails.getBouquetId());
             orderItem.setQuantity(orderItemDetails.getQuantity());
@@ -41,7 +53,9 @@ public class OrderItemController {
             orderItem.setTotalPrice(orderItemDetails.getTotalPrice());
             return orderItemService.saveOrderItem(orderItem);
         }
+
         return null;
+
     }
 
     @DeleteMapping("/{orderItemId}")

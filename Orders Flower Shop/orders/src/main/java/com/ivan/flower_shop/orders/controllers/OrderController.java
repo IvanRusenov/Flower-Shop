@@ -26,7 +26,6 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO orderDTO) {
 
-
         orderService.createOrder(orderDTO);
         LOGGER.info("New order was created");
 
@@ -61,8 +60,6 @@ public class OrderController {
 
         return ResponseEntity.ok(allOrdersByUser);
     }
-
-
 
     @GetMapping("/{orderId}")
     public ResponseEntity<OrderDTO> getOrderById(@PathVariable Long orderId) {
@@ -107,8 +104,6 @@ public class OrderController {
         return ResponseEntity.ok().build();
     }
 
-
-
     @GetMapping("/pending")
     public ResponseEntity<List<OrderDTO>> getAllOPendingOrders() {
 
@@ -126,7 +121,6 @@ public class OrderController {
 
         return ResponseEntity.ok(allPendingOrders);
     }
-
 
     @PutMapping("/update")
     public ResponseEntity<Void> updateOrder(@RequestBody OrderDTO orderDTO) {

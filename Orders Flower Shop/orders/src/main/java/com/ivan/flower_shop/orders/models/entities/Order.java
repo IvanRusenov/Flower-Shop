@@ -18,7 +18,7 @@ public class Order {
     private long userId;
 
     @Column(nullable = false)
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime orderDateTime;
 
     @Column(nullable = false)
@@ -31,7 +31,7 @@ public class Order {
     @Column(nullable = false)
     private String shippingAddress;
 
-    @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH},orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<OrderItem> items;
 
     public long getId() {
