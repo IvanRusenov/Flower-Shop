@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/commons::head}"></head>
+<body class="all-orders">
+<main>
+    <section class="position-absolute top-50 start-50 translate-middle my-container">
+        <div class="mx-auto p-3 text-center">
+            <h1 class="text-white  ">“Oops, something went wrong!”</h1>
+            <p class="text-white fs-4 m-3 ">Click <a class="text-danger" th:href="@{/home}">here</a> to go to the home page</p>
+        </div>
+    </section>
+</main>
+<footer th:replace="~{fragments/commons::footer}"></footer>
+</body>
+</html>

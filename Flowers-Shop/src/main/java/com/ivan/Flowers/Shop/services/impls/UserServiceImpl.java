@@ -11,6 +11,7 @@ import com.ivan.Flowers.Shop.repositories.CartRepository;
 import com.ivan.Flowers.Shop.repositories.RoleRepository;
 import com.ivan.Flowers.Shop.repositories.UserRepository;
 import com.ivan.Flowers.Shop.services.UserService;
+import com.ivan.Flowers.Shop.services.exceptions.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -113,7 +114,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(long id) {
 
-        User user = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Not found user with id " + id));
+        User user = userRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("User not found", User.class.getSimpleName()));
         userRepository.delete(user);
 
     }
@@ -121,24 +122,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(Long userId) {
 
-       return userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("Not found user with id " + userId));
+       return userRepository.findById(userId).orElseThrow(() ->  new ObjectNotFoundException("User not found", User.class.getSimpleName()));
     }
 
     @Override
     public boolean save(EditUserDTO editUserDTO) {
 
+      User user = userRepository.findById(editUserDTO.getId()).orElseThrow(()->
+              new ObjectNotFoundException("User not found", User.class.getSimpleName()));
 
-        Optional<User> oldUser = userRepository.findById(editUserDTO.getId());
-//        Optional<User> byUsername = userRepository.findByUsername(editUserDTO.getUsername());
-//        Optional<User> byEmail = userRepository.findByEmail(editUserDTO.getEmail());
-
-
-
-
-//        if (byUsername.isPresent() || byEmail.isPresent()){
-//            return false;
-//        }
-        User user = oldUser.get();
         user.setEmail(editUserDTO.getEmail());
         user.setShippingAddress(editUserDTO.getShippingAddress());
         user.setUsername(editUserDTO.getUsername());
@@ -148,7 +140,6 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
         return true;
-
 
     }
 }
