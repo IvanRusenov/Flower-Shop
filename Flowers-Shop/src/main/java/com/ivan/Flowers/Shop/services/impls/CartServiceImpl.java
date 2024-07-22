@@ -10,6 +10,7 @@ import com.ivan.Flowers.Shop.repositories.CartItemRepository;
 import com.ivan.Flowers.Shop.repositories.CartRepository;
 import com.ivan.Flowers.Shop.repositories.UserRepository;
 import com.ivan.Flowers.Shop.services.CartService;
+import com.ivan.Flowers.Shop.services.exceptions.ObjectNotFoundException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,11 +46,16 @@ public class CartServiceImpl implements CartService {
 
 //        TODO: use getBouquets and getTotalSum
 
-        User user = userRepository.findByUsername(shopUserDetails.getUsername()).orElseThrow();
-        Bouquet bouquet = bouquetRepository.findByItemNumber(itemNumber).orElseThrow();
+        User user = userRepository.findByUsername(shopUserDetails.getUsername())
+                .orElseThrow(() -> new ObjectNotFoundException("User not found", User.class.getSimpleName()));
+        Bouquet bouquet = bouquetRepository.findByItemNumber(itemNumber)
+                .orElseThrow(() -> new ObjectNotFoundException("Bouquet not found", Bouquet.class.getSimpleName()));
         Cart cart = user.getCart();
 
-        CartItem cartItem = cart.getItems().stream().filter(ci -> ci.getBouquet().getId() == bouquet.getId()).findFirst().orElse(null);
+        CartItem cartItem = cart.getItems().stream()
+                .filter(ci -> ci.getBouquet().getId() == bouquet.getId())
+                .findFirst()
+                .orElse(null);
 
         if (cartItem == null) {
             cartItem = new CartItem();
@@ -70,6 +76,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart getCart(UserDetails userDetails) {
+
         if (!(userDetails instanceof ShopUserDetails shopUserDetails)) {
             throw new RuntimeException("User is not authenticated.");
         }
@@ -82,7 +89,7 @@ public class CartServiceImpl implements CartService {
     public void clearCart(long cartId) {
 
         Cart cart = cartRepository.findById(cartId)
-                .orElseThrow(() -> new NoSuchElementException("Cart with id " + cartId + " doesn't exist!"));
+                .orElseThrow(() -> new ObjectNotFoundException("Cart doesn't exist", Cart.class.getSimpleName()));
 
         cart.getItems().clear();
         cartRepository.save(cart);
@@ -97,7 +104,8 @@ public class CartServiceImpl implements CartService {
             throw new RuntimeException("User is not authenticated.");
         }
 
-        User user = userRepository.findByUsername(shopUserDetails.getUsername()).orElseThrow();
+        User user = userRepository.findByUsername(shopUserDetails.getUsername())
+                .orElseThrow(() -> new ObjectNotFoundException("User not found", User.class.getSimpleName()));
         return user.getCart().getItems();
 
     }
@@ -110,15 +118,13 @@ public class CartServiceImpl implements CartService {
             throw new RuntimeException("User is not authenticated.");
         }
 
-        User user = userRepository.findByUsername(shopUserDetails.getUsername()).orElseThrow();
+        User user = userRepository.findByUsername(shopUserDetails.getUsername())
+                .orElseThrow(() -> new ObjectNotFoundException("User not found", User.class.getSimpleName()));
 
-        double sum = user.getCart().getItems().stream()
+        return user.getCart().getItems().stream()
                 .mapToDouble(item -> item.getQuantity() * item.getUnitPrice())
                 .sum();
-
-        return sum;
 //        return String.format("%.2f", sum);
-        //TODO: Remove BUG sum is not correct on adding more than one item of the same type
 
     }
 
@@ -131,14 +137,14 @@ public class CartServiceImpl implements CartService {
 
         String username = shopUserDetails.getUsername();
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found: " + username));
+                .orElseThrow(() -> new ObjectNotFoundException("User not found", User.class.getSimpleName()));
 
         CartItem cartItem = cartItemRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cart item not found with id: " + id));
+                .orElseThrow(() -> new ObjectNotFoundException("Cart item not found", CartItem.class.getSimpleName()));
 
 
         Cart cart = cartRepository.findById(user.getCart().getId())
-                .orElseThrow(() -> new RuntimeException("Cart not found for user: " + username));
+                .orElseThrow(() -> new ObjectNotFoundException("Cart not found", Cart.class.getSimpleName()));
 
 
         cart.getItems().remove(cartItem);

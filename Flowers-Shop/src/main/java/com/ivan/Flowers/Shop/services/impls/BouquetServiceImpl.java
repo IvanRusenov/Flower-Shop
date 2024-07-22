@@ -9,6 +9,7 @@ import com.ivan.Flowers.Shop.repositories.CartItemRepository;
 import com.ivan.Flowers.Shop.repositories.CartRepository;
 import com.ivan.Flowers.Shop.services.BouquetService;
 import com.ivan.Flowers.Shop.services.CloudinaryService;
+import com.ivan.Flowers.Shop.services.exceptions.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +28,11 @@ public class BouquetServiceImpl implements BouquetService {
     private final CartItemRepository cartItemRepository;
 
 
-    public BouquetServiceImpl(CloudinaryService cloudinaryService, BouquetRepository bouquetRepository, CartRepository cartRepository, CartItemRepository cartItemRepository) {
+    public BouquetServiceImpl(
+            CloudinaryService cloudinaryService,
+            BouquetRepository bouquetRepository,
+            CartRepository cartRepository,
+            CartItemRepository cartItemRepository) {
         this.cloudinaryService = cloudinaryService;
         this.bouquetRepository = bouquetRepository;
         this.cartRepository = cartRepository;
@@ -45,6 +50,7 @@ public class BouquetServiceImpl implements BouquetService {
 
         List<String> contentTypes = Arrays.asList("image/png", "image/jpeg", "image/gif", "image/jpg", "image/webp");
         String fileContentType = bouquetDTO.getPicture().getContentType();
+
         if (!contentTypes.contains(fileContentType)) {
             return false;
         }
@@ -70,7 +76,7 @@ public class BouquetServiceImpl implements BouquetService {
 //        Logger logger = LoggerFactory.getLogger(getClass());
 
         Bouquet bouquet = bouquetRepository.findByItemNumber(Integer.parseInt(itemNumber))
-                .orElseThrow(() -> new IllegalArgumentException("Bouquet not found"));
+                .orElseThrow(() -> new ObjectNotFoundException("Bouquet not found", Bouquet.class.getSimpleName()));
 
         List<Cart> allCarts = cartRepository.findAll();
 
@@ -89,7 +95,8 @@ public class BouquetServiceImpl implements BouquetService {
                 cartItemRepository.deleteAll(itemsToRemove);
                 cartRepository.save(cart);
 
-//                logger.info("Removed {} items with bouquet {} from cart {}.", itemsToRemove.size(), bouquet.getId(), cart.getId());
+//                logger.info("Removed {} items with bouquet {} from cart {}."
+//                , itemsToRemove.size(), bouquet.getId(), cart.getId());
             }
         });
 

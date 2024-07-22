@@ -11,6 +11,7 @@ import com.ivan.Flowers.Shop.repositories.CartRepository;
 import com.ivan.Flowers.Shop.repositories.UserRepository;
 import com.ivan.Flowers.Shop.services.CartService;
 import com.ivan.Flowers.Shop.services.OrderService;
+import com.ivan.Flowers.Shop.services.exceptions.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,12 @@ public class OrderServiceImpl implements OrderService {
     private OrderDetailsDTO currentOrder;
 
 
-    public OrderServiceImpl(@Qualifier("ordersRestClient") RestClient orderRestClient, CartRepository cartRepository, ModelMapper modelMapper, UserRepository userRepository, BouquetRepository bouquetRepository, CartService cartService) {
+    public OrderServiceImpl(@Qualifier("ordersRestClient") RestClient orderRestClient,
+                            CartRepository cartRepository,
+                            ModelMapper modelMapper,
+                            UserRepository userRepository,
+                            BouquetRepository bouquetRepository,
+                            CartService cartService) {
         this.orderRestClient = orderRestClient;
         this.cartRepository = cartRepository;
         this.modelMapper = modelMapper;
@@ -58,13 +64,15 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void createOrder(long cartId) {
 
-        Cart cart = cartRepository.findById(cartId).orElseThrow();
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new ObjectNotFoundException("Cart not found", Cart.class.getSimpleName()));
 
         CreateOrderDTO createOrderDTO = modelMapper.map(cart, CreateOrderDTO.class);
         createOrderDTO.setUserId(cart.getOwner().getId());
         createOrderDTO.setShippingAddress(cart.getOwner().getShippingAddress());
 
         LOGGER.info("Creating new order");
+
         orderRestClient
                 .post()
                 .uri("/orders")//"http://localhost:8888/orders"
@@ -85,7 +93,7 @@ public class OrderServiceImpl implements OrderService {
         LOGGER.info("Get all user orders in descending order");
 
         User user = userRepository.findByUsername(shopUserDetails.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ObjectNotFoundException("User not found", User.class.getSimpleName()));
 
         List<OrderDTO> orderDTOS = orderRestClient
                 .get()
@@ -101,6 +109,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private List<OrderDetailsDTO> getOrderDetailsDTOS(List<OrderDTO> orderDTOS) {
+
         if (orderDTOS == null) {
             throw new RuntimeException("Failed to retrieve orders");
         }
@@ -186,8 +195,7 @@ public class OrderServiceImpl implements OrderService {
             OrderItemDetailDTO orderItemDetailDTO = modelMapper.map(orderItemDTO, OrderItemDetailDTO.class);
             Bouquet bouquet = bouquetRepository.findById(orderItemDTO.getBouquetId())
                     .orElseThrow(
-                            () -> new NoSuchElementException("Bouquet not found for ID "
-                                    + orderItemDTO.getBouquetId())
+                            () -> new ObjectNotFoundException("Bouquet not found", Bouquet.class.getSimpleName())
                     );
 
             orderItemDetailDTO.setItemNumber(bouquet.getItemNumber());

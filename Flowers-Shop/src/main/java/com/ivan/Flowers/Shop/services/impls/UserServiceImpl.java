@@ -29,14 +29,16 @@ public class UserServiceImpl implements UserService {
 
     private final CartRepository cartRepository;
     private final PasswordEncoder passwordEncoder;
-    private final ModelMapper modelMapper;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, CartRepository cartRepository, PasswordEncoder passwordEncoder, ModelMapper modelMapper) {
+    public UserServiceImpl(UserRepository userRepository,
+                           RoleRepository roleRepository,
+                           CartRepository cartRepository,
+                           PasswordEncoder passwordEncoder
+    ) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.cartRepository = cartRepository;
         this.passwordEncoder = passwordEncoder;
-        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -73,7 +75,7 @@ public class UserServiceImpl implements UserService {
 
             user.getRoles().add(roleRepository.findByType(RoleType.ROLE_ADMIN));
 
-        }else {
+        } else {
 
             user.getRoles().add(role);
         }
@@ -89,11 +91,9 @@ public class UserServiceImpl implements UserService {
 
         Optional<User> optionalUser = userRepository.findByUsername(userLoginDTO.getUsername());
 
-        if (optionalUser.isEmpty()) {
-            return false;
-        }
-
-        return passwordEncoder.matches(userLoginDTO.getPassword(), optionalUser.get().getPassword());
+        return optionalUser
+                .filter(user -> passwordEncoder.matches(userLoginDTO.getPassword(), user.getPassword()))
+                .isPresent();
 
     }
 
@@ -122,14 +122,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(Long userId) {
 
-       return userRepository.findById(userId).orElseThrow(() ->  new ObjectNotFoundException("User not found", User.class.getSimpleName()));
+        return userRepository.findById(userId).orElseThrow(() -> new ObjectNotFoundException("User not found", User.class.getSimpleName()));
     }
 
     @Override
     public boolean save(EditUserDTO editUserDTO) {
 
-      User user = userRepository.findById(editUserDTO.getId()).orElseThrow(()->
-              new ObjectNotFoundException("User not found", User.class.getSimpleName()));
+        User user = userRepository.findById(editUserDTO.getId()).orElseThrow(
+                () -> new ObjectNotFoundException("User not found", User.class.getSimpleName())
+        );
 
         user.setEmail(editUserDTO.getEmail());
         user.setShippingAddress(editUserDTO.getShippingAddress());

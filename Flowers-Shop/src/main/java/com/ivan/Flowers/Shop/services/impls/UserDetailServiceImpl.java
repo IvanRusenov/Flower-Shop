@@ -2,8 +2,10 @@ package com.ivan.Flowers.Shop.services.impls;
 
 import com.ivan.Flowers.Shop.enums.RoleType;
 import com.ivan.Flowers.Shop.models.entities.Role;
+import com.ivan.Flowers.Shop.models.entities.User;
 import com.ivan.Flowers.Shop.models.user.ShopUserDetails;
 import com.ivan.Flowers.Shop.repositories.UserRepository;
+import com.ivan.Flowers.Shop.services.exceptions.ObjectNotFoundException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,12 +24,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-       return userRepository
-               .findByUsername(username)
-               .map(UserDetailServiceImpl::map)
-               .orElseThrow(
-                       () -> new UsernameNotFoundException("User with username " + username + " not found!")
-               );
+        return userRepository
+                .findByUsername(username)
+                .map(UserDetailServiceImpl::map)
+                .orElseThrow(
+                        () -> new ObjectNotFoundException("User not found", User.class.getSimpleName())
+                );
     }
 
     private static UserDetails map(com.ivan.Flowers.Shop.models.entities.User user) {
@@ -35,7 +37,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
         return new ShopUserDetails(
                 user.getUsername(),
                 user.getPassword(),
-                user.getRoles().stream().map(Role::getType).map(UserDetailServiceImpl::map).toList()
+                user.getRoles().stream()
+                        .map(Role::getType)
+                        .map(UserDetailServiceImpl::map)
+                        .toList()
 
         );
     }

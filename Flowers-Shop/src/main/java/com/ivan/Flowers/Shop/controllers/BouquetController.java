@@ -54,6 +54,4 @@ public class BouquetController {
         return new ModelAndView("redirect:/home");
     }
 
-    //TODO: IMPLEMENT ORDER
-
 }
