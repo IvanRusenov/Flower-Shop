@@ -43,7 +43,7 @@
                                          align-items-center text-white">
                                             <a class="remove-btn rounded-pill" th:if="(*{items.size()} != 1)"
                                                th:href="@{/order/deleteItem/{itemId}/{orderId}(itemId=${item.getId()},
-                                                orderId=${order.getId()})}">Delete</a>
+                                                orderId=${order.getId()})}" onclick="return confirm('Are you sure?')">Delete</a>
                                             <!--TODO:active only if status is PENDING-->
                                         </div>
                                     </div>

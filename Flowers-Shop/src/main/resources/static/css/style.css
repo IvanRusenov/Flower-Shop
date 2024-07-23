@@ -389,5 +389,5 @@ button {
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
-
+    /*background-blend-mode: soft-light;*/
 }

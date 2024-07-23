@@ -15,5 +15,4 @@ public class ShopUserDetails extends User {
         super(username, password, authorities);
     }
 
-
 }

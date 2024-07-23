@@ -91,7 +91,7 @@ public class CartServiceImpl implements CartService {
         Cart cart = cartRepository.findById(cartId)
                 .orElseThrow(() -> new ObjectNotFoundException("Cart doesn't exist", Cart.class.getSimpleName()));
 
-        cart.getItems().clear();
+        cart.setItems(new ArrayList<>());
         cartRepository.save(cart);
 
     }
