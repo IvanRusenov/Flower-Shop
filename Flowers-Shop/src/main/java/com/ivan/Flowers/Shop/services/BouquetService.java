@@ -7,5 +7,5 @@ import java.io.IOException;
 public interface BouquetService {
     boolean addBouquet(BouquetDTO bouquetDTO) throws IOException;
 
-    void removeBouquet(String itemNumber) throws IOException;
+    void removeBouquet(int itemNumber) throws IOException;
 }

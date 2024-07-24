@@ -72,32 +72,33 @@ public class BouquetServiceImpl implements BouquetService {
 
     @Override
     @Transactional
-    public void removeBouquet(String itemNumber) throws IOException {
+    public void removeBouquet(int itemNumber) throws IOException {
 //        Logger logger = LoggerFactory.getLogger(getClass());
 
-        Bouquet bouquet = bouquetRepository.findByItemNumber(Integer.parseInt(itemNumber))
+        Bouquet bouquet = bouquetRepository.findByItemNumber(itemNumber)
                 .orElseThrow(() -> new ObjectNotFoundException("Bouquet not found", Bouquet.class.getSimpleName()));
 
         List<Cart> allCarts = cartRepository.findAll();
 
         allCarts.forEach(cart -> {
-            List<CartItem> itemsToRemove = cart.getItems().stream()
-                    .filter(item -> item.getBouquet().equals(bouquet))
-                    .toList();
 
-            if (!itemsToRemove.isEmpty()) {
-                double totalPriceReduction = itemsToRemove.stream()
-                        .mapToDouble(CartItem::getUnitPrice)
-                        .sum();
+            CartItem itemToRemove = cart.getItems().stream()
+                    .filter(item -> item.getBouquet().getItemNumber() == itemNumber)
+                    .findFirst()
+                    .orElse(null);
+
+            if (itemToRemove != null) {
+
+                double totalPriceReduction = itemToRemove.getUnitPrice()*itemToRemove.getQuantity();
 
                 cart.setTotalPrice(cart.getTotalPrice() - totalPriceReduction);
-                cart.getItems().removeAll(itemsToRemove);
-                cartItemRepository.deleteAll(itemsToRemove);
+                cart.removeCartItem(itemToRemove);
+
+                cartItemRepository.delete(itemToRemove);
                 cartRepository.save(cart);
 
-//                logger.info("Removed {} items with bouquet {} from cart {}."
-//                , itemsToRemove.size(), bouquet.getId(), cart.getId());
             }
+
         });
 
         String url = bouquet.getUrl();
@@ -106,7 +107,7 @@ public class BouquetServiceImpl implements BouquetService {
 
         if (!isDeleted) {
 //            logger.warn("Failed to delete image from cloudinary: {}", url);
-            return;
+            throw new RuntimeException("Failed to delete image from cloudinary!");
         }
 
         bouquetRepository.delete(bouquet);

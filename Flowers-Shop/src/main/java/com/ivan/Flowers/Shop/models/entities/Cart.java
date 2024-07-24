@@ -2,6 +2,7 @@ package com.ivan.Flowers.Shop.models.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "carts")
@@ -19,6 +20,9 @@ public class Cart {
     @OneToOne(mappedBy = "cart")
     private User owner;
 
+    public Cart() {
+        this.items = new ArrayList<>();
+    }
 
     public long getId() {
         return id;
@@ -50,5 +54,13 @@ public class Cart {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public void addCartItem(CartItem cartItem) {
+        this.items.add(cartItem);
+    }
+
+    public void removeCartItem(CartItem cartItem) {
+        this.items.remove(cartItem);
     }
 }

@@ -47,7 +47,7 @@ public class BouquetController {
 
     //TODO: implement delete mapping
     @PostMapping("/bouquet/remove/{itemNumber}")
-    public ModelAndView remove(@PathVariable("itemNumber") String itemNumber) throws IOException {
+    public ModelAndView remove(@PathVariable("itemNumber") int itemNumber) throws IOException {
 
         bouquetService.removeBouquet(itemNumber);
 
