@@ -25,7 +25,6 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-
     @GetMapping("/orders")
     public ModelAndView orders(@AuthenticationPrincipal UserDetails userDetails) {
 

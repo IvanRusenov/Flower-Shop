@@ -11,8 +11,6 @@ public interface CartService {
 
     List<CartItem> getItems(UserDetails userDetails);
 
-    double getTotalSum(UserDetails userDetails);
-
     void remove(long id, UserDetails userDetails);
 
     Cart getCart(UserDetails userDetails);

@@ -24,7 +24,6 @@ import org.springframework.web.client.RestClient;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -37,7 +36,6 @@ public class OrderServiceImpl implements OrderService {
     private final BouquetRepository bouquetRepository;
     private final CartService cartService;
     private OrderDetailsDTO currentOrder;
-
 
     public OrderServiceImpl(@Qualifier("ordersRestClient") RestClient orderRestClient,
                             CartRepository cartRepository,
@@ -102,7 +100,6 @@ public class OrderServiceImpl implements OrderService {
                 .retrieve()
                 .body(new ParameterizedTypeReference<>() {
                 });
-
 
         return getOrderDetailsDTOS(orderDTOS);
 
@@ -215,7 +212,6 @@ public class OrderServiceImpl implements OrderService {
 
         if (currentOrder != null) {
             for (OrderItemDetailDTO item : currentOrder.getItems()) {
-
                 for (OrderItemDetailDTO dtoItem : orderDetailsDTO.getItems()) {
                     if (item.getId() == dtoItem.getId()) {
                         item.setQuantity(dtoItem.getQuantity());

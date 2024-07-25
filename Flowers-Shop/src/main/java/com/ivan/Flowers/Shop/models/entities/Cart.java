@@ -38,14 +38,17 @@ public class Cart {
 
     public void setItems(List<CartItem> items) {
         this.items = items;
+        setTotalPrice();
     }
 
     public double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setTotalPrice() {
+        this.totalPrice = this.items.stream()
+                .mapToDouble(item -> item.getQuantity() * item.getUnitPrice())
+                .sum();
     }
 
     public User getOwner() {
@@ -58,9 +61,11 @@ public class Cart {
 
     public void addCartItem(CartItem cartItem) {
         this.items.add(cartItem);
+        setTotalPrice();
     }
 
     public void removeCartItem(CartItem cartItem) {
         this.items.remove(cartItem);
+        setTotalPrice();
     }
 }

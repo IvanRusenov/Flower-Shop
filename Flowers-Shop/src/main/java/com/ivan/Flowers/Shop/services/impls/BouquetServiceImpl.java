@@ -27,7 +27,6 @@ public class BouquetServiceImpl implements BouquetService {
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
 
-
     public BouquetServiceImpl(
             CloudinaryService cloudinaryService,
             BouquetRepository bouquetRepository,
@@ -89,11 +88,7 @@ public class BouquetServiceImpl implements BouquetService {
 
             if (itemToRemove != null) {
 
-                double totalPriceReduction = itemToRemove.getUnitPrice()*itemToRemove.getQuantity();
-
-                cart.setTotalPrice(cart.getTotalPrice() - totalPriceReduction);
                 cart.removeCartItem(itemToRemove);
-
                 cartItemRepository.delete(itemToRemove);
                 cartRepository.save(cart);
 

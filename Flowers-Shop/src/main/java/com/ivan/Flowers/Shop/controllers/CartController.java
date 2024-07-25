@@ -18,18 +18,15 @@ public class CartController {
         this.cartService = cartService;
     }
 
-
     @GetMapping("/cart")
     public ModelAndView cart(@AuthenticationPrincipal UserDetails userDetails) {
 
         ModelAndView cart = new ModelAndView("cart");
-        cart.addObject("items", cartService.getItems(userDetails));
-        cart.addObject("totalSum", cartService.getTotalSum(userDetails));
+
         cart.addObject("cart", cartService.getCart(userDetails));
-        //TODO: remove items if cart is added
+
         return cart;
     }
-
 
     @GetMapping("cart/add/{itemNumber}")
     public ModelAndView addToCart(@PathVariable("itemNumber") int itemNumber,

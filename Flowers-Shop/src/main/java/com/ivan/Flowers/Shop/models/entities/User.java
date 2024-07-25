@@ -43,6 +43,10 @@ public class User {
     @OneToOne
     private Cart cart;
 
+    public User() {
+        this.cart= new Cart();
+    }
+
     public long getId() {
         return id;
     }

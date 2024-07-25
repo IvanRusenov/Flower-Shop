@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -25,7 +24,6 @@ public class CartServiceImpl implements CartService {
     private final UserRepository userRepository;
     private final BouquetRepository bouquetRepository;
     private final CartItemRepository cartItemRepository;
-
     private final CartRepository cartRepository;
 
     public CartServiceImpl(UserRepository userRepository, BouquetRepository bouquetRepository, CartItemRepository cartItemRepository, CartRepository cartRepository) {
@@ -44,8 +42,6 @@ public class CartServiceImpl implements CartService {
             throw new RuntimeException("User is not authenticated.");
         }
 
-//        TODO: use getBouquets and getTotalSum
-
         User user = userRepository.findByUsername(shopUserDetails.getUsername())
                 .orElseThrow(() -> new ObjectNotFoundException("User not found", User.class.getSimpleName()));
         Bouquet bouquet = bouquetRepository.findByItemNumber(itemNumber)
@@ -62,17 +58,16 @@ public class CartServiceImpl implements CartService {
             cartItem.setBouquet(bouquet);
             cartItem.setQuantity(1);
             cartItem.setUnitPrice(bouquet.getPrice());
-            cart.getItems().add(cartItem);
+            cart.addCartItem(cartItem);
             cartItemRepository.save(cartItem);
         } else {
             cartItem.setQuantity(cartItem.getQuantity() + 1);
+            cart.setTotalPrice();
         }
 
-        cart.setTotalPrice(cart.getItems().stream().mapToDouble(CartItem::getUnitPrice).sum());
         cartRepository.save(cart);
 
     }
-
 
     @Override
     public Cart getCart(UserDetails userDetails) {
@@ -92,6 +87,7 @@ public class CartServiceImpl implements CartService {
                 .orElseThrow(() -> new ObjectNotFoundException("Cart doesn't exist", Cart.class.getSimpleName()));
 
         cart.setItems(new ArrayList<>());
+
         cartRepository.save(cart);
 
     }
@@ -111,24 +107,6 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    @Transactional
-    public double getTotalSum(UserDetails userDetails) {
-
-        if (!(userDetails instanceof ShopUserDetails shopUserDetails)) {
-            throw new RuntimeException("User is not authenticated.");
-        }
-
-        User user = userRepository.findByUsername(shopUserDetails.getUsername())
-                .orElseThrow(() -> new ObjectNotFoundException("User not found", User.class.getSimpleName()));
-
-        return user.getCart().getItems().stream()
-                .mapToDouble(item -> item.getQuantity() * item.getUnitPrice())
-                .sum();
-//        return String.format("%.2f", sum);
-
-    }
-
-    @Override
     public void remove(long id, UserDetails userDetails) {
 
         if (!(userDetails instanceof ShopUserDetails shopUserDetails)) {
@@ -142,13 +120,10 @@ public class CartServiceImpl implements CartService {
         CartItem cartItem = cartItemRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Cart item not found", CartItem.class.getSimpleName()));
 
-
         Cart cart = cartRepository.findById(user.getCart().getId())
                 .orElseThrow(() -> new ObjectNotFoundException("Cart not found", Cart.class.getSimpleName()));
 
-
-        cart.getItems().remove(cartItem);
-        cart.setTotalPrice(cart.getItems().stream().mapToDouble(CartItem::getUnitPrice).sum());
+        cart.removeCartItem(cartItem);
 
         cartRepository.saveAndFlush(cart);
         cartItemRepository.delete(cartItem);
