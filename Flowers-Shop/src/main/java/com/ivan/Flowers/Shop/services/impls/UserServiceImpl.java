@@ -95,13 +95,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isMod(UserLoginDTO userLoginDTO) {
-        User user = userRepository.findByUsername(userLoginDTO.getUsername()).orElseThrow();
-        Role role = roleRepository.findByType(RoleType.ROLE_MODERATOR);
-        return user.getRoles().contains(role);
-    }
-
-    @Override
     public List<User> getAllUsers() {
 
         //TODO: return userInfoDTO ?

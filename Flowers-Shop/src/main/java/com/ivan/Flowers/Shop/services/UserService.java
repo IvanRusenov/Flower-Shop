@@ -12,8 +12,6 @@ public interface UserService {
 
     boolean login(UserLoginDTO userLoginDTO);
 
-    boolean isMod(UserLoginDTO userLoginDTO);
-
     List<User> getAllUsers();
 
     void delete(long id);
