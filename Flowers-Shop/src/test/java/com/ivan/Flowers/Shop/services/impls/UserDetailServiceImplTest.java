@@ -5,6 +5,7 @@ import com.ivan.Flowers.Shop.models.entities.Role;
 import com.ivan.Flowers.Shop.models.entities.User;
 import com.ivan.Flowers.Shop.models.user.ShopUserDetails;
 import com.ivan.Flowers.Shop.repositories.UserRepository;
+import com.ivan.Flowers.Shop.services.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,15 +20,14 @@ import java.util.Optional;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ShopUserDetailsServiceTest {
+public class UserDetailServiceImplTest {
 
     private final static String USER_ROLE_TYPE = "ROLE_USER";
-
     private final static String USERNAME = "Ivan";
     private final static String NOT_EXISTING_USERNAME = "Onofri";
     private final static String PASSWORD = "111";
 
-    private ShopUserDetailsService toTest;
+    private UserDetailServiceImpl toTest;
 
     @Mock
     private UserRepository mockedUserRepository;
@@ -36,7 +35,7 @@ public class ShopUserDetailsServiceTest {
     @BeforeEach
     void setUp() {
 
-        toTest = new ShopUserDetailsService(mockedUserRepository);
+        toTest = new UserDetailServiceImpl(mockedUserRepository);
 
     }
 
@@ -59,7 +58,7 @@ public class ShopUserDetailsServiceTest {
 
         Assertions.assertInstanceOf(ShopUserDetails.class, userDetails);
 
-        Assertions.assertThrows(UsernameNotFoundException.class,
+        Assertions.assertThrows(ObjectNotFoundException.class,
                 () -> toTest.loadUserByUsername(NOT_EXISTING_USERNAME));
 
         Assertions.assertEquals(USERNAME, userDetails.getUsername());
