@@ -26,7 +26,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-
     private final CartRepository cartRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -55,7 +54,6 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = new User();
-//        user.setOrders(new ArrayList<>());
         user.setRoles(new ArrayList<>());
 
         Cart cart = new Cart();
@@ -79,7 +77,6 @@ public class UserServiceImpl implements UserService {
 
             user.getRoles().add(role);
         }
-
 
         userRepository.saveAndFlush(user);
 
