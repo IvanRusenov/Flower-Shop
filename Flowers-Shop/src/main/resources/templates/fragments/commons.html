@@ -71,9 +71,9 @@
         </form>
       </li>
       <li sec:authorize="isAuthenticated() && !hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')">
-        <a class="glowing-gold" th:href="@{/cart}">
+        <a class="glowing-gold" th:href="@{/cart}">Cart
 <!--          TODO: show the number of products in the cart-->
-          <img src="/images/shopping-cart.png" alt="cart">
+<!--          <img src="/images/shopping-cart.png" alt="cart">-->
         </a>
       </li>
     </ul>
