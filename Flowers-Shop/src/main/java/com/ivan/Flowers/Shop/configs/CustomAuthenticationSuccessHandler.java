@@ -23,9 +23,10 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                     response.sendRedirect("/orders/pending");
                 } else if (authority.getAuthority().equals("ROLE_USER")) {
                     response.sendRedirect("/home");
-                } else {
-                    response.sendRedirect("/home");
                 }
+//                else {
+//                    response.sendRedirect("/home");
+//                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

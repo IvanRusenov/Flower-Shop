@@ -12,13 +12,11 @@ import com.ivan.Flowers.Shop.repositories.RoleRepository;
 import com.ivan.Flowers.Shop.repositories.UserRepository;
 import com.ivan.Flowers.Shop.services.UserService;
 import com.ivan.Flowers.Shop.services.exceptions.ObjectNotFoundException;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -54,7 +52,7 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = new User();
-        user.setRoles(new ArrayList<>());
+
 
         Cart cart = new Cart();
         cart.setItems(new ArrayList<>());
@@ -71,11 +69,11 @@ public class UserServiceImpl implements UserService {
 
         if (userRepository.count() == 0) {
 
-            user.getRoles().add(roleRepository.findByType(RoleType.ROLE_ADMIN));
+            user.setRole(roleRepository.findByType(RoleType.ROLE_ADMIN));
 
         } else {
 
-            user.getRoles().add(role);
+            user.setRole(role);
         }
 
         userRepository.saveAndFlush(user);
@@ -116,7 +114,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean save(EditUserDTO editUserDTO) {
+    public void save(EditUserDTO editUserDTO) {
 
         User user = userRepository.findById(editUserDTO.getId()).orElseThrow(
                 () -> new ObjectNotFoundException("User not found", User.class.getSimpleName())
@@ -126,11 +124,10 @@ public class UserServiceImpl implements UserService {
         user.setShippingAddress(editUserDTO.getShippingAddress());
         user.setUsername(editUserDTO.getUsername());
         Role role = roleRepository.findByType(editUserDTO.getRole());
-        user.setRoles(List.of(role));
+        user.setRole(role);
 
         userRepository.save(user);
 
-        return true;
 
     }
 }

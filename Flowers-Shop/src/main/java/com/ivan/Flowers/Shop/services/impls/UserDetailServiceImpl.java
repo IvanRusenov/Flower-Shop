@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
 
@@ -37,10 +39,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
         return new ShopUserDetails(
                 user.getUsername(),
                 user.getPassword(),
-                user.getRoles().stream()
-                        .map(Role::getType)
-                        .map(UserDetailServiceImpl::map)
-                        .toList()
+                List.of(new SimpleGrantedAuthority(user.getRole().getType().name()))
+
+
+
 
         );
     }

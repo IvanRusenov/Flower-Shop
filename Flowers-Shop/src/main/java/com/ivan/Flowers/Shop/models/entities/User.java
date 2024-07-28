@@ -2,6 +2,7 @@ package com.ivan.Flowers.Shop.models.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "users")
@@ -29,16 +30,16 @@ public class User {
     @Column(nullable = false)
     private String shippingAddress;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private List<Role> roles;
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "users_roles",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "role_id")
+//    )
+//    private List<Role> roles;
+@ManyToOne
+private Role role;
 
-//    @OneToMany(mappedBy = "orderBy")
-//    private List<Order> orders;
 
     @OneToOne
     private Cart cart;
@@ -103,13 +104,21 @@ public class User {
         this.shippingAddress = address;
     }
 
-    public List<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
+
+    //    public List<Role> getRoles() {
+//        return roles;
+//    }
+//
+//    public void setRoles(List<Role> roles) {
+//        this.roles = roles;
+//    }
 //
 //    public List<Order> getOrders() {
 //        return orders;

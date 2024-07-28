@@ -49,7 +49,7 @@ public class UserDetailServiceImplTest {
         User testUser = new User();
         testUser.setUsername(USERNAME);
         testUser.setPassword(PASSWORD);
-        testUser.setRoles(List.of(testRole));
+        testUser.setRole(testRole);
 
         when(mockedUserRepository.findByUsername(USERNAME))
                 .thenReturn(Optional.of(testUser));

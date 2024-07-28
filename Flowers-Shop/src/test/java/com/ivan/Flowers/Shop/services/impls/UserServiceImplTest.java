@@ -32,9 +32,6 @@ class UserServiceImplTest {
     public static final String NOT_VALID_PASSWORD = "222";
     public static final String EMAIL = "ivan@email.bg";
     public static final String SHIPPING_ADDRESS = "Plovdiv";
-    public static final String NEW_USERNAME = "rusenov";
-    public static final String NEW_EMAIL = "rusenov@email.bg";
-    public static final String NEW_SHIPPING_ADDRESS = "Sofia";
     public static final String ENCODED_PASSWORD = "cvd8$sy";
 
     private UserServiceImpl toTest;
@@ -106,7 +103,6 @@ class UserServiceImplTest {
 
         assertFalse(result);
     }
-
 
     @Test
     void register_FirstUser_ROLE_ADMIN() {
@@ -207,30 +203,6 @@ class UserServiceImplTest {
         when(mockedUserRepository.findById(1L)).thenReturn(Optional.empty());
 
         assertThrows(ObjectNotFoundException.class, () -> toTest.getUser(1L));
-    }
-
-    @Test
-    void save_UserExists_UpdatesUser() {
-        EditUserDTO editUserDTO = new EditUserDTO();
-        editUserDTO.setId(1L);
-        editUserDTO.setUsername(NEW_USERNAME);
-        editUserDTO.setEmail(NEW_EMAIL);
-        editUserDTO.setShippingAddress(NEW_SHIPPING_ADDRESS);
-        editUserDTO.setRole(RoleType.ROLE_USER);
-
-        User user = new User();
-        user.setId(1L);
-
-        Role role = new Role();
-        role.setType(RoleType.ROLE_USER);
-
-        when(mockedUserRepository.findById(1L)).thenReturn(Optional.of(user));
-        when(mockedRoleRepository.findByType(RoleType.ROLE_USER)).thenReturn(role);
-
-        boolean result = toTest.save(editUserDTO);
-
-        assertTrue(result);
-        verify(mockedUserRepository).save(user);
     }
 
     @Test

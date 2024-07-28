@@ -18,5 +18,5 @@ public interface UserService {
 
     User getUser(Long userId);
 
-    boolean save(EditUserDTO editUserDTO);
+    void save(EditUserDTO editUserDTO);
 }

@@ -110,7 +110,7 @@ public class UserController {
 
         User user = userService.getUser(userId);
         EditUserDTO editUserDTO = modelMapper.map(user, EditUserDTO.class);
-        editUserDTO.setRole(user.getRoles().getFirst().getType());
+        editUserDTO.setRole(user.getRole().getType());
         //TODO: change User to have only one role
 
         editUser.addObject("roles", RoleType.values());
@@ -122,17 +122,14 @@ public class UserController {
 
 
     @PostMapping("user/save")
-    public ModelAndView save(EditUserDTO editUserDTO, BindingResult bindingResult) {
+    public ModelAndView save(@Valid EditUserDTO editUserDTO, BindingResult bindingResult) {
 
 
         if (bindingResult.hasErrors()){
             return new ModelAndView("redirect:/user/edit/"+editUserDTO.getId());
         }
 
-
-        if (!userService.save(editUserDTO)) {
-            return new ModelAndView("redirect:/user/edit/"+editUserDTO.getId());
-        }
+        userService.save(editUserDTO);
 
         return new ModelAndView("redirect:/users/all");
     }

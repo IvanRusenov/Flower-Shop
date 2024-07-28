@@ -33,30 +33,30 @@ public class Initialisations implements CommandLineRunner {
         initRoles();
 //        initBouquets();
 
-        initModerator();
+//        initModerator();
 
     }
 
-    private void initModerator() {
-
-        Optional<User> byUsername = userRepository.findByUsername("mod");
-
-        if (byUsername.isEmpty()) {
-            return;
-        }
-
-//        Role role = roleRepository.findById(2L).get();
-        Role role = roleRepository.findByType(RoleType.ROLE_MODERATOR);
-
-        if (byUsername.get().getRoles().contains(role)) {
-            return;
-        }
-
-        byUsername.get().getRoles().clear();
-        byUsername.get().getRoles().add(role);
-
-        userRepository.save(byUsername.get());
-    }
+//    private void initModerator() {
+//
+//        Optional<User> byUsername = userRepository.findByUsername("mod");
+//
+//        if (byUsername.isEmpty()) {
+//            return;
+//        }
+//
+////        Role role = roleRepository.findById(2L).get();
+//        Role role = roleRepository.findByType(RoleType.ROLE_MODERATOR);
+//
+//        if (byUsername.get().getRoles().contains(role)) {
+//            return;
+//        }
+//
+//        byUsername.get().getRoles().clear();
+//        byUsername.get().getRoles().add(role);
+//
+//        userRepository.save(byUsername.get());
+//    }
 
 
     private void initBouquets() {

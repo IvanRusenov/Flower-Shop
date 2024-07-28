@@ -98,6 +98,7 @@ public class BouquetServiceImpl implements BouquetService {
 
         String url = bouquet.getUrl();
 
+        bouquetRepository.delete(bouquet);
         boolean isDeleted = cloudinaryService.deleteImage(url);
 
         if (!isDeleted) {
@@ -105,7 +106,6 @@ public class BouquetServiceImpl implements BouquetService {
             throw new RuntimeException("Failed to delete image from cloudinary!");
         }
 
-        bouquetRepository.delete(bouquet);
 //        logger.info("Bouquet {} removed successfully.", bouquet.getId());
     }
 

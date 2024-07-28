@@ -81,10 +81,13 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    @Transactional
     public void clearCart(long cartId) {
 
         Cart cart = cartRepository.findById(cartId)
                 .orElseThrow(() -> new ObjectNotFoundException("Cart doesn't exist", Cart.class.getSimpleName()));
+
+        cartItemRepository.deleteAll(cart.getItems());
 
         cart.setItems(new ArrayList<>());
 

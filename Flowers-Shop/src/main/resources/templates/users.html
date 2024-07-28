@@ -34,7 +34,7 @@
                                     <td class="align-middle" th:text="${user.getUsername()}">{username}</td>
                                     <td class="align-middle" th:text="${user.getEmail()}">{email}</td>
                                     <td class="align-middle" th:text="${user.getShippingAddress()}">{shippingAddress}</td>
-                                    <td class="align-middle" th:text="${user.getRoles()[0].getType()}">{shippingAddress}</td>
+                                    <td class="align-middle" th:text="${user.getRole().getType()}">{role}</td>
                                     <td class="align-middle text-center">
                                         <form th:method="get" th:action="@{/user/edit/{id}(id=${user.getId()})}">
                                             <button th:if="${user.id} != 1" type="submit"
