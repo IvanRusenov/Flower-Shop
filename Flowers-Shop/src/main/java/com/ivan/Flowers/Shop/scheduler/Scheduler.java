@@ -19,7 +19,7 @@ public class Scheduler {
 
         orderService.getAllOrdersDesc().stream()
                .filter(o -> o.getStatus().equals(StatusType.CANCELED))
-               .forEach(o-> orderService.delete(o.getId()));
-        System.out.println();
+               .forEach(o -> orderService.delete(o.getId()));
+        System.out.println("DELETING CANCELED ORDERS");
     }
 }

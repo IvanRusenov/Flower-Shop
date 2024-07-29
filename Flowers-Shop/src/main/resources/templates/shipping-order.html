@@ -10,7 +10,6 @@
         <span class="px-2 text-white" th:text="${#lists.size(orders)}"></span>
     </h1>
 
-
     <div class="container py-1">
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-lg-10 col-xl-8">
@@ -51,7 +50,6 @@
 
                         <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
 
-<!--                        TODO: SHOW ORDER ID-->
                         <div class="d-flex justify-content-between pt-2 text-white">
                             <p class="fw-bold mb-0 text-white">Order Details</p>
                             <p class="mb-0 text-white" th:text="|Total: ${order.getTotalAmount()}|"><span class="fw-bold me-4 text-white">Total</span> $898.00</p>
@@ -72,12 +70,19 @@
                         </p>
                     </form>
 
-
                 </div>
             </div>
         </div>
     </div>
 </section>
 <footer th:replace="~{fragments/commons::footer}"></footer>
+
+<script>
+    setInterval(() => {
+        console.log('Refreshing page...');
+        location.reload();
+    }, 30000);
+</script>
+
 </body>
 </html>
