@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
 
 <head th:replace="~{fragments/commons::head}"></head>
 <body class="all-orders">
@@ -7,7 +9,10 @@
     <section class="position-absolute top-50 start-50 translate-middle my-container">
         <div class="mx-auto p-3 text-center">
             <h1 class="text-white  ">“Oops, something went wrong!”</h1>
-            <p class="text-white fs-4 m-3 ">Click <a class="text-danger" th:href="@{/home}">here</a> to go to the home page</p>
+            <p sec:authorize="isAuthenticated() && !hasRole('ROLE_MODERATOR')" class="text-white fs-4 m-3 ">Click <a class="text-danger" th:href="@{/home}">here</a> to go to the home page</p>
+            <p sec:authorize="hasRole('ROLE_MODERATOR')" class="text-white fs-4 m-3 ">Click <a class="text-danger" th:href="@{/orders/pending}">here</a> to go to the home page</p>
+
+            <p sec:authorize="!isAuthenticated()" class="text-white fs-4 m-3 ">Click <a class="text-danger" th:href="@{/}">here</a> to go to the home page</p>
         </div>
     </section>
 </main>

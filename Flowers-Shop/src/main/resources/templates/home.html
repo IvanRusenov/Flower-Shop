@@ -4,7 +4,7 @@
 >
 
 <head th:replace="~{fragments/commons::head}"></head>
-<body class="home">
+<body class="bg-black">
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
     <div class="container text-center my-5">
@@ -18,15 +18,17 @@
                         <h5 class="card-title" th:text="${bouquet.description}">{description}</h5>
                         <p class="card-text" th:text="|No. ${bouquet.itemNumber}|">{No.}</p>
                         <p class="card-text mb-2" th:text="|Price: ${bouquet.unitPrice}|">{Price: lv.}</p>
-
-                        <a sec:authorize="!hasRole('ROLE_ADMIN')" th:href="@{/cart/add/{itemNumber}(itemNumber=${bouquet.itemNumber})}" class="btn-gold rounded-pill">ADD TO CART</a>
+                        <a sec:authorize="!hasRole('ROLE_ADMIN')"
+                           th:href="@{/cart/add/{itemNumber}(itemNumber=${bouquet.itemNumber})}"
+                           class="btn-gold rounded-pill"
+                        >
+                            ADD TO CART
+                        </a>
                         <form sec:authorize="hasRole('ROLE_ADMIN')"
                               th:method="post"
                               th:action="@{/bouquet/remove/{itemNumber}(itemNumber=${bouquet.itemNumber})}"
                         >
-<!--                            todo: fix button href-->
-                            <button th:href="@{/bouquet/remove/{itemNumber}(itemNumber=${bouquet.itemNumber})}"
-                                    class="remove-btn rounded-pill py-2 px-4">Remove</button>
+                            <button class="remove-btn rounded-pill py-2 px-4">Remove</button>
                         </form>
                     </div>
                 </div>
@@ -34,8 +36,6 @@
         </div>
     </div>
 </main>
-
-
 <footer th:replace="~{fragments/commons::footer}"></footer>
 </body>
 </html>
