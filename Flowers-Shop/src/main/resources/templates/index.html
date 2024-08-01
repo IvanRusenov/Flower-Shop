@@ -6,13 +6,13 @@
 <body class="background1">
     <header th:replace="~{fragments/commons::nav}"></header>
     <main>
-        <section class="position-absolute top-50 start-50 translate-middle my-container">
-           <div class="mx-auto p-3 text-center">
-                <h1 class="text-white myFont bigFont" th:text="#{nav_bar_company}">Орхидея</h1>
-                <p class="text-white fs-4 m-3 myFont" th:text="#{index_heading}">Онлайн бутик за цветя и букети</p>
+        <section class="container d-flex justify-content-center min-vh-100 align-items-center" style="max-width: 30em">
+           <div class="container mx-auto p-3 text-center" >
+                <h1 class="text-white myFont display-3" th:text="#{nav_bar_company}">Орхидея</h1>
+                <h3 class="text-white m-3 myFont " th:text="#{index_heading}">Онлайн бутик за цветя и букети</h3>
                 <div class="d-flex justify-content-center gap-4 m-3 pt-2">
-                    <a th:href="@{/login}" class="btn-gold rounded-pill p-1 col-3 fs-5" th:text="#{nav_bar_login}">Login</a>
-                    <a th:href="@{/register}" class="btn-gold rounded-pill p-1 col-3 fs-5" th:text="#{nav_bar_register}">Register</a>
+                    <a th:href="@{/login}" class="btn-gold rounded-pill p-1 col-4" th:text="#{nav_bar_login}">Login</a>
+                    <a th:href="@{/register}" class="btn-gold rounded-pill p-1 col-4 " th:text="#{nav_bar_register}">Register</a>
                 </div>
            </div>
         </section>

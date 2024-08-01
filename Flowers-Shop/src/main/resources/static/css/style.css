@@ -66,14 +66,7 @@ nav {
 /*}*/
 
 footer div {
-    text-align: center;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
     background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 1em 0;
-    margin-top: 2em;
 }
 
 .my-container {
@@ -92,7 +85,7 @@ footer div {
 
 .bigFont {
     font-style: oblique;
-    font-size: 5em;
+    font-size: 3em;
     font-weight: bold;
 }
 
