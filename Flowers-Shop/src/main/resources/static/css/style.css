@@ -83,6 +83,11 @@ footer div {
     letter-spacing: 0.5em;
 }
 
+.myFont1 {
+    font-family: 'Times New Roman', Times, serif;
+    font-style: oblique;
+}
+
 .bigFont {
     font-style: oblique;
     font-size: 3em;
