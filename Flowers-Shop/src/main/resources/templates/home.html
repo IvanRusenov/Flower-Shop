@@ -20,7 +20,7 @@
                         <p class="card-text mb-2" th:text="|Price: ${bouquet.unitPrice}|">{Price: lv.}</p>
                         <a sec:authorize="!hasRole('ROLE_ADMIN')"
                            th:href="@{/cart/add/{itemNumber}(itemNumber=${bouquet.itemNumber})}"
-                           class="btn-gold rounded-pill"
+                           class="btn-gold rounded-pill py-2 px-4"
                         >
                             ADD TO CART
                         </a>

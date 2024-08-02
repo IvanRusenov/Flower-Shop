@@ -1,39 +1,41 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/commons::head}"></head>
-<body class="bg-black">
+<body class="home">
 <header th:replace="~{fragments/commons::nav}"></header>
-<div class="container text-center my-5 text-white">
-    <h1 class="display-6 p-2 border-bottom m-5 fw-bold fst-italic">CART</h1>
-    <div class="container-fluid mb-5">
-        <div th:each="item: ${cart.getItems()}" class="row align-items-center m-3 cart-round">
+<div class="container text-center py-4 mb-5 text-white">
+    <h1 class="display-6 p-2 border-bottom m-5 myFont1 display-3">CART</h1>
+    <div class="mb-5">
+        <div th:each="item: ${cart.getItems()}" class="row align-items-center m-3 cart-round my-container">
             <div class="media col-12 col-md-3 p-2">
                 <img style="height: 300px;" th:src="${item.getBouquet().getUrl()}" alt="picture of bouquet">
             </div>
             <div class="col-12 col-md-7 fs-5">
                 <p th:text="${item.getBouquet().getDescription()}">{Description}</p>
                 <p class="py-3 fst-italic" th:text="|Quantity: ${item.getQuantity()} pcs|">Quantity: {2} pcs</p>
-                <p class="fw-bold fst-italic" th:text="|Price per pcs: ${item.getBouquet().getPrice()} $|">Price:
+                <p class="fw-bold fst-italic"
+                   th:text="|Price per pcs: ${#numbers.formatDecimal(item.getBouquet().getPrice(),0,2)} &euro;|">Price:
                     {2365.26} $</p>
             </div>
             <div class="col-12 col-md-2">
                 <form th:action="@{/cart/remove/{id}(id=*{item.getId()})}" th:method="post">
-                    <button type="submit" class="remove-btn rounded-pill px-3 py-1">Remove</button>
+                    <button type="submit" class="remove-btn rounded-pill px-3 py-1 mb-4">Remove</button>
                 </form>
             </div>
         </div>
     </div>
-    <div class="mt-3 mb-5">
+    <div class="mb-3 d-flex justify-content-center align-items-center">
         <form th:action="@{/order/{cartId}(cartId=*{cart.getId()})}" th:method="post">
-            <p th:if="${cart.getTotalPrice()} != 0" class="fs-3 fw-bold fst-italic m-3"
-               th:text="|Total sum: ${cart.getTotalPrice()} $|">Total sum: {totalSum} $</p>
+            <p th:if="${cart.getTotalPrice()} != 0" class="fs-3 myFont1 m-3"
+               th:text="|Total sum: ${#numbers.formatDecimal(cart.getTotalPrice(),0,2)} &euro;|">Total sum: {totalSum} $
+            </p>
             <p th:if="${cart.getTotalPrice()} == 0" class="fs-1 fw-bold fst-italic m-3"
                th:text="'The cart is empty!'">Empty</p>
-            <button th:if="${cart.getTotalPrice()} != 0" class="btn-gold rounded-pill mb-4 px-5 fs-3 fw-bold
-            fst-italic">BUY
+            <button th:if="${cart.getTotalPrice()} != 0" class="btn-gold rounded-pill mb-5 px-5 py-1 fs-3 fw-bold
+            fst-italic col-10">BUY
             </button>
-            <p style="margin-bottom: 5em;">
-                <a th:href="@{/home}" class="rounded-pill mb-5 px-5 py-2 fs-5 fw-bold fst-italic text-light
+            <p class="">
+                <a th:href="@{/home}" class="back-btn glowing-gold rounded-pill px-5 py-1 fs-5 fst-italic text-white
                 text-decoration-none border border-light">To gallery</a>
             </p>
         </form>
