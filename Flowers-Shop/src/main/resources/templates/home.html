@@ -4,11 +4,11 @@
 >
 
 <head th:replace="~{fragments/commons::head}"></head>
-<body class="bg-black">
+<body class="home">
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
     <div class="container text-center my-5 py-5 ">
-        <div th:object="${bouquets}" class="row g-5">
+        <div th:object="${bouquets}" class="row g-4">
             <div th:each="bouquet: ${bouquets}" class="col-12 col-md-6 col-lg-4">
                 <div class="card">
                     <div class="media">

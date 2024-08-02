@@ -407,3 +407,10 @@ h1 {
     left: 0;
     z-index: -1;
 }
+
+.home {
+    background-image: url(/images/home-bg.jpg);
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
