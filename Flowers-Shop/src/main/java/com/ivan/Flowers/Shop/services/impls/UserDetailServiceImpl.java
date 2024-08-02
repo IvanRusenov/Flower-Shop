@@ -40,12 +40,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
                 user.getUsername(),
                 user.getPassword(),
                 List.of(new SimpleGrantedAuthority(user.getRole().getType().name()))
-
-
-
-
         );
-    }
+            }
 
     private static GrantedAuthority map(RoleType roleType) {
         return new SimpleGrantedAuthority(roleType.name());
