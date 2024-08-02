@@ -4,64 +4,41 @@
 <body class="bouquet-add">
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
-    <!-- todo: fix responsive issue with position-absolute -->
-    <div class="position-absolute top-50 start-50 translate-middle content-wrap w-25 mx-auto bg-opacity-75 bg-black border custom-round">
-        <h1 class="text-center my-5 text-white midFont">Add Bouquet</h1>
-        <form class="form-floating mx-auto w-75 bg-blur" th:method="post" th:action="@{/bouquet/add}" th:object="${bouquetDTO}" enctype="multipart/form-data">
-            <div class="form-floating mb-3 text-center">
-                <input th:field="*{description}" th:errorclass="is-invalid" class="form-control" id="description" placeholder="Description">
-                <label for="description">Description</label>
-                <small th:errors="*{description}" class="text-danger ">Description error message</small>
-            </div>
-            <div class="form-floating mb-3 text-center">
-                <input th:field="*{itemNumber}" th:errorclass="is-invalid" type="number" class="form-control" id="itemNumber" placeholder="Item Number">
-                <label for="itemNumber">Item Number</label>
-                <small th:errors="*{itemNumber}" class="text-danger">Item Number error message</small>
-            </div>
-            <div class="form-floating mb-3 text-center">
-                <input th:field="*{unitPrice}" th:errorclass="is-invalid" type="number" step=".01" class="form-control" id="price" placeholder="Price">
-                <label for="price">Price</label>
-                <small th:errors="*{unitPrice}" class="text-danger">Price error message</small>
-            </div>
-<!--            <div class="form-floating mb-3 text-center">-->
-<!--                <input th:field="*{url}" th:errorclass="is-invalid" type="text" class="form-control" id="url" placeholder="Url">-->
-<!--                <label for="url">URL</label>-->
-<!--                <small th:errors="*{url}" class="text-danger">Url error message</small>-->
-<!--            </div>-->
-
-
-
-<!--            adding picture -->
-            <div class="form-floating mb-3 text-center text-white">
-<!--                <h4>Choose picture</h4>-->
-<!--                <form th:action="@{/picture/add}" th:method="POST" enctype="multipart/form-data">-->
-<!--                    <input type="hidden" id="id" name="routeId">-->
-<!--                    <div class="form-group">-->
-<!--                        <label>-->
-<!--                            <input type="text" name="pictureTitle">-->
-<!--                        </label>-->
-<!--                    </div>-->
-<!--                    <div class="image-upload">-->
-<!--                        <label for="picture">-->
-<!--                            <img src="/images/add-img.png" alt=""/>-->
-<!--                        </label>-->
-                        <input  th:field="*{picture}" th:errorclass="is-invalid" type="file" class="form-control" id="picture" name="picture" placeholder="Choose picture"/>
-                        <label for="picture">Choose picture</label>
-                        <small th:errors="*{picture}" class="text-danger">Picture error message</small>
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <button class="btn-primary rounded">Upload Picture</button>-->
-<!--                    </div>-->
-<!--                </form>-->
-
-            </div>
-            <div class="form-floating mb-3 text-center">
-                <button class="btn-gold rounded-pill p-2 w-50 my-2 ">Add</button>
-            </div>
-        </form>
-    </div>
+    <section class="container d-flex justify-content-center min-vh-100 align-items-center" style="max-width: 30em">
+        <div class="container mx-auto p-3 text-center border my-container">
+            <h1 class="text-center text-white myFont1 display-3">Add Bouquet</h1>
+            <form class="form-floating mx-auto w-75 bg-blur" th:method="post" th:action="@{/bouquet/add}" th:object="${bouquetDTO}" enctype="multipart/form-data">
+                <div class="form-floating mb-3 text-center">
+                    <input th:field="*{description}" th:errorclass="is-invalid" class="form-control" id="description"
+                           placeholder="Description">
+                    <label for="description">Description</label>
+                    <small th:errors="*{description}" class="text-danger ">Description error message</small>
+                </div>
+                <div class="form-floating mb-3 text-center">
+                    <input th:field="*{itemNumber}" th:errorclass="is-invalid" type="number" min="0"
+                           class="form-control" id="itemNumber" placeholder="Item Number">
+                    <label for="itemNumber">Item Number</label>
+                    <small th:errors="*{itemNumber}" class="text-danger">Item Number error message</small>
+                </div>
+                <div class="form-floating mb-3 text-center">
+                    <input th:field="*{unitPrice}" th:errorclass="is-invalid" type="number" min="0" step=".01"
+                           class="form-control" id="price" placeholder="Price">
+                    <label for="price">Price</label>
+                    <small th:errors="*{unitPrice}" class="text-danger">Price error message</small>
+                </div>
+                <div class="form-floating mb-3 text-center text-white">
+                    <input th:field="*{picture}" th:errorclass="is-invalid" type="file" class="form-control"
+                           required id="picture" name="picture" placeholder="Choose picture"/>
+                    <label for="picture">Choose picture</label>
+                    <small th:errors="*{picture}" class="text-danger">Picture error message</small>
+                </div>
+                <div class="form-floating mb-3 text-center">
+                    <button class="btn-gold rounded-pill p-2 w-50 my-2 ">Add</button>
+                </div>
+            </form>
+        </div>
+    </section>
 </main>
 <footer th:replace="~{fragments/commons::footer}"></footer>
-
 </body>
 </html>
