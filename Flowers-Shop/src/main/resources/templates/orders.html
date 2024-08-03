@@ -3,14 +3,10 @@
 <head th:replace="~{fragments/commons::head}"></head>
 <body class="all-orders">
 <header th:replace="~{fragments/commons::nav}"></header>
-
 <section class="gradient-custom mb-5 ">
-
     <h1 class="display-6 pt-5 m-5 fst-italic text-center text-white myFont1">All orders:
         <span class="px-2" style="color: #FEDB37;" th:text="${#lists.size(orders)}"></span>
     </h1>
-
-
     <div class="container py-1">
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-lg-10 col-xl-8">
@@ -31,31 +27,39 @@
                                                      class="img-fluid" alt="Picture of bouquet"
                                                      style="width: 100px; height: 100px;">
                                             </div>
-                                            <div class="col-md-2 text-center d-flex flex-column justify-content-center align-items-center text-white">
-                                                <p class="mb-0 text-white" th:text="${item.getDescription()}">Description</p>
+                                            <div class="col-md-2 text-center d-flex flex-column justify-content-center
+                                             align-items-center text-white">
+                                                <p class="mb-0 text-white" th:text="${item.getDescription()}">
+                                                    Description</p>
                                             </div>
-                                            <div class="col-md-2 text-center d-flex flex-column justify-content-center align-items-center text-white">
+                                            <div class="col-md-2 text-center d-flex flex-column justify-content-center
+                                            align-items-center text-white">
                                                 <p class="mb-0 small text-white">Item No</p>
                                                 <p class="mb-0 small text-white" th:text="${item.getItemNumber()}">Item
                                                     number</p>
                                             </div>
-                                            <div class="col-md-2 text-center d-flex flex-column justify-content-center align-items-center text-white">
+                                            <div class="col-md-2 text-center d-flex flex-column justify-content-center
+                                            align-items-center text-white">
                                                 <p class="mb-0 small text-white">Quantity</p>
-                                                <p class="mb-0 small text-white" th:text="${item.getQuantity()}">Qty: 1</p>
+                                                <p class="mb-0 small text-white" th:text="${item.getQuantity()}">Qty:
+                                                    1</p>
                                             </div>
-                                            <div class="col-md-2 text-center d-flex flex-column justify-content-center align-items-center text-white">
+                                            <div class="col-md-2 text-center d-flex flex-column justify-content-center
+                                            align-items-center text-white">
                                                 <p class="mb-0 small text-white"> Price per unit</p>
                                                 <p class="mb-0 small text-white"
                                                    th:text="|${#numbers.formatDecimal(item.getUnitPrice(),0,2)} &euro;|">
                                                     $499</p>
                                             </div>
-                                            <div class="mb-3 col-md-2 text-center d-flex flex-column justify-content-center align-items-center text-white">
+                                            <div class="mb-3 col-md-2 text-center d-flex flex-column
+                                            justify-content-center align-items-center text-white">
                                                 <p class="mb-0 small text-white">Price</p>
                                                 <p class="mb-0 small text-white"
-                                                   th:text="|${#numbers.formatDecimal(item.getUnitPrice() * item.getQuantity(),0,2)} &euro;|">
+                                                   th:text="|${#numbers.formatDecimal(item.getUnitPrice()
+                                                   * item.getQuantity(),0,2)} &euro;|">
                                                     $499</p>
                                             </div>
-                                            <hr class="mt-2 w-50 mx-auto bg-danger-subtle">
+                                            <hr class="mt-2 w-50 mx-auto">
                                         </div>
                                     </div>
                                 </div>
@@ -69,7 +73,8 @@
                                 <div class="d-flex justify-content-between text-white">
                                     <p class="mb-0 text-white fst-italic w-50">
                                         Order Date and time:
-                                        <span th:text="${{order.getOrderDateTime()}}" class="fw-bold">{22 Dec,2019}</span>
+                                        <span th:text="${{order.getOrderDateTime()}}"
+                                              class="fw-bold">{22 Dec,2019}</span>
                                     </p>
                                     <p class="mb-0 text-white fst-italic ">
                                         Status:
@@ -85,39 +90,17 @@
                         </div>
                     </form>
                     <div class="d-flex justify-content-center pb-2 mb-3">
-
                         <form class="text-center" th:method="get" th:action="@{/order/edit/{id}(id=*{order.getId()})}">
                             <button type="submit"
-                                    class="btn-gold rounded-pill px-5 py-2 w-50">Edit</button>
+                                    class="btn-gold rounded-pill px-5 py-2 w-50">Edit
+                            </button>
                         </form>
-
                         <form class="text-center" th:method="post" th:action="@{/orders/{id}(id=*{order.getId()})}">
                             <button type="submit"
-                                    class="remove-btn rounded-pill px-5 py-2 w-50">Delete</button>
+                                    class="remove-btn rounded-pill px-5 py-2 w-50">Delete
+                            </button>
                         </form>
-
-<!--                        <form class="col" th:method="post" th:action="@{/order/change-status/{id}(id=${order.getId()})}">-->
-<!--                            <p class="text-center">-->
-<!--                                <button type="submit" class="btn-gold rounded-pill fs-5">Change status</button>-->
-<!--                            </p>-->
-<!--                        </form>-->
-
-<!--                        <form class="col" th:method="post" th:action="@{/order/change-status/{id}(id=${order.getId()})}">-->
-<!--                            <p class="text-center">-->
-<!--                                <button type="submit" class="btn-gold rounded-pill fs-5">Edit</button>-->
-<!--                            </p>-->
-<!--                        </form>-->
-
-<!--                        <form class="col" th:method="post" th:action="@{/order/change-status/{id}(id=${order.getId()})}">-->
-<!--                            <p class="text-center">-->
-<!--                                <button type="submit" class="remove-btn rounded-pill fs-5 px-3 py-1">Delete</button>-->
-<!--                            </p>-->
-<!--                        </form>-->
-
                     </div>
-
-
-
                 </div>
             </div>
         </div>

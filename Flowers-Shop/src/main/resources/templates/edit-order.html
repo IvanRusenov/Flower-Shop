@@ -3,12 +3,12 @@
 <head th:replace="~{fragments/commons::head}"></head>
 <body class="all-orders">
 <header th:replace="~{fragments/commons::nav}"></header>
-
 <section class="gradient-custom mb-5">
+    <h1 class="display-6 pt-5 m-5 fst-italic text-center text-white myFont1">Edit order</h1>
     <form id="formData" th:method="post" th:action="@{/order/save}" th:object="${order}">
         <div class="container py-1">
             <div class="row d-flex justify-content-center align-items-center">
-                <div class="col-lg-8 col-xl-6">
+                <div class="col-xl-6 mb-3">
                     <div class="border mb-3 bg-black" style="border-radius: 10px;">
                         <input type="hidden" th:field="*{id}">
                         <div class="d-flex justify-content-center pt-4 text-white">
@@ -19,7 +19,7 @@
                             <div class="shadow-0 mb-4">
                                 <div class="text-white">
                                     <div class="row mb-2" th:each="item, i : *{items}">
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-3 text-center">
                                             <img style="width: 100px; height: 100px;" th:src="${item.getUrl()}"
                                                  class="img-fluid" alt="Picture of bouquet">
                                         </div>
@@ -32,27 +32,25 @@
                                         <div class="col-lg-3 text-center d-flex flex-column justify-content-center
                                         align-items-center text-white">
                                             <p class="col-10">
-                                                <label for="quantity">Quantity:</label>
-                                                <input class="col-5" type="number" step="1" min="1" id="quantity"
+                                                <label th:for="${i.index}">Quantity:</label>
+                                                <input class="col-5" type="number" step="1" min="1" th:id="${i.index}"
                                                        name="quantity"
                                                        th:field="*{items[__${i.index}__].quantity}"/><br/>
                                             </p>
                                         </div>
-
                                         <div class="col-lg-3 text-center d-flex flex-column justify-content-center
                                          align-items-center text-white">
-                                            <a class="remove-btn rounded-pill" th:if="(*{items.size()} != 1)"
+                                            <a class="remove-btn rounded-pill py-1 px-3" th:if="(*{items.size()} != 1)"
                                                th:href="@{/order/deleteItem/{itemId}/{orderId}(itemId=${item.getId()},
-                                                orderId=${order.getId()})}" onclick="return confirm('Are you sure?')">Delete</a>
-                                            <!--TODO:active only if status is PENDING-->
+                                                orderId=${order.getId()})}" onclick="return confirm('Are you sure?')">
+                                                Delete</a>
                                         </div>
+                                        <hr class="mt-3 w-50 mx-auto">
                                     </div>
                                 </div>
                             </div>
-
                             <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
-
-                            <div class="col-xl-6 text-white">
+                            <div class=" text-white text-center">
                                 <label for="status">Status:</label>
                                 <select th:field="*{status}" class="mb-3" id="status" name="status">
                                     <option th:value="-1" disabled selected>Select new status</option>
@@ -61,17 +59,17 @@
                                     </option>
                                 </select>
                             </div>
-                            <div class="col-lg-12 text-white">
-                                <p class="col-lg-12 text-white">
+                            <div class=" text-white">
+                                <p class="text-center text-white">
                                     <label for="shippingAddress">Shipping Address</label>
-                                    <input class="col-lg-12" type="text" id="shippingAddress" name="shippingAddress"
+                                    <input class="w-100" type="text" id="shippingAddress" name="shippingAddress"
                                            th:field="*{shippingAddress}"/><br/>
                                 </p>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-center gap-5 pb-2 text-center">
-                            <a class="btn-gold rounded-pill" th:href="@{/order/cancel}">Cancel</a>
-                            <button type="submit" class="btn-gold rounded-pill">Save</button>
+                        <div class="d-flex justify-content-center gap-5 pb-2 mb-3 text-center">
+                            <a class="btn-gold rounded-pill py-2 w-25" th:href="@{/order/cancel}">Cancel</a>
+                            <button type="submit" class="btn-gold rounded-pill py-2 w-25">Save</button>
                         </div>
                     </div>
                 </div>
