@@ -4,7 +4,7 @@
 <body class="home">
 <header th:replace="~{fragments/commons::nav}"></header>
 <div class="container text-center py-4 mb-5 text-white">
-    <h1 class="display-6 p-2 border-bottom m-5 myFont1 display-3">CART</h1>
+    <h1 class="display-6 p-2 border-bottom m-5 myFont1">CART</h1>
     <div class="mb-5">
         <div th:each="item: ${cart.getItems()}" class="row align-items-center m-3 cart-round my-container">
             <div class="media col-12 col-md-3 p-2">
@@ -39,7 +39,7 @@
                 <span class="fw-bold" th:text="${#numbers.formatDecimal(cart.getTotalPrice(),0,2)}"></span>
                 &euro;
             </p>
-            <p th:if="${cart.getTotalPrice()} == 0" class="fs-1 fw-bold fst-italic mt-3"
+            <p th:if="${cart.getTotalPrice()} == 0" class="fs-3 fw-bold fst-italic mt-3"
                th:text="'The cart is empty!'">Empty</p>
             <button th:if="${cart.getTotalPrice()} != 0" class="btn-gold rounded-pill mb-5 px-5 py-1 fs-3 fw-bold
             fst-italic col-10">BUY
