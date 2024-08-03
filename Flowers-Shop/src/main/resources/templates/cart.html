@@ -11,11 +11,19 @@
                 <img style="height: 300px;" th:src="${item.getBouquet().getUrl()}" alt="picture of bouquet">
             </div>
             <div class="col-12 col-md-7 fs-5">
-                <p th:text="${item.getBouquet().getDescription()}">{Description}</p>
-                <p class="py-3 fst-italic" th:text="|Quantity: ${item.getQuantity()} pcs|">Quantity: {2} pcs</p>
-                <p class="fw-bold fst-italic"
-                   th:text="|Price per pcs: ${#numbers.formatDecimal(item.getBouquet().getPrice(),0,2)} &euro;|">Price:
-                    {2365.26} $</p>
+                <p class="fst-italic" th:text="${item.getBouquet().getDescription()}">{Description}</p>
+                <p class="fst-italic">Item No:
+                    <span class="fw-bold" th:text="${item.getBouquet().getItemNumber()}"></span>
+                </p>
+                <p class="fst-italic">Quantity:
+                    <span class="fw-bold" th:text="${item.getQuantity()}"></span>
+                    pcs
+                </p>
+                <p class="fst-italic">Price per pcs:
+                    <span class="fw-bold"
+                          th:text="${#numbers.formatDecimal(item.getBouquet().getPrice(),0,2)}"></span>
+                     &euro;
+                </p>
             </div>
             <div class="col-12 col-md-2">
                 <form th:action="@{/cart/remove/{id}(id=*{item.getId()})}" th:method="post">
@@ -27,14 +35,16 @@
     <div class="mb-3 d-flex justify-content-center align-items-center">
         <form th:action="@{/order/{cartId}(cartId=*{cart.getId()})}" th:method="post">
             <p th:if="${cart.getTotalPrice()} != 0" class="fs-3 myFont1 m-3"
-               th:text="|Total sum: ${#numbers.formatDecimal(cart.getTotalPrice(),0,2)} &euro;|">Total sum: {totalSum} $
+               >Total sum:
+                <span class="fw-bold" th:text="${#numbers.formatDecimal(cart.getTotalPrice(),0,2)}"></span>
+                &euro;
             </p>
-            <p th:if="${cart.getTotalPrice()} == 0" class="fs-1 fw-bold fst-italic m-3"
+            <p th:if="${cart.getTotalPrice()} == 0" class="fs-1 fw-bold fst-italic mt-3"
                th:text="'The cart is empty!'">Empty</p>
             <button th:if="${cart.getTotalPrice()} != 0" class="btn-gold rounded-pill mb-5 px-5 py-1 fs-3 fw-bold
             fst-italic col-10">BUY
             </button>
-            <p class="">
+            <p>
                 <a th:href="@{/home}" class="back-btn glowing-gold rounded-pill px-5 py-1 fs-5 fst-italic text-white
                 text-decoration-none border border-light">To gallery</a>
             </p>
