@@ -84,8 +84,10 @@
                     <li class="nav-item"
                         sec:authorize="isAuthenticated() && !hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')">
                         <a class="nav-link glowing-gold" th:href="@{/cart}">Cart
-                            <!--          TODO: show the number of products in the cart-->
-                            <!--          <img src="/images/shopping-cart.png" alt="cart">-->
+                            <span class="position-absolute top-5 start-100 translate-middle badge
+                             rounded-pill bg-danger" th:text="${cartItemsQty}">
+                                <span class="visually-hidden">Items in the cart</span>
+                            </span>
                         </a>
                     </li>
 
@@ -95,7 +97,6 @@
     </nav>
 </header>
 <footer class="fixed-bottom text-white text-center">
-    <!-- todo: fix responsive issue with position-fixed -->
     <div class="py-3" th:text="|&copy #{footer_message}|">Ivan Rusenov 2024</div>
 </footer>
 </body>

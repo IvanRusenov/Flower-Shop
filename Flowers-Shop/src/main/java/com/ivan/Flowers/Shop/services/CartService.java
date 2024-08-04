@@ -16,4 +16,6 @@ public interface CartService {
     Cart getCart(UserDetails userDetails);
 
     void clearCart(long cartId);
+
+    int getAllCartItemsQuantity(UserDetails userDetails);
 }

@@ -23,6 +23,7 @@ public class CartController {
 
         ModelAndView cart = new ModelAndView("cart");
 
+        cart.addObject("cartItemsQty", cartService.getAllCartItemsQuantity(userDetails));
         cart.addObject("cart", cartService.getCart(userDetails));
 
         return cart;

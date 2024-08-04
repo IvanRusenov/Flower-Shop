@@ -96,7 +96,6 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    @Transactional
     public List<CartItem> getItems(UserDetails userDetails) {
 
         if (!(userDetails instanceof ShopUserDetails shopUserDetails)) {
@@ -132,6 +131,10 @@ public class CartServiceImpl implements CartService {
         cartItemRepository.delete(cartItem);
         userRepository.saveAndFlush(user);
 
+    }
+
+    public int getAllCartItemsQuantity(UserDetails userDetails) {
+        return getItems(userDetails).stream().mapToInt(CartItem::getQuantity).sum();
     }
 
 }
