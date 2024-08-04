@@ -37,7 +37,6 @@ public class BouquetController {
 
         if (!isAdded) {
             return new ModelAndView("bouquet-add");
-            //todo: return appropriate error message
         }
 
         return new ModelAndView("redirect:/home");

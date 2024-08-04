@@ -3,6 +3,7 @@ package com.ivan.Flowers.Shop.controllers;
 import com.ivan.Flowers.Shop.enums.StatusType;
 import com.ivan.Flowers.Shop.models.dtos.ChangeOrderStatusDTO;
 import com.ivan.Flowers.Shop.models.dtos.OrderDetailsDTO;
+import com.ivan.Flowers.Shop.services.impls.CartServiceImpl;
 import com.ivan.Flowers.Shop.services.impls.OrderServiceImpl;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,9 +21,11 @@ import java.util.List;
 public class OrderController {
 
     private final OrderServiceImpl orderService;
+    private final CartServiceImpl cartServiceImpl;
 
-    public OrderController(OrderServiceImpl orderService) {
+    public OrderController(OrderServiceImpl orderService, CartServiceImpl cartServiceImpl) {
         this.orderService = orderService;
+        this.cartServiceImpl = cartServiceImpl;
     }
 
     @GetMapping("/orders")
@@ -32,6 +35,7 @@ public class OrderController {
 
         List<OrderDetailsDTO> allOrdersByUser = orderService.getAllOrdersFromUser(userDetails);
         myOrders.addObject("orders", allOrdersByUser);
+        myOrders.addObject("cartItemsCount", cartServiceImpl.getAllCartItemsQuantity(userDetails));
 
         return myOrders;
 
@@ -106,7 +110,6 @@ public class OrderController {
     public ModelAndView delete(@PathVariable("id") long id) {
 
         orderService.delete(id);
-        //todo: Show message {order with id was deleted}
 
         return new ModelAndView("redirect:/orders/all");
 
@@ -134,8 +137,6 @@ public class OrderController {
         editOrder.addObject("statuses", StatusType.values());
 
         return editOrder;
-
-        //todo: Show message {order with id was edited}
 
     }
 

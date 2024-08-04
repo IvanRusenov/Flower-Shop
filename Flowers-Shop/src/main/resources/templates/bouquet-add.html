@@ -6,7 +6,7 @@
 <main>
     <section class="container d-flex justify-content-center min-vh-100 align-items-center" style="max-width: 30em">
         <div class="container mx-auto p-3 text-center border my-container">
-            <h1 class="text-center text-white myFont1 display-3">Add Bouquet</h1>
+            <h1 class="text-center text-white myFont1 display-6">Add Bouquet</h1>
             <form class="form-floating mx-auto w-75 bg-blur" th:method="post" th:action="@{/bouquet/add}" th:object="${bouquetDTO}" enctype="multipart/form-data">
                 <div class="form-floating mb-3 text-center">
                     <input th:field="*{description}" th:errorclass="is-invalid" class="form-control" id="description"

@@ -24,7 +24,7 @@ public class HomeController {
 
         ModelAndView modelAndView = new ModelAndView("home");
 
-        modelAndView.addObject("cartItemsQty", cartService.getAllCartItemsQuantity(userDetails));
+        modelAndView.addObject("cartItemsCount", cartService.getAllCartItemsQuantity(userDetails));
         modelAndView.addObject("bouquets", homeService.getBouquets());
 
         return modelAndView;

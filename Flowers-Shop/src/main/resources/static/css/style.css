@@ -288,7 +288,7 @@ nav img {
 
 
 .glowing-gold {
-    padding: 0.5em 2em;
+    padding: 0.5em 1em;
     border: none;
     outline: none;
     color: rgb(255, 255, 255);
@@ -316,7 +316,7 @@ nav img {
     position: absolute;
     top: -2px;
     left: -2px;
-    background-size: 400%;
+    /*background-size: 400%;*/
     z-index: -1;
     filter: blur(5px);
     width: calc(100% + 4px);

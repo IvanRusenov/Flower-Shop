@@ -74,7 +74,7 @@
                     </li>
                     <li class="nav-item glowing-gold">
                         <form>
-                            <label class="text-white px-2" for="lang" th:text="#{nav_bar_language}">Language</label>
+                            <label class="text-white pe-1" for="lang" th:text="#{nav_bar_language}">Language</label>
                             <select class="text-white bg-black" id="lang" name="lang" onchange="this.form.submit()">
                                 <option value="en_EN" th:selected="${#locale.toString()} == 'en_US'">En</option>
                                 <option value="bg_BG" th:selected="${#locale.toString()} == 'bg_BG'">Бг</option>
@@ -85,7 +85,7 @@
                         sec:authorize="isAuthenticated() && !hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')">
                         <a class="nav-link glowing-gold" th:href="@{/cart}">Cart
                             <span class="position-absolute top-5 start-100 translate-middle badge
-                             rounded-pill bg-danger" th:text="${cartItemsQty}">
+                             rounded-pill bg-danger" th:text="${cartItemsCount}">
                                 <span class="visually-hidden">Items in the cart</span>
                             </span>
                         </a>

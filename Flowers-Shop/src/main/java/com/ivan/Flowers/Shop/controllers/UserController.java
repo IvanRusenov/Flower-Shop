@@ -111,7 +111,6 @@ public class UserController {
         User user = userService.getUser(userId);
         EditUserDTO editUserDTO = modelMapper.map(user, EditUserDTO.class);
         editUserDTO.setRole(user.getRole().getType());
-        //TODO: change User to have only one role
 
         editUser.addObject("roles", RoleType.values());
         editUser.addObject("editUserDTO", editUserDTO);

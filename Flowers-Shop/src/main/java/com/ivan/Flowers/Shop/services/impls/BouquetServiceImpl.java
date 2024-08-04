@@ -54,8 +54,6 @@ public class BouquetServiceImpl implements BouquetService {
             return false;
         }
 
-        //todo: validate file size < 5mb
-
         Bouquet bouquet = new Bouquet();
         String url = cloudinaryService.uploadImage(bouquetDTO.getPicture());
         bouquet.setUrl(url);
