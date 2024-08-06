@@ -4,7 +4,8 @@
 <body class="home">
 <header th:replace="~{fragments/commons::nav}"></header>
 <section class="gradient-custom mb-5 ">
-    <h1 class="display-6 pt-5 m-5 fst-italic text-center text-white myFont1">My orders:
+    <h1 class="display-6 pt-5 m-5 fst-italic text-center text-white myFont1">
+        <span th:text="#{my_orders}"></span>
         <span class="px-2" style="color: #FEDB37;" th:text="${#lists.size(orders)}"></span>
     </h1>
     <div class="container py-1">
@@ -13,7 +14,7 @@
                 <div class="border mb-3" style="border-radius: 10px;" th:each="order: ${orders}">
                     <div class="d-flex justify-content-center pt-4 text-white">
                         <p class="fw-bold mb-0 text-white text-center"
-                           th:text="|Order id: ${order.getId()}|">Order Id: {order.id}</p>
+                           th:text="|#{order_id} ${order.getId()}|">Order Id: {order.id}</p>
                     </div>
                     <div class="" style="border-radius: 10px;">
                         <div class="p-4">
@@ -32,26 +33,26 @@
                                         </div>
                                         <div class="col-md-2 text-center d-flex flex-column justify-content-center
                                             align-items-center text-white">
-                                            <p class="mb-0 small text-white">Item No</p>
+                                            <p class="mb-0 small text-white" th:text="#{item_number}">Item No</p>
                                             <p class="mb-0 small text-white" th:text="${item.getItemNumber()}">Item
                                                 number</p>
                                         </div>
                                         <div class="col-md-2 text-center d-flex flex-column justify-content-center
                                             align-items-center text-white">
-                                            <p class="mb-0 small text-white">Quantity</p>
+                                            <p class="mb-0 small text-white" th:text="#{quantity}">Quantity</p>
                                             <p class="mb-0 small text-white" th:text="${item.getQuantity()}">Qty:
                                                 1</p>
                                         </div>
                                         <div class="col-md-2 text-center d-flex flex-column justify-content-center
                                             align-items-center text-white">
-                                            <p class="mb-0 small text-white"> Price per unit</p>
+                                            <p class="mb-0 small text-white" th:text="#{price_per_unit}"> Price per unit</p>
                                             <p class="mb-0 small text-white"
                                                th:text="|${#numbers.formatDecimal(item.getUnitPrice(),0,2)} &euro;|">
                                                 $499</p>
                                         </div>
                                         <div class="mb-3 col-md-2 text-center d-flex flex-column
                                             justify-content-center align-items-center text-white">
-                                            <p class="mb-0 small text-white">Price</p>
+                                            <p class="mb-0 small text-white" th:text="#{price}">Price</p>
                                             <p class="mb-0 small text-white"
                                                th:text="|${#numbers.formatDecimal(item.getUnitPrice()
                                                    * item.getQuantity(),0,2)} &euro;|">
@@ -63,25 +64,25 @@
                             </div>
                             <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
                             <div class="d-flex justify-content-between pt-2 text-white align-items-center">
-                                <p class="fw-bold mb-0 text-white fs-4">Order Details</p>
+                                <p class="fw-bold mb-0 text-white fs-4" th:text="#{order_details}">Order Details</p>
                                 <p class="mb-0 text-white fw-bold fst-italic fs-4"
-                                   th:text="|Total: ${#numbers.formatDecimal(order.getTotalAmount(),0,2)} &euro;|">
+                                   th:text="|#{total} ${#numbers.formatDecimal(order.getTotalAmount(),0,2)} &euro;|">
                                 </p>
                             </div>
                             <div class="d-flex justify-content-between text-white">
                                 <p class="mb-0 text-white fst-italic w-50">
-                                    Order Date and time:
+                                    <span th:text="#{order_date_and_time}"></span>
                                     <span th:text="${{order.getOrderDateTime()}}"
                                           class="fw-bold">{22 Dec,2019}</span>
                                 </p>
                                 <p class="mb-0 text-white fst-italic ">
-                                    Status:
+                                    <span th:text="#{status}"></span>
                                     <span class="fw-bold fst-italic text-white "
                                           th:text="${order.getStatus()}">{PENDING}</span>
                                 </p>
                             </div>
                             <p class="mb-0 text-white fst-italic">
-                                Shipping address:
+                                <span th:text="#{shippingAddress}"></span>
                                 <span th:text="${order.getShippingAddress()}" class="fw-bold"></span>
                             </p>
                         </div>

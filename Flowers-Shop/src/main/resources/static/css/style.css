@@ -36,6 +36,9 @@ nav {
     background-color: rgba(0, 0, 0, 0.7)
 }
 
+/*a, tr, tr>th, th {*/
+/*    font-family: 'Times New Roman', Times, serif;*/
+/*}*/
 /*nav ul {*/
 /*    display: flex;*/
 /*    justify-content: space-around;*/
@@ -78,6 +81,10 @@ footer div {
 
 }
 
+.my-bg {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
 .myFont {
     font-family: 'Times New Roman', Times, serif;
     font-style: oblique;
@@ -86,7 +93,7 @@ footer div {
 
 .myFont1 {
     font-family: 'Times New Roman', Times, serif;
-    font-style: oblique;
+    /*font-style: oblique;*/
 }
 
 .bigFont {
@@ -256,7 +263,7 @@ nav img {
     color: white;
     cursor: pointer;
     display: inline-flex;
-    font-family: "JetBrains Mono", monospace;
+    /*font-family: "JetBrains Mono", monospace;*/
     justify-content: center;
     line-height: 1;
     overflow: hidden;
@@ -379,14 +386,14 @@ nav img {
 }
 
 .all-orders {
-    background-image: url(/images/all-orders-bg6.jpg);
+    background-image: url(/images/bg-orchid-2.jpg);
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
 }
 
 .bouquet-add {
-    background-image: url(/images/bouquet-add-bg2.jpg);
+    background-image: url(/images/bg-orchid-1.jpg);
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
@@ -410,3 +417,4 @@ nav img {
     background-size: cover;
     background-attachment: fixed;
 }
+

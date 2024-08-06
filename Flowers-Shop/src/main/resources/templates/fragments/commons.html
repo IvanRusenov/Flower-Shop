@@ -57,13 +57,13 @@
                             orders</a>
                     </li>
                     <li class="nav-item" sec:authorize="hasRole('ROLE_MODERATOR')">
-                        <a class="nav-link glowing-gold" th:href="@{/orders/pending}">All pending orders</a>
+                        <a class="nav-link glowing-gold" th:href="@{/orders/pending}" th:text="#{all_pending_orders}">All pending orders</a>
                     </li>
                     <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-                        <a class="nav-link glowing-gold" th:href="@{/users/all}">Users</a>
+                        <a class="nav-link glowing-gold" th:href="@{/users/all}" th:text="#{nav_bar_users}">Users</a>
                     </li>
                     <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-                        <a class="nav-link glowing-gold" th:href="@{/orders/all}">Orders</a>
+                        <a class="nav-link glowing-gold" th:href="@{/orders/all}" th:text="#{nav_bar_orders}">Orders</a>
                     </li>
                     <li class="nav-item" sec:authorize="isAuthenticated()">
                         <form th:action="@{/logout}" th:method="post">
@@ -83,7 +83,8 @@
                     </li>
                     <li class="nav-item"
                         sec:authorize="isAuthenticated() && !hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')">
-                        <a class="nav-link glowing-gold" th:href="@{/cart}">Cart
+                        <a class="nav-link glowing-gold" th:href="@{/cart}">
+                            <span th:text="#{cart}"></span>
                             <span class="position-absolute top-5 start-100 translate-middle badge
                              rounded-pill bg-danger" th:text="${cartItemsCount}">
                                 <span class="visually-hidden">Items in the cart</span>

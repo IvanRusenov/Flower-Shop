@@ -6,23 +6,23 @@
 <main>
     <section class="container d-flex justify-content-center min-vh-100 align-items-center" style="max-width: 20em">
         <div class="container mx-auto text-center border my-container">
-            <h1 class="text-center mt-2 myFont1 display-3 text-white">Login</h1>
+            <h1 class="text-center mt-2 myFont1 display-6 text-white" th:text="#{nav_bar_login}">Login</h1>
             <form class="form-control-sm mx-auto bg-blur" th:method="post" th:action="@{/login}"
                   th:object="${userLoginDTO}">
                 <div class="form-floating mb-2 text-center">
                     <input th:field="*{username}" th:errorclass="is-invalid" class="form-control" id="username"
                            placeholder="Username" minlength="2" maxlength="50" required>
-                    <label for="username">Username</label>
+                    <label for="username" th:text="#{username}">Username</label>
                     <small th:errors="*{username}" class="text-danger ">Username error message</small>
                 </div>
                 <div class="form-floating text-center">
                     <input th:field="*{password}" th:errorclass="is-invalid" type="password" class="form-control"
                            id="password" placeholder="Password" minlength="3" maxlength="20" required>
-                    <label for="password">Password</label>
+                    <label for="password"th:text="#{password}">Password</label>
                     <small th:errors="*{password}" class="text-danger">Password error message</small>
                 </div>
                 <div class="text-center my-4">
-                    <button class="btn-gold rounded-pill p-2 col-5">LOGIN</button>
+                    <button class="btn-gold rounded-pill p-2 col-5" th:text="#{nav_bar_login}">LOGIN</button>
                 </div>
             </form>
         </div>

@@ -6,8 +6,9 @@
 
 <section class="">
 
-    <h1 class="myFont1 display-6 text-white p-2 pt-5 m-5 text-center">All users:
-        <span class="px-2" style="color: #FEDB37;" th:text="${#lists.size(users)}"></span>
+    <h1 class="myFont1 fst-italic    display-6 text-white p-2 pt-5 m-5 text-center">
+        <span th:text="#{users_all_users}" class="my-bg"></span>
+        <span class="px-2 my-bg" style="color: #FEDB37;" th:text="| ${#lists.size(users)}|"></span>
     </h1>
 
     <div class="container py-1">
@@ -20,12 +21,13 @@
                             <table class="table table-dark table-striped table-bordered">
                                 <thead >
                                 <tr class="text-center fw-bold">
-                                    <th scope="col">Id</th>
-                                    <th scope="col">Username</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Shipping Address</th>
-                                    <th scope="col">Role</th>
-                                    <th scope="col" colspan="2">Actions</th>
+                                    <th scope="col" th:text="#{id}">Id</th>
+                                    username=Username
+                                    <th scope="col" th:text="#{username}">Username</th>
+                                    <th scope="col" th:text="#{email}">Email</th>
+                                    <th scope="col" th:text="#{shippingAddress}">Shipping Address</th>
+                                    <th scope="col" th:text="#{role}">Role</th>
+                                    <th scope="col" colspan="2" th:text="#{actions}">Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -39,12 +41,12 @@
                                         <form th:method="get" th:action="@{/user/edit/{id}(id=${user.getId()})}">
                                             <button th:if="${user.id} != 1" type="submit"
                                                     class="rounded-pill px-3 py-1 bg-dark text-white
-                                                    glowing-gold">Edit</button>
+                                                    glowing-gold" th:text="#{edit}">Edit</button>
                                         </form>
                                     </td>
                                     <td class="align-middle text-center">
                                         <form th:method="delete" th:action="@{/user/delete/{id}(id=${user.getId()})}">
-                                            <button th:if="${user.id} != 1" type="submit" class="rounded-pill px-3 py-1 bg-dark text-white glowing-gold">Delete</button>
+                                            <button th:if="${user.id} != 1" type="submit" class="rounded-pill px-3 py-1 bg-dark text-white glowing-gold" th:text="#{delete}">Delete</button>
                                         </form>
                                     </td>
 <!--                                        <form class="col" th:method="post" th:action="@{/order/change-shippingAddress/{id}(id=${user.getId()})}">-->
