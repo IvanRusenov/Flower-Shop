@@ -294,5 +294,4 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
-//TODO: IMPLEMENT CALENDAR WITH NAME DAYS
 }
