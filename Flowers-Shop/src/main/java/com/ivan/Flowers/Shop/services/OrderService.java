@@ -34,4 +34,9 @@ public interface OrderService {
     void save(OrderDetailsDTO orderDetailsDTO);
 
     OrderItemDetailDTO getOrderItem(long itemId);
+
+    void setCurrentOrder(OrderDetailsDTO orderDetailsDTO);
+
+    OrderDetailsDTO getCurrentOrder();
+
 }

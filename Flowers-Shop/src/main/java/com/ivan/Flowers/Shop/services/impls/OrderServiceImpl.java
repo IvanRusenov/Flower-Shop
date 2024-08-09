@@ -1,5 +1,6 @@
 package com.ivan.Flowers.Shop.services.impls;
 
+import com.ivan.Flowers.Shop.configs.OrderApiConfig;
 import com.ivan.Flowers.Shop.enums.StatusType;
 import com.ivan.Flowers.Shop.models.dtos.*;
 import com.ivan.Flowers.Shop.models.entities.Bouquet;
@@ -36,19 +37,21 @@ public class OrderServiceImpl implements OrderService {
     private final BouquetRepository bouquetRepository;
     private final CartService cartService;
     private OrderDetailsDTO currentOrder;
+    private final OrderApiConfig orderApiConfig;
 
     public OrderServiceImpl(@Qualifier("ordersRestClient") RestClient orderRestClient,
                             CartRepository cartRepository,
                             ModelMapper modelMapper,
                             UserRepository userRepository,
                             BouquetRepository bouquetRepository,
-                            CartService cartService) {
+                            CartService cartService, OrderApiConfig orderApiConfig) {
         this.orderRestClient = orderRestClient;
         this.cartRepository = cartRepository;
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
         this.bouquetRepository = bouquetRepository;
         this.cartService = cartService;
+        this.orderApiConfig = orderApiConfig;
     }
 
     public OrderDetailsDTO getCurrentOrder() {
@@ -73,7 +76,7 @@ public class OrderServiceImpl implements OrderService {
 
         orderRestClient
                 .post()
-                .uri("/orders")//"http://localhost:8888/orders"
+                .uri(orderApiConfig.getBaseUrl() + "/orders")//"http://localhost:8888/orders"
                 .body(createOrderDTO)
                 .retrieve();
 
@@ -153,7 +156,7 @@ public class OrderServiceImpl implements OrderService {
 
         List<OrderDTO> orderDTOS = orderRestClient
                 .get()
-                .uri("/orders")
+                .uri( orderApiConfig.getBaseUrl() + "/orders")
                 .retrieve()
                 .body(new ParameterizedTypeReference<>() {
                 });
