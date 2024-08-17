@@ -8,7 +8,8 @@
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-lg-10 col-xl-8">
                 <div class="card-header px-4 py-5">
-                    <h5 class="text-white text-center mb-0 fst-italic">Thanks for your order,
+                    <h5 class="text-white text-center mb-0 fst-italic">
+                        <span th:text="#{thanks}"></span>
                         <span style="color: #FEDB37;" th:text="${username}"></span> !
                     </h5>
                 </div>
@@ -26,22 +27,22 @@
                                         <p class="mb-0 text-white" th:text="${item.getDescription()}">Description</p>
                                     </div>
                                     <div class="col-md-2 text-center d-flex flex-column justify-content-center align-items-center text-white">
-                                        <p class="mb-0 small text-white">Item No</p>
+                                        <p class="mb-0 small text-white" th:text="#{item_number}">Item No</p>
                                         <p class="mb-0 small text-white" th:text="${item.getItemNumber()}">Item
                                             number</p>
                                     </div>
                                     <div class="col-md-2 text-center d-flex flex-column justify-content-center align-items-center text-white">
-                                        <p class="mb-0 small text-white">Quantity</p>
+                                        <p class="mb-0 small text-white" th:text="#{quantity}">Quantity</p>
                                         <p class="mb-0 small text-white" th:text="${item.getQuantity()}">Qty: 1</p>
                                     </div>
                                     <div class="col-md-2 text-center d-flex flex-column justify-content-center align-items-center text-white">
-                                        <p class="mb-0 small text-white"> Price per unit</p>
+                                        <p class="mb-0 small text-white" th:text="#{price_per_unit}"> Price per unit</p>
                                         <p class="mb-0 small text-white"
                                            th:text="|${#numbers.formatDecimal(item.getUnitPrice(),0,2)} &euro;|">
                                             $499</p>
                                     </div>
                                     <div class="mb-3 col-md-2 text-center d-flex flex-column justify-content-center align-items-center text-white">
-                                        <p class="mb-0 small text-white">Price</p>
+                                        <p class="mb-0 small text-white" th:text="#{price}">Price</p>
                                         <p class="mb-0 small text-white"
                                            th:text="|${#numbers.formatDecimal(item.getUnitPrice() * item.getQuantity(),0,2)} &euro;|">
                                             $499</p>
@@ -52,24 +53,24 @@
                         </div>
                         <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
                         <div class="d-flex justify-content-between pt-2 text-white align-items-center">
-                            <p class="fw-bold mb-0 text-white fs-4">Order Details</p>
+                            <p class="fw-bold mb-0 text-white fs-4" th:text="#{order_details}">Order Details</p>
                             <p class="mb-0 text-white fw-bold fst-italic fs-4"
-                               th:text="|Total: ${#numbers.formatDecimal(order.getTotalAmount(),0,2)} &euro;|">
+                               th:text="|#{total} ${#numbers.formatDecimal(order.getTotalAmount(),0,2)} &euro;|">
                             </p>
                         </div>
                         <div class="d-flex justify-content-between text-white">
                             <p class="mb-0 text-white fst-italic">
-                                Order Date and time:
+                                <span th:text="#{order_date_and_time}"></span>
                                 <span th:text="${{order.getOrderDateTime()}}" class="fw-bold">{22 Dec,2019}</span>
                             </p>
                             <p class="mb-0 text-white fst-italic ">
-                                Status:
+                                <span th:text="#{status}"></span>
                                 <span class="fw-bold fst-italic text-white "
                                       th:text="${order.getStatus()}">{PENDING}</span>
                             </p>
                         </div>
                         <p class="mb-0 text-white fst-italic">
-                            Shipping address:
+                            <span th:text="#{shippingAddress}"></span>
                             <span th:text="${order.getShippingAddress()}" class="fw-bold"></span>
                         </p>
                     </div>

@@ -5,7 +5,7 @@
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
     <section class="container d-flex justify-content-center min-vh-100 align-items-center" style="max-width: 20em">
-        <div class="container mx-auto text-center border my-container">
+        <div class="container mx-auto text-center ">
             <h1 class="text-center mt-2 myFont1 display-6 text-white" th:text="#{nav_bar_login}">Login</h1>
             <form class="form-control-sm mx-auto bg-blur" th:method="post" th:action="@{/login}"
                   th:object="${userLoginDTO}">

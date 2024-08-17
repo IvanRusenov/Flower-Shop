@@ -4,8 +4,8 @@
 <body class="background1">
 <header th:replace="~{fragments/commons::nav}"></header>
 <main>
-    <section class="container d-flex justify-content-center min-vh-100 align-items-center py-5 my-5" style="max-width: 30em">
-        <div class="container mx-auto text-center border my-container">
+    <section class="container d-flex justify-content-center min-vh-100 align-items-center py-5" style="max-width: 30em">
+        <div class="container mx-auto text-center">
             <h1 class="text-center mt-2 myFont1 display-6 text-white" th:text="#{nav_bar_register}">Register</h1>
             <form class="form-floating mx-auto w-75 bg-blur" th:method="post" th:action="@{/register}"
                   th:object="${userRegisterDTO}">

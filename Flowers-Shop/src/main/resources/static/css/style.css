@@ -19,7 +19,7 @@ html {
 
 .background1 {
     /* background-image: url(img/background.jpg); */
-    background-image: url(/images/background1.png);
+    background-image: url(/images/bg-orchid-33.jpg);
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
@@ -229,7 +229,7 @@ nav img {
 }
 
 .media img {
-    width: 100%;
+    width: auto;
     height: 100%;
     object-fit: fill;
     padding: 1em;
@@ -412,7 +412,14 @@ nav img {
 }
 
 .home {
-    background-image: url(/images/home-bg.jpg);
+     background-image: url(/images/home-bg.jpg);
+     background-position: center;
+     background-size: cover;
+     background-attachment: fixed;
+ }
+
+.shipping {
+    background-image: url(/images/bg-orchid-4.jpg);
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
